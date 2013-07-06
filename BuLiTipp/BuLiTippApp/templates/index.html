@@ -1,0 +1,31 @@
+{% extends "base_site.html" %}
+
+<!-- benötigte Variablen: spielzeit -->
+
+{% block content %}
+Here would be some content!
+<ul>
+	<li>Nächster Spieltag</li>
+	<li>letzter Spieltag</li>
+	<li>Punkteliste</li>
+	<li>Spieltage kommentieren</li>
+</ul>
+
+{% if spieltipp_previous %}
+<h2>Die Ergebnisse des letzten Spieltages:</h2>
+{% with spieltag=spieltipp_previous.0.0.spieltag no_navigation="true" spieltipp=spieltipp_previous  %}
+Hier die Übersicht des {{spieltag.nummer}}. Spieltages!
+{% include "spieltag/inline.html" %}
+{% endwith %}
+
+{% endif %}
+
+{% if spieltipp_next %}
+<h2>Hier der nächste Spieltag!</h2>
+{% with spieltag=spielzeit.next_spieltag _no_navigation_="true" spieltipp=spieltipp_next  %}
+Tippen noch möglich bis zum <strong>{{spieltag.datum}}</strong>!
+{% include "spieltag/inline.html" %}
+{% endwith %}
+{% endif %}
+
+{% endblock %}

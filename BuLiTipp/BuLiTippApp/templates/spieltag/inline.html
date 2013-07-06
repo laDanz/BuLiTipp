@@ -1,0 +1,51 @@
+<!-- benoetigte Daten: spieltag, spieltipp, spieltag_previous, spieltag_next  -->
+<!-- Optional: no_navigation="true"  -->
+
+{% if spieltipp %}
+
+<form action="/BuLiTipp/{{ spieltag.id  }}/tipp/" method="post">
+{% csrf_token  %}
+    <table>
+        <tr><td><b>Spiel</b></td><td><b>Ergebnis</b></td><td><b>mein Tipp</b></td><td></td></tr>
+    {% for spiel, tipp, punkte in spieltipp  %}
+		<tr>
+		<td><center><b>{{ spiel.heimmannschaft }}</b> vs <b>{{ spiel.auswaertsmannschaft }}</b></center></td>
+		<td>
+		<center>
+		{% if spiel.ergebniss == "DNF" %}
+			tippen!
+		{% else %}
+			{{ spiel.ergebniss  }}
+		{% endif %}
+		</center>
+		</td>
+		<td><input type="text" name="tipp_{{ spiel.id  }}" style="width:50px"
+			id="tipp{{ spiel.id  }}" value="{{ tipp.ergebniss }}" 
+			pattern="[0-9]{1,2}:[0-9]{1,2}" 
+			title="Bitte Ergebnis im Format x:y angeben!"
+			{% if not spieltag.is_tippable  %} Disabled {% endif %}></td>
+		
+		<td>
+		{% if punkte != None%}
+			{{punkte}}
+		{% endif %}
+		</td>
+		</tr>
+    {% endfor %}
+    </table>
+<input type="submit" value="Tipp abgeben!" 
+	{% if not spieltag.is_tippable  %} Disabled {% endif %} />
+</form>
+{% else %}
+    <p>Keine Spiele an diesem Spieltag.</p>
+{% endif %}
+
+{% if no_navigation != "true" %}
+{% if spieltag.nummer > 1 %}
+<a href="/BuLiTipp/{{ spieltag.previous.id }}/">vorheriger</a>
+{% endif %}
+
+{% if spieltag.nummer < 34 %}
+<a href="/BuLiTipp/{{ spieltag.next.id }}/">naechster</a>
+{% endif %}
+{% endif %}

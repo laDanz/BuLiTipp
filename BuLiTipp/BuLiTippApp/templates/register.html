@@ -1,0 +1,16 @@
+{% extends "base_site.html" %}
+
+{% block content %}
+	Bitte ausf&uuml;llen!
+	<form method="POST" action="/register/">
+	{% csrf_token %}
+<ul>
+		<li><label for="uname"><strong>Username*:</strong></label>		<input type="text" id="uname" name="username" required /></li>
+		<li><label for="pword"><strong>Passwort*:</strong></label>		<input type="password" id="pword" name="password" required /></li>
+		<li><label for="fname">Vorname:</label>		<input type="text" id="fname" name="first_name" /></li>
+		<li><label for="email">email:</label>		<input type="email" id="email" name="email" /></li>
+
+</ul>
+		<input type="submit" value="register" />
+	</form>
+{% endblock %}

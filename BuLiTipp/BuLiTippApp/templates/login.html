@@ -1,0 +1,18 @@
+{% extends "base_site.html" %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+	Hello {{ request.user.username  }}!
+{% else %}
+	Please sign in!
+	<form method="POST" action="/login/">
+	{% csrf_token %}
+		<label for="uname">Username:</label>
+		<input type="text" id="uname" name="username" />
+		<label for="pword">Passwort:</label>
+		<input type="password" id="pword" name="password" />
+		<input type="submit" value="einloggen" />
+		<input type="hidden" name="next" value="{{ next }}" />
+	</form>
+{% endif %}
+{% endblock %}
