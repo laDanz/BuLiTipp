@@ -6,7 +6,7 @@
 <form action="/BuLiTipp/{{ spieltag.id  }}/tipp/" method="post">
 {% csrf_token  %}
     <table>
-        <tr><td><b>Spiel</b></td><td><b>Ergebnis</b></td>{% if user.is_authenticated %}<td><b>mein Tipp</b></td>{% endif %}<td></td></tr>
+        <tr><td><b>Spiel</b></td><td><b>Ergebnis</b></td>{% if user.is_authenticated %}<td><b>mein Tipp</b></td>{% if not spieltag.is_tippable %}<td><b>Punkte</b></td>{% endif %}{% endif %}<td></td></tr>
     {% for spiel, tipp, punkte in spieltipp  %}
 		<tr>
 		<td><center><b>{{ spiel.heimmannschaft }}</b> vs <b>{{ spiel.auswaertsmannschaft }}</b></center></td>
@@ -30,11 +30,13 @@
 			title="Bitte Ergebnis im Format x:y angeben!"
 			{% if not spieltag.is_tippable  %} Disabled {% endif %}></td>
 		{% endif %}
+		{% if user.is_authenticated and not spieltag.is_tippable %}
 		<td>
-		{% if punkte != None%}
-			{{punkte}}
+		{% if punkte != None %}
+			<center>{{punkte}}</center>
 		{% endif %}
 		</td>
+		{% endif %}
 		</tr>
     {% endfor %}
     </table>
@@ -47,10 +49,6 @@
     <p>Keine Spiele an diesem Spieltag.</p>
 {% endif %}
 
-{% with kommentare=spieltag.kommentar_set.all spieltag=spieltag %}
-{% include "kommentar/detail.html" %}
-{% endwith %}
-
 {% if no_navigation != "true" %}
 {% if spieltag.nummer > 1 %}
 <a href="/BuLiTipp/{{ spieltag.previous.id }}/">vorheriger</a>
@@ -60,3 +58,7 @@
 <a href="/BuLiTipp/{{ spieltag.next.id }}/">naechster</a>
 {% endif %}
 {% endif %}
+
+{% with kommentare=spieltag.kommentar_set.all spieltag=spieltag %}
+{% include "kommentar/detail.html" %}
+{% endwith %}
