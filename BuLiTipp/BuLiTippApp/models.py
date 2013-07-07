@@ -59,13 +59,13 @@ class Spieltag(models.Model):
 			return None
 		try:
 			return Spieltag.objects.filter(spielzeit_id=self.spielzeit.id).filter(nummer=self.nummer-1)[0]
-        	except:
+		except:
 			return None
 	def spieltipp(self, user_id):
 		tipps = Tipp.objects.filter(spiel_id__spieltag_id=self.id).filter(user_id=user_id)
-	        tipps = {t.spiel_id: t for t in tipps}
+		tipps = {t.spiel_id: t for t in tipps}
 		punkte = {t.spiel_id: t.punkte() for t in tipps.values() }
-        	return [(spiel, tipps[spiel.id] if spiel.id in tipps.keys() else None, punkte[spiel.id] if spiel.id in punkte.keys() else None) for spiel in self.spiel_set.all()]
+		return [(spiel, tipps[spiel.id] if spiel.id in tipps.keys() else None, punkte[spiel.id] if spiel.id in punkte.keys() else None) for spiel in self.spiel_set.all()]
 
 class Verein(models.Model):
 	name = models.CharField(max_length=75)
@@ -78,7 +78,7 @@ class Spiel(models.Model):
 	spieltag = models.ForeignKey(Spieltag)
 	ergebniss = models.CharField(max_length=5)
 	def __unicode__(self):
-		return "%s vs %s" % (self.heimmannschaft, self.auswaertsmannschaft)
+		return "%s vs %s" % (unicode(self.heimmannschaft), unicode(self.auswaertsmannschaft))
 	def tipps(self):
 		return self.tipp_set.all()
 
