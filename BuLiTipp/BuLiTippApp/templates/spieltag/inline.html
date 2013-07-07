@@ -13,7 +13,11 @@
 		<td>
 		<center>
 		{% if spiel.ergebniss == "DNF" %}
-			tippen!
+			{% if spieltag.is_tippable %}
+				tippen!
+			{% else %}
+				eintragen!
+			{% endif %}
 		{% else %}
 			{{ spiel.ergebniss  }}
 		{% endif %}

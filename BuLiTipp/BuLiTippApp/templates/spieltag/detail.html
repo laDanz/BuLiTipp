@@ -1,7 +1,11 @@
 {% extends "base_site.html" %}
 {% block content %}
 Der {{ spieltag.nummer }}. Spieltag der Saison "{{ spielzeit.bezeichner  }}"<br>
+{% if spieltag.is_tippable %}
 Jetzt tippen bis zum {{ spieltag.datum }}.
+{% else %}
+Tippen nicht mehr möglich!
+{% endif %}
 
 {% include "spieltag/inline.html" %}
 
