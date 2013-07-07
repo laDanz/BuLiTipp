@@ -11,6 +11,13 @@ from datetime import datetime
 
 def home(request):
 	return redirect("BuLiTippApp.views.index")
+
+# sicherheitsabfrage!?	
+def delete_kommentar(request):
+	kommentar_id=request.POST["kommentar_id"]
+	spieltag_id=request.POST["spieltag_id"]
+	Kommentar.objects.get(pk=kommentar_id).delete()
+	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
 	
 def post_kommentar(request):
 	text=request.POST["text"]
@@ -24,7 +31,7 @@ def post_kommentar(request):
 		kommentar.spieltag_id = spieltag_id
 	else:
 		kommentar.reply_to_id = reply_to
-		#for redirect
+		#for redirect FIXME:hack
 		komm = Kommentar.objects.get(pk=reply_to)
 		while komm.spieltag_id == None:
 			komm = Kommentar.objects.get(pk=komm.reply_to)

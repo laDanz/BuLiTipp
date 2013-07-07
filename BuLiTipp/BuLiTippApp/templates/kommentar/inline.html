@@ -5,8 +5,18 @@
 
 {% if kommentar.id %}
 <div>
-von {{ kommentar.user.username }} am {{kommentar.datum}}<br>
+von {{ kommentar.user.username }} am {{kommentar.datum}}
+
+<br>
 <textarea disabled>{{ kommentar.text }}</textarea>
+	{% if kommentar.user.id == user.id or user.is_staff%}
+		<form action="/BuLiTipp/kommi/delete/" method="post">
+		{% csrf_token %}
+		<input type="hidden" name="kommentar_id" value="{{kommentar.id}}" />
+		<input type="hidden" name="spieltag_id" value="{{spieltag.id}}" />
+		<input type="submit" value="l&ouml;schen" />
+		</form>
+	{% endif %}
 	<!-- Kommentar auf Kommentar nur in der ersten ebene-->
 	{% if kommentar.spieltag and user.is_authenticated %}
 	<div style="padding-left:25px">
