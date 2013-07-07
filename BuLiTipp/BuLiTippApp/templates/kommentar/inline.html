@@ -8,7 +8,7 @@
 von {{ kommentar.user.username }} am {{kommentar.datum}}<br>
 <textarea disabled>{{ kommentar.text }}</textarea>
 	<!-- Kommentar auf Kommentar nur in der ersten ebene-->
-	{% if kommentar.spieltag %}
+	{% if kommentar.spieltag and user.is_authenticated %}
 	<div style="padding-left:25px">
 		{% with reply_to=kommentar.id %}
 		{% include "kommentar/inline_new.html" %}

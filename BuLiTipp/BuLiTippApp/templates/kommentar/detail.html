@@ -2,9 +2,11 @@
 <h3>Kommentare</h3>
 Schreib ein Kommentar:
 
+{% if user.is_authenticated %}
 {% with editable="true" spieltag=spieltag %}
 {% include "kommentar/inline.html" %}
 {% endwith %}
+{% endif %}
 
 {% if kommentare|length > 0 %}
 	{% for kommentar in kommentare %}
