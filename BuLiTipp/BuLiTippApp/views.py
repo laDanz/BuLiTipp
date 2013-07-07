@@ -113,7 +113,7 @@ def detail(request, spieltag_id):
 	spieltag_previous = int(spieltag_id) - 1
 	tipps = Tipp.objects.filter(spiel_id__spieltag_id=spieltag_id).filter(user_id=request.user.id)
 	tipps = {t.spiel_id: t for t in tipps}
-	spieltipp = [(spiel, tipps[spiel.id] if spiel.id in tipps.keys() else None) for spiel in spieltag.spiel_set.all()]
+	spieltipp = spieltag.spieltipp(request.user.id)
 	return render_to_response("spieltag/detail.html", \
 		{"spieltag" : spieltag, \
 		"spielzeit" : spielzeit, \
