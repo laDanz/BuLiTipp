@@ -6,10 +6,32 @@ from django.contrib.auth import authenticate, login as djlogin, logout as djlogo
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from models import Spieltag, Spielzeit, Spiel, Tipp
+from models import Spieltag, Spielzeit, Spiel, Tipp, Kommentar
+from datetime import datetime
 
 def home(request):
 	return redirect("BuLiTippApp.views.index")
+	
+def post_kommentar(request):
+	text=request.POST["text"]
+	user=request.user
+	spieltag_id=request.POST["spieltag_id"]
+	reply_to=request.POST["reply_to"]
+	kommentar=Kommentar()
+	kommentar.text=text
+	kommentar.user=user
+	if spieltag_id != "":
+		kommentar.spieltag_id = spieltag_id
+	else:
+		kommentar.reply_to_id = reply_to
+		#for redirect
+		komm = Kommentar.objects.get(pk=reply_to)
+		while komm.spieltag_id == None:
+			komm = Kommentar.objects.get(pk=komm.reply_to)
+		spieltag_id = komm.spieltag_id
+	kommentar.datum=datetime.now()
+	kommentar.save()
+	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
 
 def index(request):
 	# show Punkte, letzter Spieltag, naechster Spieltag

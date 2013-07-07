@@ -43,6 +43,10 @@
     <p>Keine Spiele an diesem Spieltag.</p>
 {% endif %}
 
+{% with kommentare=spieltag.kommentar_set.all spieltag=spieltag %}
+{% include "kommentar/detail.html" %}
+{% endwith %}
+
 {% if no_navigation != "true" %}
 {% if spieltag.nummer > 1 %}
 <a href="/BuLiTipp/{{ spieltag.previous.id }}/">vorheriger</a>

@@ -1,0 +1,27 @@
+<!-- benötigt kommentar, spieltag -->
+
+<!-- collapsen: django jquery toggle-->
+{% if editable != "true" %}
+
+{% if kommentar.id %}
+<div>
+von {{ kommentar.user.username }} am {{kommentar.datum}}<br>
+<textarea disabled>{{ kommentar.text }}</textarea>
+	<!-- Kommentar auf Kommentar nur in der ersten ebene-->
+	{% if kommentar.spieltag %}
+	<div style="padding-left:25px">
+		{% with reply_to=kommentar.id %}
+		{% include "kommentar/inline_new.html" %}
+		{% endwith %}
+	</div>
+	{% endif %}
+</div>
+{% endif %}
+
+{% else %}
+
+{% with spieltag_id=spieltag.id %}
+		{% include "kommentar/inline_new.html" %}
+		{% endwith %}
+
+{% endif %}

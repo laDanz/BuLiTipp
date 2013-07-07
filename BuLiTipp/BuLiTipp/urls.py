@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^logout/', "BuLiTippApp.views.logout"),
 
     url(r'^BuLiTipp/$', 'BuLiTippApp.views.index'),
+	url(r'^BuLiTipp/kommi/$', 'BuLiTippApp.views.post_kommentar'),
     url(r'^BuLiTipp/(?P<spieltag_id>\d+)/$', 'BuLiTippApp.views.detail'),
     url(r'^BuLiTipp/(?P<spieltag_id>\d+)/tipp/$', 'BuLiTippApp.views.tippen'),
 

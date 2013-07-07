@@ -91,3 +91,9 @@ class Tipp(models.Model):
 	def punkte(self):
 		return Punkterechner().punkte(self)
 	
+class Kommentar(models.Model):
+	datum = models.DateTimeField()
+	text = models.CharField(max_length=500)
+	user = models.ForeignKey(User)
+	reply_to = models.ForeignKey('self', null=True)
+	spieltag = models.ForeignKey(Spieltag, null=True)

@@ -1,0 +1,24 @@
+<!-- benoetigt kommentare, spieltag -->
+<h3>Kommentare</h3>
+Schreib ein Kommentar:
+
+{% with editable="true" spieltag=spieltag %}
+{% include "kommentar/inline.html" %}
+{% endwith %}
+
+{% if kommentare|length > 0 %}
+	{% for kommentar in kommentare %}
+		<div style="border:1px solid rgb(205,205,205); padding:5px; margin:5px;">
+		{% include "kommentar/inline.html" %}
+			<div style="padding-left:25px">
+			{% for kommentar in kommentar.kommentar_set.all%}
+				{% include "kommentar/inline.html" %}
+			{% endfor %}
+			</div>
+		</div>
+	{% endfor %}
+{% else %}
+<div>
+Noch keine Kommentare, schreibe den Ersten!
+</div>
+{% endif %}

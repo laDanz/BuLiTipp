@@ -10,6 +10,11 @@ class SpielInline(admin.TabularInline):
 class SpieltagAdmin(admin.ModelAdmin):
 	list_filter = ["spielzeit"]
 	inlines = [SpielInline]
+	fieldsets = [
+        (None,               {'fields': ['spielzeit']}),
+        ('Datum', {'fields': ['datum'], 'classes': ['collapse']}),
+		('Nummer', {'fields': ['nummer'], 'classes': ['collapse']}),
+    ]
 
 admin.site.register(Spieltag, SpieltagAdmin)
 
