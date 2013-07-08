@@ -3,7 +3,7 @@
 
 {% if spieltipp %}
 
-<form action="/BuLiTipp/{{ spieltag.id  }}/tipp/" method="post">
+<form action="/BuLiTipp/sp{{ spieltag.id  }}/tipp/" method="post">
 {% csrf_token  %}
     <table>
         <tr><td><b>Spiel</b></td><td><b>Ergebnis</b></td>{% if user.is_authenticated %}<td><b>mein Tipp</b></td>{% if not spieltag.is_tippable %}<td><b>Punkte</b></td>{% endif %}{% endif %}<td></td></tr>
