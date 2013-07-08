@@ -12,6 +12,17 @@ from datetime import datetime
 def home(request):
 	return redirect("BuLiTippApp.views.index")
 
+def best(request):
+	userpunkte={}
+	for user in User.objects.all():
+		tipps = Tipp.objects.filter(user_id=user.id)
+		def p(tipp):
+			if tipp.punkte() is None:
+				return 0
+			return tipp.punkte()
+		punkte = sum(map(p, tipps))
+		userpunkte[user]=punkte
+	return render_to_response("bestenliste.html",{"userpunkte":userpunkte})
 # sicherheitsabfrage!?	
 def delete_kommentar(request):
 	kommentar_id=request.POST["kommentar_id"]

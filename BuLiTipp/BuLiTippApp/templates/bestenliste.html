@@ -1,0 +1,13 @@
+{% extends "base_site.html" %}
+
+<!-- benötigte Variablen: userpunkte -->
+
+{% block content %}
+
+<nl>
+{% for user in userpunkte %}
+<li>{{user.username}}: {{userpunkte.user}}</li>
+{% endfor %}
+</nl>
+{% endblock %}
+
