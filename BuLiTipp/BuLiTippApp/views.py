@@ -13,15 +13,15 @@ def home(request):
 	return redirect("BuLiTippApp.views.index")
 
 def best(request):
-	userpunkte={}
+	userpunkte=[]
+	#fuer jeden user
 	for user in User.objects.all():
+		#ermittle alle tipps
 		tipps = Tipp.objects.filter(user_id=user.id)
-		def p(tipp):
-			if tipp.punkte() is None:
-				return 0
-			return tipp.punkte()
-		punkte = sum(map(p, tipps))
-		userpunkte[user]=punkte
+		#summiere die punkte der Tipps
+		punkte = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+		userpunkte.append((user, punkte))
+	userpunkte.sort(key=lambda punkt:punkt[1], reverse=True)
 	return render_to_response("bestenliste.html",{"userpunkte":userpunkte})
 # sicherheitsabfrage!?	
 def delete_kommentar(request):

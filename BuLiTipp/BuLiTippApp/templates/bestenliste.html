@@ -1,13 +1,13 @@
 {% extends "base_site.html" %}
 
-<!-- benötigte Variablen: userpunkte -->
+<!-- benötigte Variablen: userpunkte=[(user, punkte)] -->
 
 {% block content %}
 
-<nl>
-{% for user in userpunkte %}
-<li>{{user.username}}: {{userpunkte.user}}</li>
+<ol>
+{% for user, punkte in userpunkte %}
+<li><strong>{{user.username}}:</strong> {{punkte}} Punkte</li>
 {% endfor %}
-</nl>
+</ol>
 {% endblock %}
 
