@@ -1,4 +1,18 @@
 {% extends "base_site.html" %}
+<!-- benötigt: spieltag, spielzeit -->
+{% load i18n  %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+    <a href="/BuLiTipp/">{% trans 'Home' %}</a>
+    {% if title %} &rsaquo; {{ title }}{% endif %}
+    -&rsaquo;
+    <a href="/BuLiTipp/{{spielzeit.id}}/">{{ spielzeit.bezeichner }}</a>
+    -&rsaquo;
+    <a href="/BuLiTipp/sp{{spieltag.id}}/">#{{ spieltag.nummer }}</a>
+    </div>
+{% endblock %}
+
 {% block content %}
 Der {{ spieltag.nummer }}. Spieltag der Saison "{{ spielzeit.bezeichner  }}"<br>
 {% if spieltag.is_tippable %}

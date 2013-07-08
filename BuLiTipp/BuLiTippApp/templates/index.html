@@ -1,6 +1,18 @@
 {% extends "base_site.html" %}
 
 <!-- benötigte Variablen: spielzeiten, spieltipp_previous, spieltipp_next -->
+{% load i18n  %}
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+    <a href="/BuLiTipp/">{% trans 'Home' %}</a>
+    {% if title %} &rsaquo; {{ title }}{% endif %}
+    {% if aktuelle_spielzeit.id %}
+    -&rsaquo;
+    <a href="/BuLiTipp/{{aktuelle_spielzeit.id}}/">{{ aktuelle_spielzeit.bezeichner }}</a>
+    {% endif %}
+    </div>
+{% endblock %}
+
 
 {% block content %}
 <h1>BuLiTipp Testphase</h1>
