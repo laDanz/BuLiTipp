@@ -55,30 +55,32 @@ def index(request):
 	return index2(request, -1)
 def index2(request, spielzeit_id):
 	# show Punkte, letzter Spieltag, naechster Spieltag
+	spielzeiten=[]
+	aktuelle_spielzeit=None
+	spieltipp_next=None
+	spieltipp_previous=None
 	try:
 		aktuelle_spielzeit=Spielzeit.objects.get(pk=spielzeit_id)
-		spielzeiten=[]
-		print "try"
+		spieltag = aktuelle_spielzeit.next_spieltag()
+		if(spieltag is not None and spieltag.is_tippable()):
+			spieltipp_next = spieltag.spieltipp(request.user.id)
+		else:
+			#letzten Spieltag erreicht
+			spieltipp_next=None
+		if(spieltag.previous() is not None):
+	        	if(spieltag.is_tippable()):
+				spieltipp_previous = spieltag.previous().spieltipp(request.user.id)
+			else:
+				#kein naechster spieltag
+				spieltipp_previous = spieltag.spieltipp(request.user.id)
+		else:
+			spieltipp_previous=None
 	except:
 		spielzeiten=Spielzeit.objects.all()
-		aktuelle_spielzeit=spielzeiten[0]
-		print "except"
-	spieltag = aktuelle_spielzeit.next_spieltag()
-	if(spieltag is not None and spieltag.is_tippable()):
-		spieltipp_next = spieltag.spieltipp(request.user.id)
-	else:
-		#letzten Spieltag erreicht
-		spieltipp_next=None
-	if(spieltag.previous() is not None):
-	        if(spieltag.is_tippable()):
-			spieltipp_previous = spieltag.previous().spieltipp(request.user.id)
-		else:
-			#kein naechster spieltag
-			spieltipp_previous = spieltag.spieltipp(request.user.id)
-	else:
-		spieltipp_previous=None
+	
 	return render_to_response("index.html",\
 		{"spielzeiten":spielzeiten, \
+		"aktuelle_spielzeit":aktuelle_spielzeit, \
 		"spieltipp_next":spieltipp_next, \
 		"spieltipp_previous":spieltipp_previous} ,\
 		context_instance=RequestContext(request))
