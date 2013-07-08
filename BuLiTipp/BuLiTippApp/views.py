@@ -52,8 +52,17 @@ def post_kommentar(request):
 	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
 
 def index(request):
+	return index2(request, -1)
+def index2(request, spielzeit_id):
 	# show Punkte, letzter Spieltag, naechster Spieltag
-	aktuelle_spielzeit=Spielzeit.objects.all()[0]
+	try:
+		aktuelle_spielzeit=Spielzeit.objects.get(pk=spielzeit_id)
+		spielzeiten=[]
+		print "try"
+	except:
+		spielzeiten=Spielzeit.objects.all()
+		aktuelle_spielzeit=spielzeiten[0]
+		print "except"
 	spieltag = aktuelle_spielzeit.next_spieltag()
 	if(spieltag is not None and spieltag.is_tippable()):
 		spieltipp_next = spieltag.spieltipp(request.user.id)
@@ -69,7 +78,7 @@ def index(request):
 	else:
 		spieltipp_previous=None
 	return render_to_response("index.html",\
-		{"spielzeit":aktuelle_spielzeit, \
+		{"spielzeiten":spielzeiten, \
 		"spieltipp_next":spieltipp_next, \
 		"spieltipp_previous":spieltipp_previous} ,\
 		context_instance=RequestContext(request))

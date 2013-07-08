@@ -50,12 +50,12 @@
 {% endif %}
 
 {% if no_navigation != "true" %}
-{% if spieltag.nummer > 1 %}
-<a href="/BuLiTipp/{{ spieltag.previous.id }}/">vorheriger</a>
+{% if spieltag.previous.id > 0 %}
+<a href="/BuLiTipp/sp{{ spieltag.previous.id }}/">vorheriger</a>
 {% endif %}
 
-{% if spieltag.nummer < 34 %}
-<a href="/BuLiTipp/{{ spieltag.next.id }}/">naechster</a>
+{% if spieltag.next.id > 0 %}
+<a href="/BuLiTipp/sp{{ spieltag.next.id }}/">naechster</a>
 {% endif %}
 {% endif %}
 

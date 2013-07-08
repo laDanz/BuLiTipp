@@ -1,31 +1,54 @@
 {% extends "base_site.html" %}
 
-<!-- benötigte Variablen: spielzeit -->
+<!-- benötigte Variablen: spielzeiten, spieltipp_previous, spieltipp_next -->
 
 {% block content %}
-Here would be some content!
+<h1>BuLiTipp Testphase</h1>
+Ideen für weitere Inhalte oder Änderungen/Kritik/Gestaltung gerne an: <a href="mailto:cdanzmann@gmail.com">cdanzmann@gmail.com</a>
+<h2>Was noch kommen k&ouml;nnte:</h2>
 <ul>
-	<li>Nächster Spieltag</li>
-	<li>letzter Spieltag</li>
-	<li>Punkteliste</li>
-	<li>Spieltage kommentieren</li>
+	<li>Nächster Spieltag -> drin</li>
+	<li>letzter Spieltag -> drin</li>
+	<li>Punkteliste -> <a href="/BuLiTipp/best/">drin</a></li>
+	<li>Spieltage kommentieren -> drin</li>
+	<li>bei mehreren Saisons(BuLi/WM/EM) teilnehmen</li>
+	<li>die gleiche Saison mit unterschiedlichen Tippkreisen spielen</li>
+	<li>breadcrumps</li>
 </ul>
 
-{% if spieltipp_previous %}
-<h2>Die Ergebnisse des letzten Spieltages:</h2>
-{% with spieltag=spieltipp_previous.0.0.spieltag no_navigation="true" spieltipp=spieltipp_previous  %}
-Hier die Übersicht des {{spieltag.nummer}}. Spieltages!
-{% include "spieltag/inline.html" %}
-{% endwith %}
+<hr>
+<!-- Wenn mehrere Saisons vorhanden -> Saison ausählen -->
+{% if user.is_authenticated %}
+
+{% if spielzeiten|length > 1 %}
+	<h2>Bitte Spielzeit auswählen({{spielzeiten|length}}):</h2>
+		<ul>
+		{% for spielzeit in spielzeiten %}
+			<li><a href="/BuLiTipp/{{spielzeit.id}}/">{{spielzeit.bezeichner}} auswählen</a></li>
+		{% endfor %}
+		</ul>
 
 {% endif %}
 
-{% if spieltipp_next %}
-<h2>Hier der nächste Spieltag!</h2>
-{% with spieltag=spielzeit.next_spieltag _no_navigation_="true" spieltipp=spieltipp_next  %}
-Tippen noch möglich bis zum <strong>{{spieltag.datum}}</strong>!
-{% include "spieltag/inline.html" %}
-{% endwith %}
+{% endif %}
+
+{% if spielzeiten|length == 0 %}
+	{% if spieltipp_previous %}
+		<h2>Die Ergebnisse des letzten Spieltages:</h2>
+		{% with spieltag=spieltipp_previous.0.0.spieltag no_navigation="true" spieltipp=spieltipp_previous  %}
+		Hier die Übersicht des {{spieltag.nummer}}. Spieltages!
+		{% include "spieltag/inline.html" %}
+		{% endwith %}
+
+	{% endif %}
+
+	{% if spieltipp_next %}
+		<h2>Hier der nächste Spieltag!</h2>
+		{% with spieltag=spieltipp_next.0.0.spieltag _no_navigation_="true" spieltipp=spieltipp_next  %}
+		Tippen noch möglich bis zum <strong>{{spieltag.datum}}</strong>!
+		{% include "spieltag/inline.html" %}
+		{% endwith %}
+	{% endif %}
 {% endif %}
 
 {% endblock %}
