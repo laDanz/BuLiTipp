@@ -51,12 +51,26 @@
 
 {% if no_navigation != "true" %}
 {% if spieltag.previous.id > 0 %}
-<a href="/BuLiTipp/sp{{ spieltag.previous.id }}/">vorheriger</a>
+	<a href="/BuLiTipp/sp{{ spieltag.previous.id }}/">
+	{% endif %}
+	<- vorheriger
+	{% if spieltag.previous.id > 0 %}
+	</a>
 {% endif %}
 
 {% if spieltag.next.id > 0 %}
-<a href="/BuLiTipp/sp{{ spieltag.next.id }}/">naechster</a>
+	<a href="/BuLiTipp/sp{{ spieltag.next.id }}/">
+	{% endif %}
+	naechster ->
+	{% if spieltag.next.id > 0 %}
+	</a>
 {% endif %}
+direkt zu:
+<select name="spieltag" size="1" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+{% for st in spieltag.spielzeit.spieltag_set.all %}
+	<option value="/BuLiTipp/sp{{st.id}}">{{st.nummer}}</option>
+{% endfor %}
+</select>
 {% endif %}
 
 {% with kommentare=spieltag.kommentar_set.all spieltag=spieltag %}

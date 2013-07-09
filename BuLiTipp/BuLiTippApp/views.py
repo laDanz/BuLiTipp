@@ -131,7 +131,7 @@ def login(request):
 	return render_to_response("login.html", context_instance=RequestContext(request))
 
 @login_required
-def detail(request, spieltag_id):
+def detail(request, spieltag_id, spielzeit_id=-1):
 	spieltag = get_object_or_404(Spieltag, pk=spieltag_id)
 	spielzeit = Spielzeit.objects.get(pk=spieltag.spielzeit_id)
 	spieltag_next = int(spieltag_id) + 1
