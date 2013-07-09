@@ -12,7 +12,9 @@ from datetime import datetime
 def home(request):
 	return redirect("BuLiTippApp.views.index")
 
-def best(request):
+def best(request, full=True):
+	''' Ausgabe beschränken auf max. ersten 3 Plätze + eigener Platz + den davor und den dahinter 
+	'''
 	userpunkte=[]
 	#fuer jeden user
 	for user in User.objects.all():
@@ -22,7 +24,27 @@ def best(request):
 		punkte = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
 		userpunkte.append((user, punkte))
 	userpunkte.sort(key=lambda punkt:punkt[1], reverse=True)
-	return render_to_response("bestenliste.html",{"userpunkte":userpunkte})
+	userpunkteplatz=[(userpunkt[0], userpunkt[1], platz+1) for platz, userpunkt in enumerate(userpunkte)]
+	user=request.user
+	for i, userp in enumerate(userpunkte):
+		if user.id == userp[0].id:
+			platz=i
+			break
+	first=True
+	j=0
+	if not full:
+		for i, userp in enumerate(userpunkteplatz[:]):
+			if i < 3 or platz -2 < i < platz + 2:
+				j+=1
+				first=True
+				continue
+			if first:
+				first=False
+				userpunkteplatz[i]=("...", "...", "...")
+				j+=1
+			else:
+				del userpunkteplatz[j]
+	return render_to_response("bestenliste.html",{"userpunkteplatz":userpunkteplatz}, context_instance=RequestContext(request))
 # sicherheitsabfrage!?	
 def delete_kommentar(request):
 	kommentar_id=request.POST["kommentar_id"]

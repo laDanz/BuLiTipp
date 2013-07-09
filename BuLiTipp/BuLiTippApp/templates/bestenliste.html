@@ -1,13 +1,19 @@
 {% extends "base_site.html" %}
 
-<!-- benötigte Variablen: userpunkte=[(user, punkte)] -->
+<!-- benötigte Variablen: userpunkteplatz=[(user, punkte, platz)] -->
 
 {% block content %}
-
-<ol>
-{% for user, punkte in userpunkte %}
-<li><strong>{{user.username}}:</strong> {{punkte}} Punkte</li>
+<table><tr><td><strong>Platz</strong></td><td>Spieler</td><td>Punkte</td></tr>
+{% for user_, punkte, platz in userpunkteplatz %}
+	<tr><td><b>{{platz}}</b>
+	</td><td>
+	{% if user.id == user_.id %}<strong>{% endif %}
+	{{user_.username}}
+	</strong> </td><td>
+	{{punkte}}
+	</td>
+	</tr>
 {% endfor %}
-</ol>
+</table>
 {% endblock %}
 
