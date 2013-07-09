@@ -91,6 +91,9 @@ def logout(request):
 	return redirect("/BuLiTipp/", context_instance=RequestContext(request))
 
 def register(request):
+	''' if POST: register User, if username is free, then login user and redirect to "/"
+		else: show "register.html"
+	'''
 	if "username" in request.POST.keys():
 		u = request.POST['username']
 		p = request.POST['password']
@@ -99,12 +102,14 @@ def register(request):
 		#assert username unique
 		try:
 			user = User.objects.create_user(u, e, p)
+			user = authenticate(username=u, password=p)
+			djlogin(request, user)
 		except IntegrityError:
 			return HttpResponse("Username bereits belegt!")
 		group = Group.objects.filter(name="BuLiTipp")[0]
 		user.groups.add(group)
 		user.save()
-		return HttpResponse("Erfolgreich erstellt!")
+		return redirect("/", context_instance=RequestContext(request))
 	return render_to_response("register.html", context_instance=RequestContext(request))
 	
 
