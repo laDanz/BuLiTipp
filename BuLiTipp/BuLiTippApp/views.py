@@ -146,14 +146,13 @@ def detail(request, spieltag_id, spielzeit_id=-1):
 		"spieltag_previous" : str(spieltag_previous), \
 		"spieltipp": spieltipp}, \
 		context_instance=RequestContext(request))
-
 @login_required
 def tippen(request, spieltag_id):
 	''' request.POST.items() enthaelt die Tipps in der Form: [("tipp_"spielID : tipp), ]
 	'''
 	import string
-	def tipp_filter(k): return k.startswith("tipp_")
-	tipps = filter(tipp_filter, request.POST.keys())
+	speichern_erfolgreich=None
+	tipps = filter(lambda key: key.startswith("tipp_"), request.POST.keys())
 	#fuer jeden tipp im POST
 	for tipp_ in tipps:
 		tipp, spiel_id = string.split(tipp_, "_")
@@ -166,9 +165,7 @@ def tippen(request, spieltag_id):
 			tipp.spiel_id = spiel_id
 			tipp.user = request.user
 		tipp.ergebniss = request.POST[tipp_]
-		tipp.save()
 		#tipp speichern
-	s = ""
-	for k, v in request.POST.items():
-		s+= "%s: %s; " % (k, v)
-	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
+		tipp.save()
+		speichern_erfolgreich=True
+	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", kwargs={"spieltag_id":spieltag_id}))
