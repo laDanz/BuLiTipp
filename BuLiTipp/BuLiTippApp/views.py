@@ -51,9 +51,7 @@ def post_kommentar(request):
 	kommentar.save()
 	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
 
-def index(request):
-	return index2(request, -1)
-def index2(request, spielzeit_id):
+def index(request, spielzeit_id=-1):
 	# show Punkte, letzter Spieltag, naechster Spieltag
 	spielzeiten=[]
 	aktuelle_spielzeit=None
