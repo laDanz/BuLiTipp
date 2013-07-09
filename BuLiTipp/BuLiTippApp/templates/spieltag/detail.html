@@ -9,7 +9,16 @@
     -&rsaquo;
     <a href="/BuLiTipp/{{spielzeit.id}}/">{{ spielzeit.bezeichner }}</a>
     -&rsaquo;
-    <a href="/BuLiTipp/sp{{spieltag.id}}/">#{{ spieltag.nummer }}</a>
+
+	<select name="spieltag" size="1" onchange="this.options[this.selectedIndex].value 
+        	&& (window.location = this.options[this.selectedIndex].value);">
+		{% for st in spielzeit.spieltag_set.all %}
+        		<option {%if st.id == spieltag.id%}selected{%endif%} value="/BuLiTipp/sp{{st.id}}">{{st.nummer}}</option>
+		{% endfor %}
+	</select>
+
+    <!--a href="/BuLiTipp/sp{{spieltag.id}}/">#{{ spieltag.nummer }}</a-->
+
     </div>
 {% endblock %}
 
