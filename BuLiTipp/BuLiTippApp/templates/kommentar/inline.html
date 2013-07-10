@@ -8,7 +8,7 @@
 von {{ kommentar.user.username }} am {{kommentar.datum}}
 
 <br>
-<textarea disabled>{{ kommentar.text }}</textarea>
+<textarea disabled cols="50" rows="5">{{ kommentar.text }}</textarea>
 	{% if kommentar.user.id == user.id or user.is_staff%}
 		<form action="/BuLiTipp/kommi/delete/" method="post">
 		{% csrf_token %}
