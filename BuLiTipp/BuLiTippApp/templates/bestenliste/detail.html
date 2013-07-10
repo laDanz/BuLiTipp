@@ -1,0 +1,12 @@
+{% extends "base_site.html" %}
+
+<!-- benötigte Variablen: userpunkteplatz=[(user, punkte, platz)] -->
+
+{% block content %}
+<h1>Globale Highscore</h1>
+<h3>Über alle Liegen hinweg...</h3>
+
+{% include "bestenliste/inline.html" %}
+
+{% endblock %}
+
