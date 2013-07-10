@@ -46,7 +46,7 @@ def best(request, full=True):
 				j+=1
 			else:
 				del userpunkteplatz[j]
-	return render_to_response("bestenliste.html",{"userpunkteplatz":userpunkteplatz}, context_instance=RequestContext(request))
+	return render_to_response("bestenliste/detail.html",{"userpunkteplatz":userpunkteplatz}, context_instance=RequestContext(request))
 # sicherheitsabfrage!?	
 def delete_kommentar(request):
 	kommentar_id=request.POST["kommentar_id"]

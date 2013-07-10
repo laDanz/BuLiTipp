@@ -46,10 +46,29 @@ Ideen für weitere Inhalte oder Änderungen/Kritik/Gestaltung gerne an: <a href=
 
 {% if spielzeiten|length == 0 %}
 	{% if spieltipp_previous %}
-		<h2>Die Ergebnisse des letzten Spieltages:</h2>
-		{% with spieltag=spieltipp_previous.0.0.spieltag no_navigation="true" spieltipp=spieltipp_previous  %}
-		Hier die Übersicht des {{spieltag.nummer}}. Spieltages!
-		{% include "spieltag/inline.html" %}
+
+		<div>
+			<div style="float:left">
+				<h2>Die Ergebnisse des letzten Spieltages:</h2>
+				{% with spieltag=spieltipp_previous.0.0.spieltag no_navigation="true" spieltipp=spieltipp_previous kommentare=spieltipp_previous.0.0.spieltag.kommentar_set.all %}
+				Hier die Übersicht des {{spieltag.nummer}}. Spieltages!
+
+				{% include "spieltag/inline.html" %}
+			</div>
+			{% if not spieltag.is_tippable %}
+			        {% with userpunkteplatz=aktuelle_spielzeit.userpunkteplatz %}
+			                <div style="float:right; padding:15px;">
+					<b>Saisonverlauf:</b>
+				                {% include "bestenliste/inline.html" %}
+			                </div>
+			        {% endwith %}
+			{% endif %}
+			<div style="clear:both"></div>
+		</div>
+
+
+		{% include "kommentar/detail.html" %}
+
 		{% endwith %}
 
 	{% endif %}
@@ -59,6 +78,11 @@ Ideen für weitere Inhalte oder Änderungen/Kritik/Gestaltung gerne an: <a href=
 		{% with spieltag=spieltipp_next.0.0.spieltag _no_navigation_="true" spieltipp=spieltipp_next  %}
 		Tippen noch möglich bis zum <strong>{{spieltag.datum}}</strong>!
 		{% include "spieltag/inline.html" %}
+
+		{% with kommentare=spieltag.kommentar_set.all %}
+			{% include "kommentar/detail.html" %}
+		{% endwith %}
+
 		{% endwith %}
 	{% endif %}
 {% endif %}

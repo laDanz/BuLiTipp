@@ -31,6 +31,8 @@ class Spielzeit(models.Model):
 			return self.spieltag_set.filter(datum__gte=now)[0]
 		except:
 			return self.spieltag_set.all().order_by("nummer").reverse()[0]
+	def userpunkteplatz(self):
+		return Bestenliste().spielzeit(self.id)
 	
 
 class Spieltag(models.Model):
@@ -72,6 +74,50 @@ class Spieltag(models.Model):
 				ftipps= ftipps.exclude(user_id=user_id)
 				fremdtipps[spiel.id] = [(t.user.username, t.ergebniss, t.punkte()) for t in ftipps]
 		return [(spiel, tipps[spiel.id] if spiel.id in tipps.keys() else None, punkte[spiel.id] if spiel.id in punkte.keys() else None, fremdtipps[spiel.id] if spiel.id in fremdtipps.keys() else None) for spiel in self.spiel_set.all()]
+	def userpunkteplatz(self):
+		return Bestenliste().spieltag(self.id)
+
+class Bestenliste():
+	def all(self, user_id=-1, full=True):
+		return self.query(user_id=user_id, full=full)
+	def spieltag(self, spieltag_id, user_id=-1, full=True):
+		return self.query(spieltag_id=spieltag_id, user_id=user_id, full=full)
+	def spielzeit(self, spielzeit_id, user_id=-1, full=True):
+		return self.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full)
+	def query(self, user_id=-1, full=True, spieltag_id=None, spielzeit_id=None):
+		userpunkte=[]
+		#fuer jeden user
+		for user in User.objects.all():
+			#ermittle alle tipps
+	                tipps = Tipp.objects.filter(user_id=user.id)
+			if spieltag_id is not None:
+				tipps=tipps.filter(spiel_id__spieltag_id=spieltag_id)
+			if spielzeit_id is not None:
+				tipps=tipps.filter(spiel_id__spieltag_id__spielzeit_id=spielzeit_id)
+			#summiere die punkte der Tipps
+			punkte = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+			userpunkte.append((user, punkte))
+		userpunkte.sort(key=lambda punkt:punkt[1], reverse=True)
+		userpunkteplatz=[(userpunkt[0], userpunkt[1], platz+1) for platz, userpunkt in enumerate(userpunkte)]
+	        for i, userp in enumerate(userpunkte):
+			if user_id == userp[0].id:
+				platz=i
+				break
+		first=True
+		j=0
+		if not full:
+			for i, userp in enumerate(userpunkteplatz[:]):
+				if i < 3 or platz -2 < i < platz + 2:
+					j+=1
+					first=True
+					continue
+				if first:
+					first=False
+					userpunkteplatz[i]=("...", "...", "...")
+					j+=1
+				else:
+					del userpunkteplatz[j]
+		return userpunkteplatz
 
 class Verein(models.Model):
 	name = models.CharField(max_length=75)

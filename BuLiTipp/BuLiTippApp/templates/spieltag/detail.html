@@ -29,7 +29,23 @@ Jetzt tippen bis zum {{ spieltag.datum }}.
 {% else %}
 Tippen nicht mehr möglich!
 {% endif %}
-
+<div>
+<div style="float:left">
 {% include "spieltag/inline.html" %}
+</div>
+{% if not spieltag.is_tippable %}
+	{% with userpunkteplatz=spieltag.userpunkteplatz %}
+		<div style="float:right">
+		<b>Dieser Spieltag:</b>
+		{% include "bestenliste/inline.html" %}
+		</div>
+	{% endwith %}
+{% endif %}
+<div style="clear:both"></div>
+</div>
+{% with kommentare=spieltag.kommentar_set.all spieltag=spieltag %}
+	{% include "kommentar/detail.html" %}
+{% endwith %}
+
 
 {% endblock %}
