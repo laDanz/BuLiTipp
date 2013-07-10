@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
@@ -79,6 +81,7 @@ def index(request, spielzeit_id=-1):
 	aktuelle_spielzeit=None
 	spieltipp_next=None
 	spieltipp_previous=None
+	#logik, ob eine spezielle spielzeit ausgewählt ist, oder erst noch ausgewählt werden muss
 	try:
 		aktuelle_spielzeit=Spielzeit.objects.get(pk=spielzeit_id)
 		spieltag = aktuelle_spielzeit.next_spieltag()

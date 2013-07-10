@@ -1,13 +1,28 @@
-<!-- benoetigte Daten: spieltag, spieltipp, spieltag_previous, spieltag_next  -->
+<!-- benoetigte Daten: spieltag, spieltipp=[spiel, tipp, punkte, fremdtipps(user, tipp, punkte)], spieltag_previous, spieltag_next  -->
 <!-- Optional: no_navigation="true"  -->
 
 {% if spieltipp %}
+<style type="text/css">
+*.tipp3 { color:green; font-weight:bold; }
+*.tipp1 { color:orange; }
+*.tipp0 { color:red;  }
+</style>
 
 <form action="/BuLiTipp/sp{{ spieltag.id  }}/tipp/" method="post">
 {% csrf_token  %}
     <table>
-        <tr><td><b>Spiel</b></td><td><b>Ergebnis</b></td>{% if user.is_authenticated %}<td><b>mein Tipp</b></td>{% if not spieltag.is_tippable %}<td><b>Punkte</b></td>{% endif %}{% endif %}<td></td></tr>
-    {% for spiel, tipp, punkte in spieltipp  %}
+        <tr>
+		<td><b>Spiel</b></td>
+		<td><b>Ergebnis</b></td>
+		{% if user.is_authenticated %}
+			<td><b>mein Tipp</b></td>
+			{% if not spieltag.is_tippable %}
+				<!--td><b>Punkte</b></td-->{% endif %}{% endif %}
+		{% if not spieltag.is_tippable %}
+			<td><b><a onclick='if (document.getElementsByName("fremdtipp")[0].style.display==""){s="None";}else{ s="";}; for (var i = 0; i < document.getElementsByName("fremdtipp").length; i++) {document.getElementsByName("fremdtipp")[i].style.display=s; }' href="#">Andere:</a></b></td>
+		{% endif %}
+	</tr>
+    {% for spiel, tipp, punkte, fremdtipps in spieltipp  %}
 		<tr>
 		<td><center><b>{{ spiel.heimmannschaft }}</b> vs <b>{{ spiel.auswaertsmannschaft }}</b></center></td>
 		<td>
@@ -24,19 +39,32 @@
 		</center>
 		</td>
 		{% if user.is_authenticated %}
-		<td><input type="text" name="tipp_{{ spiel.id  }}" style="width:50px"
+		<td>
+			{% if spieltag.is_tippable  %}
+			<input type="text" name="tipp_{{ spiel.id  }}" style="width:50px"
 			id="tipp{{ spiel.id  }}" value="{{ tipp.ergebniss }}" 
 			pattern="[0-9]{1,2}:[0-9]{1,2}" 
 			title="Bitte Ergebnis im Format x:y angeben!"
-			{% if not spieltag.is_tippable  %} Disabled {% endif %}></td>
+			{% if not spieltag.is_tippable  %} Disabled {% endif %}>
+			{% else %}
+			<center class="tipp{{punkte}}">{{ tipp.ergebniss }} ({{punkte}})</center>
+			{% endif %}
+		</td>
 		{% endif %}
 		{% if user.is_authenticated and not spieltag.is_tippable %}
-		<td>
+		<!--td>
 		{% if punkte != None %}
 			<center>{{punkte}}</center>
 		{% endif %}
-		</td>
+		</td-->
 		{% endif %}
+		{% for fremdtipp in fremdtipps %}
+			<td name="fremdtipp" class="tipp{{fremdtipp.2}}">
+			{% if fremdtipp.2 >= 0 %}
+				{{fremdtipp.0}}: {{fremdtipp.1}} ({{fremdtipp.2}})
+			{% endif %}
+			</td>
+		{% endfor %}
 		</tr>
     {% endfor %}
     </table>

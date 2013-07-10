@@ -65,7 +65,13 @@ class Spieltag(models.Model):
 		tipps = Tipp.objects.filter(spiel_id__spieltag_id=self.id).filter(user_id=user_id)
 		tipps = {t.spiel_id: t for t in tipps}
 		punkte = {t.spiel_id: t.punkte() for t in tipps.values() }
-		return [(spiel, tipps[spiel.id] if spiel.id in tipps.keys() else None, punkte[spiel.id] if spiel.id in punkte.keys() else None) for spiel in self.spiel_set.all()]
+		fremdtipps={}
+		if not self.is_tippable():
+			for spiel in self.spiel_set.all():
+				ftipps= spiel.tipps()
+				ftipps= ftipps.exclude(user_id=user_id)
+				fremdtipps[spiel.id] = [(t.user.username, t.ergebniss, t.punkte()) for t in ftipps]
+		return [(spiel, tipps[spiel.id] if spiel.id in tipps.keys() else None, punkte[spiel.id] if spiel.id in punkte.keys() else None, fremdtipps[spiel.id] if spiel.id in fremdtipps.keys() else None) for spiel in self.spiel_set.all()]
 
 class Verein(models.Model):
 	name = models.CharField(max_length=75)
@@ -85,6 +91,16 @@ class Spiel(models.Model):
 class Tipp(models.Model):
 	user = models.ForeignKey(User)
 	spiel = models.ForeignKey(Spiel)
+	def ergebniss_h(self):
+		e=str(self.ergebniss)
+		if ":" in e:
+			return e.split(":")[0]
+		return None
+	def ergebniss_a(self):
+		e=str(self.ergebniss)
+		if ":" in e:
+			return e.split(":")[1]
+		return None
 	ergebniss = models.CharField(max_length=5)
 	def __unicode__(self):
 		return "%s: %s (%s)" % (self.spiel, self.ergebniss, self.user_id)
