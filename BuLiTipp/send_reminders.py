@@ -10,7 +10,7 @@ import BuLiTippApp.mail as mail
 ERINNERUNG_SUBJECT = "Jetzt den nächsten Spieltag tippen!"
 ERINNERUNG_MSG = "Hallo %s,\n\nEs wird höchste Zeit, dass du den nächsten Spieltag tippst!\nGehe gleich auf http://ladanz.kicks-ass.net:8000 um deinen Tipp abzugeben!\n\nViele Grüße,\ndie BuLiTippApp" 
 
-def run():
+def run(test=False):
 	global ERINNERUNG_SUBJECT
 	global ERINNERUNG_MSG
 	all_spielzeiten=Spielzeit.objects.all()
@@ -24,10 +24,12 @@ def run():
 	#	print "%s: %s/%s" % (user.username, tipps_anz, spiele_anz)
 		if tipps_anz < spiele_anz:
 			if email is not None and email != "":
-	#			print email
 				#this user hasn't tippt all games, let's send him a reminder mail
-				ERINNERUNG_MSG = ERINNERUNG_MSG % str(user.username)
-				mail.send(ERINNERUNG_SUBJECT, user.email, ERINNERUNG_MSG)
+				if test:
+					print "User %s has not tipped(%s/%s), lets send him an riminder to %s" % (user.username, tipps_anz, spiele_anz, email)
+				else:
+					ERINNERUNG_MSG_ = ERINNERUNG_MSG % str(user.username)
+					mail.send(ERINNERUNG_SUBJECT, user.email, ERINNERUNG_MSG_)
 def install():
 	INSTALL_STRING = "0  8    * * *   ladanz  cd "+ os.getcwd()  +" && ./send_reminders.py"
 	# is 0 if installed, otherwise not installed
@@ -49,8 +51,17 @@ def install():
 		crontab_file.close()
 		print "erfolgreich installiert"
 
+def test():
+	print "looking for emails to send"
+	run(test=True)
+	
+	print "send testmail"
+	mail.send("This is just a Test!","cdanzmann@gmail.com","If you can read this, the mailservice is working")
+
 if __name__ == "__main__":
 	if "install" in sys.argv:
 		install()
+	elif "test" in sys.argv:
+		test()
 	else:
 		run()
