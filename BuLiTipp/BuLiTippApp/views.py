@@ -156,7 +156,7 @@ def login(request):
 	return render_to_response("login.html", context_instance=RequestContext(request))
 
 @login_required
-def detail(request, spieltag_id, spielzeit_id=-1):
+def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 	spieltag = get_object_or_404(Spieltag, pk=spieltag_id)
 	spielzeit = Spielzeit.objects.get(pk=spieltag.spielzeit_id)
 	spieltag_next = int(spieltag_id) + 1
@@ -164,19 +164,18 @@ def detail(request, spieltag_id, spielzeit_id=-1):
 	tipps = Tipp.objects.filter(spiel_id__spieltag_id=spieltag_id).filter(user_id=request.user.id)
 	tipps = {t.spiel_id: t for t in tipps}
 	spieltipp = spieltag.spieltipp(request.user.id)
-	return render_to_response("spieltag/detail.html", \
-		{"spieltag" : spieltag, \
-		"spielzeit" : spielzeit, \
-		"spieltag_next" : str(spieltag_next), \
-		"spieltag_previous" : str(spieltag_previous), \
-		"spieltipp": spieltipp}, \
-		context_instance=RequestContext(request))
+	args={"spieltag" : spieltag, "spielzeit" : spielzeit, \
+		"spieltag_next" : str(spieltag_next), "spieltag_previous" : str(spieltag_previous), \
+		"spieltipp": spieltipp}
+	if info is not None:
+		args["info"]=info
+	return render_to_response("spieltag/detail.html", args, context_instance=RequestContext(request))
 @login_required
 def tippen(request, spieltag_id):
 	''' request.POST.items() enthaelt die Tipps in der Form: [("tipp_"spielID : tipp), ]
 	'''
 	import string
-	speichern_erfolgreich=None
+	info=None
 	tipps = filter(lambda key: key.startswith("tipp_"), request.POST.keys())
 	#fuer jeden tipp im POST
 	for tipp_ in tipps:
@@ -192,5 +191,8 @@ def tippen(request, spieltag_id):
 		tipp.ergebniss = request.POST[tipp_]
 		#tipp speichern
 		tipp.save()
-		speichern_erfolgreich=True
-	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", kwargs={"spieltag_id":spieltag_id}))
+		info="Erfolgreich gespeichert!"
+	#GET -> redirect to detail page
+	if len(tipps)==0:
+		return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
+	return detail(request, spieltag_id, info=info)
