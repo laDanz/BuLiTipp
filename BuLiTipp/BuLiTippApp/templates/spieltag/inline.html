@@ -60,7 +60,7 @@
 		{% endif %}
 		{% for fremdtipp in fremdtipps %}
 			<td name="fremdtipp" class="tipp{{fremdtipp.2}}">
-			{% if fremdtipp.1 >= 0 %}
+			{% if fremdtipp.1 != "" %}
 				{{fremdtipp.0}}: {{fremdtipp.1}} ({{fremdtipp.2}})
 			{% endif %}
 			</td>
