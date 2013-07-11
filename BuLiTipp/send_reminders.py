@@ -16,6 +16,10 @@ def run(test=False):
 	all_spielzeiten=Spielzeit.objects.all()
 	latest_spielzeit=all_spielzeiten[len(all_spielzeiten)-1]
 	next_spieltag=latest_spielzeit.next_spieltag()
+	if not next_spieltag.is_tippable():
+		if test:
+			print "next_spieltag not tippable, nothing to do here"
+		return
 	#print "Naechster Spieltag: " + str(next_spieltag)
 	spiele_anz = len(next_spieltag.spiel_set.all())
 	for user in User.objects.all():
