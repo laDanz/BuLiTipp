@@ -50,7 +50,7 @@ Ideen für weitere Inhalte oder Änderungen/Kritik/Gestaltung gerne an: <a href=
 		<div>
 			<div style="float:left">
 				<h2>Die Ergebnisse des letzten Spieltages:</h2>
-				{% with spieltag=spieltipp_previous.0.0.spieltag no_navigation="true" spieltipp=spieltipp_previous kommentare=spieltipp_previous.0.0.spieltag.kommentar_set.all %}
+				{% with spieltag=spieltipp_previous.0.0.spieltag _no_navigation_="true" spieltipp=spieltipp_previous kommentare=spieltipp_previous.0.0.spieltag.kommentar_set.all %}
 				Hier die Übersicht des {{spieltag.nummer}}. Spieltages!
 
 				{% include "spieltag/inline.html" %}
@@ -75,7 +75,7 @@ Ideen für weitere Inhalte oder Änderungen/Kritik/Gestaltung gerne an: <a href=
 
 	{% if spieltipp_next %}
 		<h2>Hier der nächste Spieltag!</h2>
-		{% with spieltag=spieltipp_next.0.0.spieltag _no_navigation_="true" spieltipp=spieltipp_next  %}
+		{% with spieltag=spieltipp_next.0.0.spieltag no_navigation="true" spieltipp=spieltipp_next  %}
 		Tippen noch möglich bis zum <strong>{{spieltag.datum}}</strong>!
 		{% include "spieltag/inline.html" %}
 
