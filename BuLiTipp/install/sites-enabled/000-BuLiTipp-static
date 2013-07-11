@@ -1,0 +1,25 @@
+<VirtualHost *:80>
+        #ServerAdmin webmaster@localhost
+
+        DocumentRoot /home/ladanz/Hacking/hacking/BuLiTipp/
+
+Alias /robots.txt /home/ladanz/Hacking/hacking/BuLiTipp/static/robots.txt
+Alias /favicon.ico /home/ladanz/Hacking/hacking/BuLiTipp/static/favicon.ico
+
+AliasMatch ^/([^/]*\.css) /home/ladanz/Hacking/hacking/BuLiTipp/static/styles/$1
+
+Alias /media/ /home/ladanz/Hacking/hacking/BuLiTipp/media/
+Alias /static/ /home/ladanz/Hacking/hacking/BuLiTipp/static/
+
+<Directory /home/ladanz/Hacking/hacking/BuLiTipp/static>
+	Order deny,allow
+	Allow from all
+</Directory>
+
+<Directory /home/ladanz/Hacking/hacking/BuLiTipp/media>
+	Order deny,allow
+	Allow from all
+</Directory>
+
+</VirtualHost>
+

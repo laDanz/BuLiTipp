@@ -1,0 +1,9 @@
+WSGIScriptAlias / /home/ladanz/Hacking/hacking/BuLiTipp/BuLiTipp/wsgi.py
+WSGIPythonPath /home/ladanz/Hacking/hacking/BuLiTipp
+
+<Directory /home/ladanz/Hacking/hacking/BuLiTipp/BuLiTipp>
+	<Files wsgi.py>
+		Order deny,allow
+		Allow from all
+	</Files>
+</Directory>
