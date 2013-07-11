@@ -31,7 +31,8 @@ def run(test=False):
 					ERINNERUNG_MSG_ = ERINNERUNG_MSG % str(user.username)
 					mail.send(ERINNERUNG_SUBJECT, user.email, ERINNERUNG_MSG_)
 def install():
-	INSTALL_STRING = "0  8    * * *   ladanz  cd "+ os.getcwd()  +" && ./send_reminders.py"
+	#um 7:15 an jedem DIe+Do gucken
+	INSTALL_STRING = "15  7    * * 2,4   ladanz  cd "+ os.getcwd()  +" && ./send_reminders.py\n"
 	# is 0 if installed, otherwise not installed
 	CHECK_INSTALL  = "send_reminders"
 	crontab_file = open("/etc/crontab", "r")
