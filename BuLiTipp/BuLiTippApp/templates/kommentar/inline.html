@@ -10,7 +10,7 @@ von {{ kommentar.user.username }} am {{kommentar.datum}}
 <br>
 <textarea disabled cols="50" rows="5">{{ kommentar.text }}</textarea>
 	{% if kommentar.user.id == user.id or user.is_staff%}
-		<form action="/BuLiTipp/kommi/delete/" method="post">
+		<form action="{% url BuLiTippApp.views.delete_kommentar%}" method="post">
 		{% csrf_token %}
 		<input type="hidden" name="kommentar_id" value="{{kommentar.id}}" />
 		<input type="hidden" name="spieltag_id" value="{{spieltag.id}}" />

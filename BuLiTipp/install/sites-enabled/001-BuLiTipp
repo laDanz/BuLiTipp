@@ -1,4 +1,4 @@
-WSGIScriptAlias / /home/ladanz/Hacking/hacking/BuLiTipp/BuLiTipp/wsgi.py
+WSGIScriptAlias /BuLiTipp /home/ladanz/Hacking/hacking/BuLiTipp/BuLiTipp/wsgi.py
 WSGIPythonPath /home/ladanz/Hacking/hacking/BuLiTipp
 
 <Directory /home/ladanz/Hacking/hacking/BuLiTipp/BuLiTipp>
