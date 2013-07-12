@@ -4,11 +4,11 @@
 {% load i18n  %}
 {% block breadcrumbs %}
     <div class="breadcrumbs">
-    <a href="/BuLiTipp/">{% trans 'Home' %}</a>
+    <a href="{% url BuLiTippApp.views.home %}">{% trans 'Home' %}</a>
     {% if title %} &rsaquo; {{ title }}{% endif %}
     {% if aktuelle_spielzeit.id %}
     -&rsaquo;
-    <a href="/BuLiTipp/{{aktuelle_spielzeit.id}}/">{{ aktuelle_spielzeit.bezeichner }}</a>
+    <a href="{% url BuLiTippApp.views.index aktuelle_spielzeit.id %}">{{ aktuelle_spielzeit.bezeichner }}</a>
     {% endif %}
     </div>
 {% endblock %}
@@ -21,7 +21,7 @@ Ideen für weitere Inhalte oder Änderungen/Kritik/Gestaltung gerne an: <a href=
 <ul>
 	<li>Nächster Spieltag -> drin</li>
 	<li>letzter Spieltag -> drin</li>
-	<li>Punkteliste -> <a href="/BuLiTipp/best/">drin</a></li>
+	<li>Punkteliste -> <a href="{% url BuLiTippApp.views.best %}">drin</a></li>
 	<li>Spieltage kommentieren -> drin</li>
 	<li>bei mehreren Saisons(BuLi/WM/EM) teilnehmen</li>
 	<li>die gleiche Saison mit unterschiedlichen Tippkreisen spielen</li>
@@ -36,7 +36,7 @@ Ideen für weitere Inhalte oder Änderungen/Kritik/Gestaltung gerne an: <a href=
 	<h2>Bitte Spielzeit auswählen({{spielzeiten|length}}):</h2>
 		<ul>
 		{% for spielzeit in spielzeiten %}
-			<li><a href="/BuLiTipp/{{spielzeit.id}}/">{{spielzeit.bezeichner}} auswählen</a></li>
+			<li><a href="{% url BuLiTippApp.views.index spielzeit.id %}">{{spielzeit.bezeichner}} auswählen</a></li>
 		{% endfor %}
 		</ul>
 

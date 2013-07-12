@@ -2,7 +2,7 @@
 
 {% block content %}
 	Bitte ausf&uuml;llen!
-	<form method="POST" action="/register/">
+	<form method="POST" action="{% url BuLiTippApp.views.register %}">
 	{% csrf_token %}
 <table>
 <tr><td/></td>

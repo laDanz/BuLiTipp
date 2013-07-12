@@ -111,7 +111,7 @@ def index(request, spielzeit_id=-1):
 
 def logout(request):
 	djlogout(request)
-	return redirect("/BuLiTipp/", context_instance=RequestContext(request))
+	return redirect(reverse("BuLiTippApp.views.home"), context_instance=RequestContext(request))
 
 def register(request):
 	''' if POST: register User, if username is free, then login user and redirect to "/"
@@ -132,7 +132,7 @@ def register(request):
 		group = Group.objects.filter(name="BuLiTipp")[0]
 		user.groups.add(group)
 		user.save()
-		return redirect("/", context_instance=RequestContext(request))
+		return redirect(reverse("BuLiTippApp.views.home"), context_instance=RequestContext(request))
 	return render_to_response("register.html", context_instance=RequestContext(request))
 	
 # using django.contrib.auth.views.login instead as login view

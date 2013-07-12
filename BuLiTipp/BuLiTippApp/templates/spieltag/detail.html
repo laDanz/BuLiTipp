@@ -4,20 +4,18 @@
 
 {% block breadcrumbs %}
     <div class="breadcrumbs">
-    <a href="/BuLiTipp/">{% trans 'Home' %}</a>
+    <a href="{% url BuLiTippApp.views.home %}">{% trans 'Home' %}</a>
     {% if title %} &rsaquo; {{ title }}{% endif %}
     -&rsaquo;
-    <a href="/BuLiTipp/{{spielzeit.id}}/">{{ spielzeit.bezeichner }}</a>
+    <a href="{% url BuLiTippApp.views.index spielzeit.id %}">{{ spielzeit.bezeichner }}</a>
     -&rsaquo;
 
 	<select name="spieltag" size="1" onchange="this.options[this.selectedIndex].value 
         	&& (window.location = this.options[this.selectedIndex].value);">
 		{% for st in spielzeit.spieltag_set.all %}
-        		<option {%if st.id == spieltag.id%}selected{%endif%} value="/BuLiTipp/sp{{st.id}}">{{st.nummer}}</option>
+        		<option {%if st.id == spieltag.id%}selected{%endif%} value="{% url BuLiTippApp.views.detail st.id %}">{{st.nummer}}</option>
 		{% endfor %}
 	</select>
-
-    <!--a href="/BuLiTipp/sp{{spieltag.id}}/">#{{ spieltag.nummer }}</a-->
 
     </div>
 {% endblock %}
