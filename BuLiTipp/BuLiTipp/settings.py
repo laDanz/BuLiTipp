@@ -1,4 +1,5 @@
 # Django settings for BuLiTipp project.
+from django.core.urlresolvers import reverse
 import local_settings
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -157,3 +158,4 @@ LOGGING = {
 }
 
 LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = reverse("BuLiTippApp.views.home")

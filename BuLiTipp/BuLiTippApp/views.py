@@ -135,25 +135,29 @@ def register(request):
 		return redirect("/", context_instance=RequestContext(request))
 	return render_to_response("register.html", context_instance=RequestContext(request))
 	
-
-def login(request):
-	if "username" in request.POST.keys():
-		u = request.POST['username']
-		p = request.POST['password']
-		user = authenticate(username=u, password=p)
-		if user is not None:
-			if user.is_active:
-				djlogin(request, user)
-				if "next" in request.POST.keys() and len(request.POST["next"])>0:
-					return redirect(request.POST["next"])
-				else:
-					return redirect("/BuLiTipp/", context_instance=RequestContext(request))
-					#return HttpResponseRedirect(reverse("BuLiTippApp.views.index") )
-			else:
-				return HttpResponse("Falscher Username/Password!")
-		else:
-			return HttpResponse("Falscher Username/Password!")
-	return render_to_response("login.html", context_instance=RequestContext(request))
+# using django.contrib.auth.views.login instead as login view
+#def login(request):
+#	if "username" in request.POST.keys():
+#		u = request.POST['username']
+#		p = request.POST['password']
+#		user = authenticate(username=u, password=p)
+#		if user is not None:
+#			if user.is_active:
+#				djlogin(request, user)
+#				next=request.GET.get('next', '')
+#				print "Get: "+str(request.GET)
+#				print "Post: "+str(request.POST)
+#				print "Next: "+next
+#				if next != "":
+#					return redirect(next)
+#				else:
+#					return redirect(reverse("BuLiTippApp.views.home"))
+#					#return HttpResponseRedirect(reverse("BuLiTippApp.views.index") )
+#			else:
+#				return HttpResponse("Falscher Username/Password!")
+#		else:
+#			return HttpResponse("Falscher Username/Password!")
+#	return render_to_response("login.html", context_instance=RequestContext(request))
 
 @login_required
 def detail(request, spieltag_id, spielzeit_id=-1, info=""):

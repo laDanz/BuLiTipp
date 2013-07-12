@@ -5,7 +5,7 @@
 	Hello {{ request.user.username  }}!
 {% else %}
 	Please sign in!
-	<form method="POST" action="{% url BuLiTippApp.views.login %}">
+	<form method="POST" action="{% url django.contrib.auth.views.login %}">
 	{% csrf_token %}
 		<label for="uname">Username:</label>
 		<input type="text" id="uname" name="username" />

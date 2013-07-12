@@ -37,7 +37,7 @@
                 <a href="{% url 'BuLiTippApp.views.logout' %}">{% trans 'Log out' %}</a>
             {% endblock %}
 	{% else %}
-                <a href="{% url 'BuLiTippApp.views.login' %}">{% trans 'Log in' %}</a> oder
+                <a href="{% url 'django.contrib.auth.views.login' %}">{% trans 'Log in' %}</a> oder
                 <a href="{% url 'BuLiTippApp.views.register' %}">{% trans 'Register' %}</a>
         {% endif %}
         </div>
