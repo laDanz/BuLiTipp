@@ -1,7 +1,7 @@
-<VirtualHost *:80>
+#<VirtualHost *:80>
         #ServerAdmin webmaster@localhost
 
-        DocumentRoot /home/ladanz/Hacking/hacking/BuLiTipp/
+        #DocumentRoot /home/ladanz/Hacking/hacking/BuLiTipp/
 
 Alias /robots.txt /home/ladanz/Hacking/hacking/BuLiTipp/static/robots.txt
 Alias /favicon.ico /home/ladanz/Hacking/hacking/BuLiTipp/static/favicon.ico
@@ -21,5 +21,5 @@ Alias /static/ /home/ladanz/Hacking/hacking/BuLiTipp/static/
 	Allow from all
 </Directory>
 
-</VirtualHost>
+#</VirtualHost>
 
