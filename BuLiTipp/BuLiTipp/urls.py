@@ -21,6 +21,7 @@ urlpatterns = patterns('',
 
     url(r'^BuLiTipp/$', 'BuLiTippApp.views.index'),
     url(r'^BuLiTipp/(?P<spielzeit_id>\d+)/$', 'BuLiTippApp.views.index'),
+    url(r'^BuLiTipp/news/$', 'BuLiTippApp.views.news'),
     url(r'^BuLiTipp/kommi/$', 'BuLiTippApp.views.post_kommentar'),
     url(r'^BuLiTipp/kommi/delete/$', 'BuLiTippApp.views.delete_kommentar'),
     url(r'^BuLiTipp/best/$', 'BuLiTippApp.views.best'),

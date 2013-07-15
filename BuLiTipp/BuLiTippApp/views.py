@@ -14,6 +14,13 @@ from datetime import datetime
 def home(request):
 	return redirect("BuLiTippApp.views.index")
 
+def news(request):
+	news=News.objects.all().order_by("datum").reverse()
+	return render_to_response("news.html",\
+		{"news":news} ,\
+		context_instance=RequestContext(request))
+
+
 def best(request, full=True):
 	''' Ausgabe beschränken auf max. ersten 3 Plätze + eigener Platz + den davor und den dahinter 
 	'''
@@ -81,7 +88,7 @@ def index(request, spielzeit_id=-1):
 	aktuelle_spielzeit=None
 	spieltipp_next=None
 	spieltipp_previous=None
-	news=News.objects.all().order_by("datum").reverse()
+	news=News.objects.all().order_by("datum").reverse()[:5]
 	#logik, ob eine spezielle spielzeit ausgewählt ist, oder erst noch ausgewählt werden muss
 	try:
 		aktuelle_spielzeit=Spielzeit.objects.get(pk=spielzeit_id)
