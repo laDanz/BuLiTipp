@@ -158,4 +158,4 @@ LOGGING = {
 }
 
 LOGIN_URL = "/login/"
-LOGIN_REDIRECT_URL = reverse("BuLiTippApp.views.home")
+LOGIN_REDIRECT_URL = reverse("BuLiTippApp.views.index")
