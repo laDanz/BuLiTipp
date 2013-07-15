@@ -1,7 +1,8 @@
-from BuLiTippApp.models import Verein, Spielzeit, Spieltag, Spiel
+from BuLiTippApp.models import Verein, Spielzeit, Spieltag, Spiel, News
 from django.contrib import admin
 
 admin.site.register(Verein)
+admin.site.register(News)
 
 class SpielInline(admin.TabularInline):
 	model = Spiel

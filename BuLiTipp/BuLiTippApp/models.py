@@ -5,6 +5,12 @@ from punkterechner import Punkterechner
 
 # Create your models here.
 
+class News(models.Model):
+	author = models.ForeignKey(User)
+	datum = models.DateTimeField()
+	text = models.CharField(max_length=1000)
+	
+
 class Spielzeit(models.Model):
 	bezeichner = models.CharField(max_length=50)
 	def __init__(self, *args, **kwargs):

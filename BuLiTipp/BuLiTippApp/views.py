@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login as djlogin, logout as djlogo
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from models import Spieltag, Spielzeit, Spiel, Tipp, Kommentar
+from models import Spieltag, Spielzeit, Spiel, Tipp, Kommentar, News
 from datetime import datetime
 
 def home(request):
@@ -81,6 +81,7 @@ def index(request, spielzeit_id=-1):
 	aktuelle_spielzeit=None
 	spieltipp_next=None
 	spieltipp_previous=None
+	news=News.objects.all().order_by("datum").reverse()
 	#logik, ob eine spezielle spielzeit ausgewählt ist, oder erst noch ausgewählt werden muss
 	try:
 		aktuelle_spielzeit=Spielzeit.objects.get(pk=spielzeit_id)
@@ -105,7 +106,8 @@ def index(request, spielzeit_id=-1):
 		{"spielzeiten":spielzeiten, \
 		"aktuelle_spielzeit":aktuelle_spielzeit, \
 		"spieltipp_next":spieltipp_next, \
-		"spieltipp_previous":spieltipp_previous} ,\
+		"spieltipp_previous":spieltipp_previous, \
+		"news":news} ,\
 		context_instance=RequestContext(request))
 #	return HttpResponse("This is the Index view.")
 
