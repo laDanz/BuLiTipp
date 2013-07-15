@@ -4,7 +4,7 @@
 
 {% block breadcrumbs %}
     <div class="breadcrumbs">
-    <a href="{% url BuLiTippApp.views.home %}">{% trans 'Home' %}</a>
+    <a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
     {% if title %} &rsaquo; {{ title }}{% endif %}
     -&rsaquo;
     <a href="{% url BuLiTippApp.views.index spielzeit.id %}">{{ spielzeit.bezeichner }}</a>
