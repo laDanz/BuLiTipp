@@ -14,7 +14,7 @@ von {{ kommentar.user.username }} am {{kommentar.datum}}
 		{% csrf_token %}
 		<input type="hidden" name="kommentar_id" value="{{kommentar.id}}" />
 		<input type="hidden" name="spieltag_id" value="{{spieltag.id}}" />
-		<input type="submit" value="l&ouml;schen" />
+		<input type="submit" value="Kommentar l&ouml;schen" />
 		</form>
 	{% endif %}
 	<!-- Kommentar auf Kommentar nur in der ersten ebene-->
