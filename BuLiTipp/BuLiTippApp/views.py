@@ -106,6 +106,9 @@ def index(request, spielzeit_id=-1):
 				spieltipp_previous = spieltag.spieltipp(request.user.id)
 		else:
 			spieltipp_previous=None
+		#fix fuer spielzeiten, die nur einen Spieltag haben
+		if(spieltipp_next is None and spieltipp_previous is None):
+			spieltipp_previous = spieltag.spieltipp(request.user.id)
 	except:
 		spielzeiten=Spielzeit.objects.all()
 	
