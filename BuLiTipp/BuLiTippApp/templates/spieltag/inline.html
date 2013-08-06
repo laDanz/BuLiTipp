@@ -2,11 +2,6 @@
 <!-- Optional: no_navigation="true"  -->
 
 {% if spieltipp %}
-<style type="text/css">
-*.tipp3 { color:green; font-weight:bold; }
-*.tipp1 { color:orange; }
-*.tipp0 { color:red;  }
-</style>
 
 <form action="{% url BuLiTippApp.views.tippen spieltag.id  %}" method="post">
 {% csrf_token  %}

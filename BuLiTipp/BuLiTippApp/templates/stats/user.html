@@ -1,0 +1,71 @@
+{% extends "base_site.html" %}
+<!-- benötigt: spieltag, spielzeit, spielzeiten, spieltipp, punkte_anteile[(punkte_wert, anteil_in_prozent)], best_tipp(spiel, punkte), worst_tipp(spiel, punkte), spieltag_punkte, spieltag_punkte_diff -->
+{% load i18n  %}
+
+
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+	    <a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
+    	{% if title %} &rsaquo; {{ title }}{% endif %}
+    	&rsaquo;
+    	<a href="{% url BuLiTippApp.views.user_site %}">Spielerstatistiken</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+{% include "css/BuLiTippApp.css" %}
+	
+	Andere Spielzeit: 
+	<select value="wählen" name="spielzeit_id" size="1" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+		{% for sz in spielzeiten %}
+			<option {% if sz.id == spielzeit.id %}selected{% endif %} value="{% url BuLiTippApp.views.user_site sz.id %}">{{sz.bezeichner}}</option>
+		{% endfor %}
+	</select>
+
+{% if spieltipp %}
+
+	<h2>Der {{ spieltag.nummer }}. Spieltag der Saison "{{ spielzeit.bezeichner  }}"</h2>
+	<div>
+		<div style="float:left">
+			{% include "spieltag/inline.html" %}
+		</div>
+		{% if not spieltag.is_tippable %}
+			{% with userpunkteplatz=spieltag.userpunkteplatz %}
+				<div style="float:right">
+				<b>Dieser Spieltag:</b>
+				{% include "bestenliste/inline.html" %}
+				</div>
+			{% endwith %}
+		{% endif %}
+		<div style="clear:both"></div>
+	</div>
+	
+	<h3>Weitere Statistiken zu diesem Spieltag:</h3>
+	<ul>
+		<li>
+		Deine Punkte: <b>{{ spieltag_punkte }} Punkte</b> (ungefähr <b>{{ spieltag_punkte_diff }}</b> Punkte <b>{% if spieltag_punkte_diff > 0 %}besser{% else %}schlechter{% endif %}</b> als der Durchschnitt)
+		</li>
+		<li>
+		Der beste Tipp der Tippgemeinschaft: <b>{{ best_tipp.0 }}</b>({{ best_tipp.0.ergebniss }}) mit <b>{{ best_tipp.1 }}</b> Punkten 
+		</li>
+		<li>
+		Der schlechteste Tipp der Tippgemeinschaft: <b>{{ worst_tipp.0 }}</b>({{ worst_tipp.0.ergebniss }}) mit <b>{{ worst_tipp.1 }}</b> Punkten
+		</li>
+	</ul>
+
+	<h3>Deine Punkteverteilung</h3>
+	<table><tr><td /><td /></tr>
+	{% for punkte, anteil in punkte_anteile %}
+		<tr>
+			<td class="tipp{{ punkte }}">{{ punkte }} Punkte:</td>
+			<td><b>{{ anteil }}%</b></td>
+		</tr>
+	{% endfor %}
+	</table>
+<!-- else:  if spieltipp -->	
+{% else %}
+	<h2>Noch kein abgeschlossener Spieltag in dieser Saison, kommt später wieder!</h2>
+<!-- endif: if spieltipp -->
+{% endif %}
+{% endblock %}

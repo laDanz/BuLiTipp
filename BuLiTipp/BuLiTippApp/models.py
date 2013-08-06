@@ -69,16 +69,18 @@ class Spieltag(models.Model):
 			return Spieltag.objects.filter(spielzeit_id=self.spielzeit.id).filter(nummer=self.nummer-1)[0]
 		except:
 			return None
-	def spieltipp(self, user_id):
+	#returns [(spiel, tipp, punkte)] for this Spieltag for a certain user
+	def spieltipp(self, user_id, fremd_tipps=True):
 		tipps = Tipp.objects.filter(spiel_id__spieltag_id=self.id).filter(user_id=user_id)
 		tipps = {t.spiel_id: t for t in tipps}
 		punkte = {t.spiel_id: t.punkte() for t in tipps.values() }
 		fremdtipps={}
-		if not self.is_tippable():
-			for spiel in self.spiel_set.all():
-				ftipps= spiel.tipps()
-				ftipps= ftipps.exclude(user_id=user_id)
-				fremdtipps[spiel.id] = [(t.user.username, t.ergebniss, t.punkte()) for t in ftipps]
+		if fremd_tipps:
+			if not self.is_tippable():
+				for spiel in self.spiel_set.all():
+					ftipps= spiel.tipps()
+					ftipps= ftipps.exclude(user_id=user_id)
+					fremdtipps[spiel.id] = [(t.user.username, t.ergebniss, t.punkte()) for t in ftipps]
 		return [(spiel, tipps[spiel.id] if spiel.id in tipps.keys() else None, punkte[spiel.id] if spiel.id in punkte.keys() else None, fremdtipps[spiel.id] if spiel.id in fremdtipps.keys() else None) for spiel in self.spiel_set.all()]
 	def userpunkteplatz(self):
 		return Bestenliste().spieltag(self.id)

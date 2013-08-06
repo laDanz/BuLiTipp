@@ -3,18 +3,28 @@
 <!-- benötigte Variablen: spielzeiten, spieltipp_previous, spieltipp_next -->
 {% load i18n  %}
 {% block breadcrumbs %}
+
     <div class="breadcrumbs">
-    <a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
-    {% if title %} &rsaquo; {{ title }}{% endif %}
-    {% if aktuelle_spielzeit.id %}
-    -&rsaquo;
-    <a href="{% url BuLiTippApp.views.index aktuelle_spielzeit.id %}">{{ aktuelle_spielzeit.bezeichner }}</a>
-    {% endif %}
+    	<div style="float:left">
+		    <a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
+		    {% if title %} &rsaquo; {{ title }}{% endif %}
+		    {% if aktuelle_spielzeit.id %}
+			    -&rsaquo;
+			    <a href="{% url BuLiTippApp.views.index aktuelle_spielzeit.id %}">{{ aktuelle_spielzeit.bezeichner }}</a>
+		    {% endif %}
+	    </div>
+    	<div style="float:right;">
+    		{% include "navigation.html" %}
+    	</div>
+    	<div style="clear:both"></div>
     </div>
+
 {% endblock %}
 
 
 {% block content %}
+{% include "css/BuLiTippApp.css" %}
+
 <h1>BuLiTipp</h1>
 Ideen für weitere Inhalte oder Änderungen/Kritik/Gestaltung gerne an: <a href="mailto:cdanzmann@gmail.com">cdanzmann@gmail.com</a>
 

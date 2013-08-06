@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from models import Spieltag, Spielzeit, Spiel, Tipp, Kommentar, News
 from datetime import datetime
+from sets import Set
+import operator
 
 def home(request):
 	return redirect("BuLiTippApp.views.index")
@@ -19,6 +21,83 @@ def news(request):
 	return render_to_response("news.html",\
 		{"news":news} ,\
 		context_instance=RequestContext(request))
+
+@login_required
+def user_site(request, spielzeit_id=None):
+	user = request.user
+	tipps = Tipp.objects.filter(user_id=user.id)
+	points_sum = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+# 	points_spielzeit = {}
+# 	for sz in Spielzeit.objects.all():
+# 		tipps = Tipp.objects.filter(user_id=user.id).filter(spiel__spieltag__spielzeit_id=sz.id)
+# 		points = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+# 		points_spielzeit.append((sz, points))
+	spielzeiten = Spielzeit.objects.order_by('id').reverse()
+	if spielzeit_id is None:
+		aktuelle_spielzeit = spielzeiten[0]
+	else:
+		aktuelle_spielzeit = Spielzeit.objects.get(pk=spielzeit_id)
+ 	spieltag = aktuelle_spielzeit.next_spieltag()
+
+	if(spieltag is None or (spieltag.previous() is not None and spieltag.previous().is_tippable())):
+		#noch kein abgeschlossener Spieltag -> noch keine Statistik!
+		return render_to_response("stats/user.html",\
+                {"spieltag":spieltag,\
+                "spielzeit":aktuelle_spielzeit,\
+                "spielzeiten":spielzeiten} ,\
+                context_instance=RequestContext(request))
+		
+	if(spieltag.is_tippable()):
+		spieltag=spieltag.previous()
+		
+	spieltipp_previous = spieltag.spieltipp(request.user.id)
+
+		
+	tipps = Tipp.objects.filter(user_id=user.id, spiel_id__spieltag_id=spieltag.id)
+	points_spieltag = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+	
+	punkte_anteile = {}
+	for tipp in tipps:
+		if tipp.punkte() in punkte_anteile.keys():
+			anteile = punkte_anteile[tipp.punkte()]
+		else:
+			anteile = 0 
+		punkte_anteile[tipp.punkte()]=anteile+1
+	tipp_anzahl=len(tipps)
+	for key in punkte_anteile.keys():
+		punkte_anteile[key]=(punkte_anteile[key]*100)/tipp_anzahl
+	punkte_anteile=reversed(sorted(punkte_anteile.iteritems()))
+	
+	tipps = Tipp.objects.filter(spiel_id__spieltag_id=spieltag.id)
+	points_spieltag_sum = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+	
+	spiele_punkte = {}
+	for tipp in tipps:
+		if tipp.spiel in spiele_punkte.keys():
+			pkt = spiele_punkte[tipp.spiel]
+		else:
+			pkt = 0 
+		spiele_punkte[tipp.spiel]=pkt+tipp.punkte()
+	spiele_punkte = sorted(spiele_punkte.iteritems(), key=operator.itemgetter(1))
+	best_tipp = spiele_punkte[-1]
+	worst_tipp = spiele_punkte[0]
+	
+	user_tipped = len(Set([tipp.user.id for tipp in tipps]))
+	points_diff = points_spieltag - (points_spieltag_sum / user_tipped)
+	
+	
+
+	return render_to_response("stats/user.html",\
+                {"spieltag":spieltag,\
+                "spielzeit":aktuelle_spielzeit,\
+                "spieltag_punkte":points_spieltag,\
+                "spieltag_punkte_diff":points_diff,\
+                "best_tipp":best_tipp,\
+                "worst_tipp":worst_tipp,\
+                "punkte_anteile":punkte_anteile,\
+                "spielzeiten":spielzeiten,\
+				"spieltipp":spieltipp_previous} ,\
+                context_instance=RequestContext(request))
 
 
 def best(request, full=True):
