@@ -5,12 +5,20 @@
 
 
 {% block breadcrumbs %}
-    <div class="breadcrumbs">
-	    <a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
+
+     <div class="breadcrumbs">
+    	<div style="float:left">
+		    <a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
     	{% if title %} &rsaquo; {{ title }}{% endif %}
     	&rsaquo;
     	<a href="{% url BuLiTippApp.views.user_site %}">Spielerstatistiken</a>
+	    </div>
+    	<div style="float:right;">
+    		{% include "navigation.html" %}
+    	</div>
+    	<div style="clear:both"></div>
     </div>
+
 {% endblock %}
 
 {% block content %}

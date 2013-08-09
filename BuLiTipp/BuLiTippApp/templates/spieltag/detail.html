@@ -3,21 +3,30 @@
 {% load i18n  %}
 
 {% block breadcrumbs %}
+    
     <div class="breadcrumbs">
-    <a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
-    {% if title %} &rsaquo; {{ title }}{% endif %}
-    -&rsaquo;
-    <a href="{% url BuLiTippApp.views.index spielzeit.id %}">{{ spielzeit.bezeichner }}</a>
-    -&rsaquo;
-
-	<select name="spieltag" size="1" onchange="this.options[this.selectedIndex].value 
-        	&& (window.location = this.options[this.selectedIndex].value);">
-		{% for st in spielzeit.spieltag_set.all %}
-        		<option {%if st.id == spieltag.id%}selected{%endif%} value="{% url BuLiTippApp.views.detail st.id %}">{{st.nummer}}</option>
-		{% endfor %}
-	</select>
-
+    	<div style="float:left">
+		    <a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
+		    {% if title %} &rsaquo; {{ title }}{% endif %}
+		    
+		    -&rsaquo;
+		    <a href="{% url BuLiTippApp.views.index spielzeit.id %}">{{ spielzeit.bezeichner }}</a>
+		    -&rsaquo;
+		
+			<select name="spieltag" size="1" onchange="this.options[this.selectedIndex].value 
+		        	&& (window.location = this.options[this.selectedIndex].value);">
+				{% for st in spielzeit.spieltag_set.all %}
+		        		<option {%if st.id == spieltag.id%}selected{%endif%} value="{% url BuLiTippApp.views.detail st.id %}">{{st.nummer}}</option>
+				{% endfor %}
+			</select>
+	    </div>
+    	<div style="float:right;">
+    		{% include "navigation.html" %}
+    	</div>
+    	<div style="clear:both"></div>
     </div>
+
+    
 {% endblock %}
 
 {% block content %}
