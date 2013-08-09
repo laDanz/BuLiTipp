@@ -71,10 +71,10 @@ Ideen für weitere Inhalte oder Änderungen/Kritik/Gestaltung gerne an: <a href=
 				{% include "spieltag/inline.html" %}
 			</div>
 			{% if not spieltag.is_tippable %}
-			        {% with userpunkteplatz=aktuelle_spielzeit.userpunkteplatz %}
+			        {% with userpunkteplatz=aktuelle_spielzeit.userpunkteplatz spielzeit=aktuelle_spielzeit %}
 			                <div style="float:right; padding:15px;">
 					<b>Saisonverlauf:</b>
-				                {% include "bestenliste/inline.html" %}
+				                {% include "bestenliste/inline.html" %}<!-- maybe _switchable ? -->
 			                </div>
 			        {% endwith %}
 			{% endif %}

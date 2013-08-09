@@ -1,0 +1,25 @@
+<!-- benötigt: spieltag, spielzeit  -->
+
+<script type="text/javascript">
+function switch_hidden() {
+	document.getElementById("best_spielzeit").hidden=!document.getElementById("best_spielzeit").hidden;
+	document.getElementById("best_spieltag").hidden=!document.getElementById("best_spieltag").hidden;
+}
+</script>
+{% if spieltag %}
+	{% with userpunkteplatz=spieltag.userpunkteplatz %}
+		<div id="best_spieltag">
+			<b>Dieser Spieltag:</b>
+			{% if spielzeit %}
+				<a href="#" onclick='switch_hidden()'>#</a>
+			{% endif %}
+			{% include "bestenliste/inline.html" %}
+		</div>
+	{% endwith %}
+{% endif %}
+{% with userpunkteplatz=spielzeit.userpunkteplatz %}
+	<div id="best_spielzeit" {% if spieltag %}hidden{% endif %}>
+		<b>Diese Spielzeit:</b><a href="#" onclick='switch_hidden()'>#</a>
+		{% include "bestenliste/inline.html" %}
+	</div>
+{% endwith %}

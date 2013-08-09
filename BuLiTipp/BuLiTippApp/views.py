@@ -79,10 +79,18 @@ def user_site(request, spielzeit_id=None):
 			pkt = 0 
 		spiele_punkte[tipp.spiel]=pkt+tipp.punkte()
 	spiele_punkte = sorted(spiele_punkte.iteritems(), key=operator.itemgetter(1))
-	best_tipp = spiele_punkte[-1]
-	worst_tipp = spiele_punkte[0]
+	try:
+		best_tipp = spiele_punkte[-1]
+	except:
+		best_tipp = None
+	try:
+		worst_tipp = spiele_punkte[0]
+	except:
+		worst_tipp = None
 	
 	user_tipped = len(Set([tipp.user.id for tipp in tipps]))
+	if (user_tipped == 0):
+		user_tipped = 1;
 	points_diff = points_spieltag - (points_spieltag_sum / user_tipped)
 	
 	

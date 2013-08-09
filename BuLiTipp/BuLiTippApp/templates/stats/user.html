@@ -39,12 +39,9 @@
 			{% include "spieltag/inline.html" %}
 		</div>
 		{% if not spieltag.is_tippable %}
-			{% with userpunkteplatz=spieltag.userpunkteplatz %}
-				<div style="float:right">
-				<b>Dieser Spieltag:</b>
-				{% include "bestenliste/inline.html" %}
-				</div>
-			{% endwith %}
+			<div style="float:right" id="bestenliste">
+				{% include "bestenliste/inline_switchable.html" %}
+			</div>
 		{% endif %}
 		<div style="clear:both"></div>
 	</div>
@@ -54,12 +51,16 @@
 		<li>
 		Deine Punkte: <b>{{ spieltag_punkte }} Punkte</b> (ungefähr <b>{{ spieltag_punkte_diff }}</b> Punkte <b>{% if spieltag_punkte_diff > 0 %}besser{% else %}schlechter{% endif %}</b> als der Durchschnitt)
 		</li>
+		{% if best_tipp %}
 		<li>
 		Der beste Tipp der Tippgemeinschaft: <b>{{ best_tipp.0 }}</b>({{ best_tipp.0.ergebniss }}) mit <b>{{ best_tipp.1 }}</b> Punkten 
 		</li>
+		{% endif %}
+		{% if worst_tipp %}
 		<li>
 		Der schlechteste Tipp der Tippgemeinschaft: <b>{{ worst_tipp.0 }}</b>({{ worst_tipp.0.ergebniss }}) mit <b>{{ worst_tipp.1 }}</b> Punkten
 		</li>
+		{% endif %}
 	</ul>
 
 	<h3>Deine Punkteverteilung</h3>

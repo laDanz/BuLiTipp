@@ -49,8 +49,7 @@ Tippen nicht mehr möglich!
 {% if not spieltag.is_tippable %}
 	{% with userpunkteplatz=spieltag.userpunkteplatz %}
 		<div style="float:right">
-		<b>Dieser Spieltag:</b>
-		{% include "bestenliste/inline.html" %}
+		{% include "bestenliste/inline_switchable.html" %}
 		</div>
 	{% endwith %}
 {% endif %}
