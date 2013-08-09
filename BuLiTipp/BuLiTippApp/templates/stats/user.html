@@ -49,7 +49,15 @@
 	<h3>Weitere Statistiken zu diesem Spieltag:</h3>
 	<ul>
 		<li>
-		Deine Punkte: <b>{{ spieltag_punkte }} Punkte</b> (ungefähr <b>{{ spieltag_punkte_diff }}</b> Punkte <b>{% if spieltag_punkte_diff > 0 %}besser{% else %}schlechter{% endif %}</b> als der Durchschnitt)
+		Deine Punkte: <b>{{ spieltag_punkte }} Punkte</b>
+		<ul>
+			<li>
+				ungefähr <b>{{ spieltag_punkte_diff }}</b> Punkte <b>{% if spieltag_punkte_diff > 0 %}besser{% else %}schlechter{% endif %}</b> als der Durchschnitt der Spieler
+			</li>
+			<li>
+				ungefähr <b>{{ spieltag_punkte_diff_player }}</b> Punkte <b>{% if spieltag_punkte_diff_player > 0 %}besser{% else %}schlechter{% endif %}</b> als dein Durchschnitt
+			</li>
+		</ul>
 		</li>
 		{% if best_tipp %}
 		<li>

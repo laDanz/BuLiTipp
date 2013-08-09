@@ -25,8 +25,7 @@ def news(request):
 @login_required
 def user_site(request, spielzeit_id=None):
 	user = request.user
-	tipps = Tipp.objects.filter(user_id=user.id)
-	points_sum = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+	
 # 	points_spielzeit = {}
 # 	for sz in Spielzeit.objects.all():
 # 		tipps = Tipp.objects.filter(user_id=user.id).filter(spiel__spieltag__spielzeit_id=sz.id)
@@ -52,7 +51,8 @@ def user_site(request, spielzeit_id=None):
 		
 	spieltipp_previous = spieltag.spieltipp(request.user.id)
 
-		
+
+	#alle tipps eines users an diesem spieltag	
 	tipps = Tipp.objects.filter(user_id=user.id, spiel_id__spieltag_id=spieltag.id)
 	points_spieltag = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
 	
@@ -68,6 +68,15 @@ def user_site(request, spielzeit_id=None):
 		punkte_anteile[key]=(punkte_anteile[key]*100)/tipp_anzahl
 	punkte_anteile=reversed(sorted(punkte_anteile.iteritems()))
 	
+	#alle tipps des users dieser spielzeit
+	tipps = Tipp.objects.filter(user_id=user.id, spiel_id__spieltag__spielzeit_id=aktuelle_spielzeit.id)
+	points_sum = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+	spieltage_tipped = len(Set([tipp.spiel.spieltag.id for tipp in tipps]))
+	if (spieltage_tipped ==0):
+		spieltage_tipped = 1
+	spieltag_punkte_diff_player = points_spieltag - (points_sum / spieltage_tipped)
+	
+	#tipps
 	tipps = Tipp.objects.filter(spiel_id__spieltag_id=spieltag.id)
 	points_spieltag_sum = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
 	
@@ -104,6 +113,7 @@ def user_site(request, spielzeit_id=None):
                 "worst_tipp":worst_tipp,\
                 "punkte_anteile":punkte_anteile,\
                 "spielzeiten":spielzeiten,\
+                "spieltag_punkte_diff_player":spieltag_punkte_diff_player,\
 				"spieltipp":spieltipp_previous} ,\
                 context_instance=RequestContext(request))
 
