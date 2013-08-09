@@ -167,7 +167,7 @@ def index(request, spielzeit_id=-1):
 	aktuelle_spielzeit=None
 	spieltipp_next=None
 	spieltipp_previous=None
-	news=News.objects.all().order_by("datum").reverse()[:5]
+	news=News.objects.all().order_by("datum").reverse()[:3]
 	#logik, ob eine spezielle spielzeit ausgewählt ist, oder erst noch ausgewählt werden muss
 	try:
 		aktuelle_spielzeit=Spielzeit.objects.get(pk=spielzeit_id)

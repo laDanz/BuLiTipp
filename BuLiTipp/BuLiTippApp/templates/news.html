@@ -4,12 +4,24 @@
 {% load i18n  %}
 {% block breadcrumbs %}
     <div class="breadcrumbs">
-	<a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
+    	<div style="float:left">
+		    <a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
+		    {% if title %} &rsaquo; {{ title }}{% endif %}
+		    
+			-&rsaquo;
+			<a href="{% url BuLiTippApp.views.news %}">Mitteilungen</a>
+		    
+	    </div>
+    	<div style="float:right;">
+    		{% include "navigation.html" %}
+    	</div>
+    	<div style="clear:both"></div>
     </div>
 {% endblock %}
 
 
 {% block content %}
+{% include "css/BuLiTippApp.css" %}
 
 <h2>Mitteilungen</h2>
 {% for news_ in news %}
