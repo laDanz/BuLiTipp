@@ -2,8 +2,10 @@
 <!-- Optional: no_navigation="true"  -->
 
 {% if spieltipp %}
+{% load url from future %}
 
-<form action="{% url BuLiTippApp.views.tippen spieltag.id  %}" method="post">
+
+<form action="{% url "BuLiTippApp.views.tippen" spieltag.id  %}" method="post">
 {% csrf_token  %}
     <table>
         <tr>
@@ -26,7 +28,15 @@
 			{% if spieltag.is_tippable %}
 				tippen!
 			{% else %}
-				eintragen!
+				{% if user.is_staff %}
+
+					<a href ="{% url "admin:BuLiTippApp_spieltag_change" spieltag.id %}">
+				
+				{% endif %}
+					eintragen!
+				{% if user.is_staff %}
+					</a>
+				{% endif %}
 			{% endif %}
 		{% else %}
 			{{ spiel.ergebniss  }}
@@ -74,7 +84,7 @@
 
 {% if no_navigation != "true" %}
 {% if spieltag.previous.id > 0 %}
-	<a href="{% url BuLiTippApp.views.detail spieltag.previous.id %}">
+	<a href="{% url "BuLiTippApp.views.detail" spieltag.previous.id %}">
 	{% endif %}
 	<- vorheriger
 	{% if spieltag.previous.id > 0 %}
@@ -82,7 +92,7 @@
 {% endif %}
 
 {% if spieltag.next.id > 0 %}
-	<a href="{% url BuLiTippApp.views.detail spieltag.next.id %}">
+	<a href="{% url "BuLiTippApp.views.detail" spieltag.next.id %}">
 	{% endif %}
 	naechster ->
 	{% if spieltag.next.id > 0 %}
@@ -91,7 +101,7 @@
 direkt zu:
 <select name="spieltag" size="1" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
 {% for st in spieltag.spielzeit.spieltag_set.all %}
-	<option value="{% url BuLiTippApp.views.detail st.id %}">{{st.nummer}}</option>
+	<option value="{% url "BuLiTippApp.views.detail" st.id %}">{{st.nummer}}</option>
 {% endfor %}
 </select>
 {% endif %}
