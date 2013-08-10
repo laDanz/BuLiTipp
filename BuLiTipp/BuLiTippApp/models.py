@@ -130,7 +130,7 @@ class Bestenliste():
 class Verein(models.Model):
 	name = models.CharField(max_length=75)
 	def __unicode__(self):
-		return self.name
+		return unicode(self.name)
 
 class Spiel(models.Model):
 	heimmannschaft = models.ForeignKey(Verein, related_name="heimmannschaft")
@@ -157,7 +157,8 @@ class Tipp(models.Model):
 		return None
 	ergebniss = models.CharField(max_length=5)
 	def __unicode__(self):
-		return "%s: %s (%s)" % (self.spiel, self.ergebniss, self.user_id)
+		s = "%s: %s (%s)" % (self.id, self.ergebniss, self.user_id)
+		return unicode(s)
 	def punkte(self):
 		return Punkterechner().punkte(self)
 	
