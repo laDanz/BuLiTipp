@@ -86,7 +86,10 @@ def user_site(request, spielzeit_id=None):
 			pkt = spiele_punkte[tipp.spiel]
 		else:
 			pkt = 0 
-		spiele_punkte[tipp.spiel]=pkt+tipp.punkte()
+		tipp_punkte = tipp.punkte()
+		if(tipp_punkte is None):
+			tipp_punkte = 0
+		spiele_punkte[tipp.spiel]=pkt+tipp_punkte
 	spiele_punkte = sorted(spiele_punkte.iteritems(), key=operator.itemgetter(1))
 	try:
 		best_tipp = spiele_punkte[-1]
