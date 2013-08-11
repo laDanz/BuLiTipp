@@ -3,14 +3,20 @@
 import mail_settings
 ''' required: mail_settings. USERNAME and PASSWORD as gmail credentials
 '''
-def send(subject, toaddrs, message):
+def send(subject, toaddrs, message, message_html=None):
 	import smtplib
 	from email.mime.text import MIMEText
+	from email.mime.multipart import MIMEMultipart
 	fromaddr = mail_settings.USERNAME
 	# Credentials (if needed)
 	username = mail_settings.USERNAME
 	password = mail_settings.PASSWORD
-	msg = MIMEText(message)
+	msg = MIMEMultipart('alternative')#MIMEText(message)
+	part1 = MIMEText(message, 'plain')
+	part2 = MIMEText(message_html, 'html')
+	msg.attach(part1)
+	if message_html is not None:
+		msg.attach(part2)
 	msg['Subject'] = subject
 	msg['From'] = fromaddr
 	msg['To'] = toaddrs

@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 import BuLiTippApp.mail as mail
 
 ERINNERUNG_SUBJECT = "Jetzt den nächsten Spieltag tippen!"
-ERINNERUNG_MSG = "Hallo %s,\n\nEs wird höchste Zeit, dass du den nächsten Spieltag tippst!\nGehe gleich auf http://ladanz.kicks-ass.net:8000 um deinen Tipp abzugeben!\n\nViele Grüße,\ndie BuLiTippApp" 
+ERINNERUNG_MSG = 'Hallo %s,\n\nEs wird höchste Zeit, dass du den nächsten Spieltag tippst!\nGehe gleich auf http://ladanz.kicks-ass.net:8000/BuLiTipp/BuLiTipp/sp%s/ um deinen Tipp abzugeben!\n\nViele Grüße,\ndie BuLiTippApp\n\n*psst* unter uns: Du kannst auch gleich mehrere Spieltage "vorraus" tippen ;)'
+ERINNERUNG_MSG_HTML = '<html>Hallo %s,<br><br>Es wird höchste Zeit, dass du den nächsten Spieltag tippst!<br>Gehe gleich auf <a href="http://ladanz.kicks-ass.net:8000/BuLiTipp/BuLiTipp/sp%s/">http://ladanz.kicks-ass.net:8000/BuLiTipp</a> um deinen Tipp abzugeben!<br><br>Viele Grüße,<br>die BuLiTippApp<br><br><b>*psst*: Nur unter uns:</b> Du kannst auch gleich mehrere Spieltage "vorraus" tippen ;)'
 
 def run(test=False):
 	global ERINNERUNG_SUBJECT
@@ -32,8 +33,9 @@ def run(test=False):
 				if test:
 					print "User %s has not tipped(%s/%s), lets send him an riminder to %s" % (user.username, tipps_anz, spiele_anz, email)
 				else:
-					ERINNERUNG_MSG_ = ERINNERUNG_MSG % str(user.username)
-					mail.send(ERINNERUNG_SUBJECT, user.email, ERINNERUNG_MSG_)
+					ERINNERUNG_MSG_ = ERINNERUNG_MSG % (str(user.username), next_spieltag.id)
+					ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % (str(user.username), next_spieltag.id)
+					mail.send(ERINNERUNG_SUBJECT, user.email, ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)
 def install():
 	#um 7:15 an jedem DIe+Do gucken
 	INSTALL_STRING = "15  7    * * 2,4   ladanz  cd "+ os.getcwd()  +" && ./send_reminders.py\n"
@@ -61,7 +63,13 @@ def test():
 	run(test=True)
 	
 	print "send testmail"
-	mail.send("This is just a Test!","cdanzmann@gmail.com","If you can read this, the mailservice is working")
+	global ERINNERUNG_MSG
+	all_spielzeiten=Spielzeit.objects.all()
+        latest_spielzeit=all_spielzeiten[len(all_spielzeiten)-1]
+        next_spieltag=latest_spielzeit.next_spieltag()
+	ERINNERUNG_MSG_ = ERINNERUNG_MSG % ("admin", next_spieltag.id)
+	ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % ("admin", next_spieltag.id)
+	mail.send("This is just a Test!","cdanzmann@gmail.com","If you can read this, the mailservice is working\n" + ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)
 
 if __name__ == "__main__":
 	if "install" in sys.argv:
