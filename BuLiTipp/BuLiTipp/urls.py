@@ -30,4 +30,7 @@ urlpatterns = patterns('',
     url(r'^BuLiTipp/stat/user/(?P<spielzeit_id>\d+)/$', 'BuLiTippApp.views.user_site'),
     url(r'^BuLiTipp/stat/user/$', 'BuLiTippApp.views.user_site'),
 
+    url(r'^BuLiTipp/saisontipp/(?P<spielzeit_id>\d+)/$', 'BuLiTippApp.views.saisontipp'),
+    url(r'^BuLiTipp/saisontipp/$', 'BuLiTippApp.views.saisontipp'),
+
 )

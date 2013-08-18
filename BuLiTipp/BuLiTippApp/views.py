@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login as djlogin, logout as djlogo
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from models import Spieltag, Spielzeit, Spiel, Tipp, Kommentar, News
+from models import Spieltag, Spielzeit, Spiel, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger
 from datetime import datetime
 from sets import Set
 import operator
@@ -312,3 +312,95 @@ def tippen(request, spieltag_id):
 	if len(tipps)==0:
 		return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
 	return detail(request, spieltag_id, info=info)
+
+@login_required
+def saisontipp(request, spielzeit_id=None):
+	spielzeiten = Spielzeit.objects.all()
+	if spielzeit_id is None:
+		spielzeit_id = spielzeiten[0].id
+	is_pokal = "Pokal" in Spielzeit.objects.get(pk=spielzeit_id).bezeichner
+	mannschaften=Verein.objects.all()
+	try:
+		meistertipp=Meistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
+	except:
+		meistertipp=None
+	try:
+		herbstmeistertipp=Herbstmeistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
+	except:
+		herbstmeistertipp=None
+	try:
+		absteiger1=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[0]
+	except:
+		absteiger1=None
+	try:
+		absteiger2=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[1]
+	except:
+		absteiger2=None
+	try:
+		absteiger3=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[2]
+	except:
+		absteiger3=None
+	if "absteigertipp1_id" in request.POST.keys():
+		absteigertipp1_id = request.POST["absteigertipp1_id"]
+		if absteiger1 is not None:
+			absteiger1.delete()
+		absteiger1=None
+		if absteiger1 is None:
+			absteiger1=Absteiger()
+		absteiger1.user=request.user
+		absteiger1.spielzeit_id=spielzeit_id
+		absteiger1.mannschaft_id=absteigertipp1_id
+		absteiger1.save()
+	if "absteigertipp2_id" in request.POST.keys():
+		absteigertipp2_id = request.POST["absteigertipp2_id"]
+		if absteiger2 is not None:
+			absteiger2.delete()
+		absteiger2=None
+		if absteiger2 is None:
+			absteiger2=Absteiger()
+		absteiger2.user=request.user
+		absteiger2.spielzeit_id=spielzeit_id
+		absteiger2.mannschaft_id=absteigertipp2_id
+		absteiger2.save()
+	if "absteigertipp3_id" in request.POST.keys():
+		absteigertipp3_id = request.POST["absteigertipp3_id"]
+		if absteiger3 is not None:
+			absteiger3.delete()
+		absteiger3=None
+		if absteiger3 is None:
+			absteiger3=Absteiger()
+		absteiger3.user=request.user
+		absteiger3.spielzeit_id=spielzeit_id
+		absteiger3.mannschaft_id=absteigertipp3_id
+		absteiger3.save()
+	if "herbstmeistertipp_id" in request.POST.keys():
+		herbstmeistertipp_id = request.POST["herbstmeistertipp_id"]
+		if herbstmeistertipp is None:
+			herbstmeistertipp=Herbstmeistertipp()
+		herbstmeistertipp.user=request.user
+		herbstmeistertipp.spielzeit_id=spielzeit_id
+		herbstmeistertipp.mannschaft_id=herbstmeistertipp_id
+		herbstmeistertipp.save()
+	if "meistertipp_id" in request.POST.keys():
+		meistertipp_id = request.POST["meistertipp_id"]
+		if meistertipp is None:
+			meistertipp=Meistertipp()
+		meistertipp.user=request.user
+		meistertipp.spielzeit_id=spielzeit_id
+		meistertipp.mannschaft_id=meistertipp_id
+		meistertipp.save()
+		return HttpResponseRedirect(reverse("BuLiTippApp.views.saisontipp", args=(spielzeit_id,)))
+	return render_to_response( \
+		"saisontipp.html", \
+		{  \
+		"mannschaften":mannschaften, \
+		"spielzeiten" :spielzeiten,  \
+		"meistertipp" :meistertipp,  \
+		"absteiger1"  :absteiger1,   \
+		"absteiger2"  :absteiger2,   \
+		"absteiger3"  :absteiger3,   \
+		"herbstmeistertipp" :herbstmeistertipp,  \
+		"spielzeit_id" :spielzeit_id,  \
+		"spielzeitid" :spielzeit_id,  \
+		}, \
+		context_instance=RequestContext(request))

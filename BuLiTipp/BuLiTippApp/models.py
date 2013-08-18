@@ -168,3 +168,50 @@ class Kommentar(models.Model):
 	user = models.ForeignKey(User)
 	reply_to = models.ForeignKey('self', null=True)
 	spieltag = models.ForeignKey(Spieltag, null=True)
+
+############################################################################
+###   saisonale Tipps   ###
+############################################################################
+
+class Meistertipp(models.Model):
+	datum = models.DateTimeField(auto_now=True)
+	user = models.ForeignKey(User)
+	mannschaft = models.ForeignKey(Verein)
+	spielzeit = models.ForeignKey(Spielzeit)
+	class Meta:
+		unique_together = ("user", "spielzeit")
+	def __unicode__(self):
+		s = "%s: %s (%s)" % (self.user, unicode(self.mannschaft), self.spielzeit)
+		return unicode(s)
+
+class Herbstmeistertipp(models.Model):
+	datum = models.DateTimeField(auto_now=True)
+	user = models.ForeignKey(User)
+	mannschaft = models.ForeignKey(Verein)
+	spielzeit = models.ForeignKey(Spielzeit)
+	class Meta:
+		unique_together = ("user", "spielzeit")
+	def __unicode__(self):
+		s = "%s: %s (%s)" % (self.user, unicode(self.mannschaft), self.spielzeit)
+		return unicode(s)
+
+class Absteiger(models.Model):
+	datum = models.DateTimeField(auto_now=True)
+	user = models.ForeignKey(User)
+	mannschaft = models.ForeignKey(Verein)
+	spielzeit = models.ForeignKey(Spielzeit)
+	ABSTEIGER_ANZAHL = 3
+	class Meta:
+		unique_together = ("user", "spielzeit", "mannschaft")
+	def __unicode__(self):
+		s = "%s: %s (%s)" % (self.user, unicode(self.mannschaft), self.spielzeit)
+		return unicode(s)
+	def save(self):
+		count = 0
+		try:
+			count = len(Absteiger.objects.filter(user_id=self.user.id, spielzeit_id=self.spielzeit.id))
+		except:
+			pass
+		if count>=self.ABSTEIGER_ANZAHL:
+			raise Exception("no more than " + str(self.ABSTEIGER_ANZAHL)  + " Absteiger allowed")
+		return super(Absteiger, self).save()
