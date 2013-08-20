@@ -64,6 +64,12 @@
     <div id="content" class="{% block coltype %}colM{% endblock %}">
         {% block pretitle %}{% endblock %}
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+		{% if message != None %}
+			<div class="message">	{{ message }}	</div>
+		{% endif %}
+		{% if error != None %}
+			<div class="error">	{{ error }}	</div>
+		{% endif %}
         {% block content %}
         {% block object-tools %}{% endblock %}
         {{ content }}

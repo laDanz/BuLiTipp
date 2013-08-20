@@ -284,7 +284,7 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 		"spieltag_next" : str(spieltag_next), "spieltag_previous" : str(spieltag_previous), \
 		"spieltipp": spieltipp}
 	if info is not None:
-		args["info"]=info
+		args["message"]=info
 	return render_to_response("spieltag/detail.html", args, context_instance=RequestContext(request))
 @login_required
 def tippen(request, spieltag_id):
@@ -314,7 +314,7 @@ def tippen(request, spieltag_id):
 	return detail(request, spieltag_id, info=info)
 
 @login_required
-def saisontipp(request, spielzeit_id=None):
+def saisontipp(request, spielzeit_id=None, message=None):
 	spielzeiten = Spielzeit.objects.all()
 	if spielzeit_id is None:
 		spielzeit_id = spielzeiten[0].id
@@ -391,7 +391,7 @@ def saisontipp(request, spielzeit_id=None):
 		meistertipp.spielzeit_id=spielzeit_id
 		meistertipp.mannschaft_id=meistertipp_id
 		meistertipp.save()
-		return HttpResponseRedirect(reverse("BuLiTippApp.views.saisontipp", args=(spielzeit_id,)))
+		return saisontipp(request, spielzeit_id, "Erfolgreich gespeichert!")
 	return render_to_response( \
 		"saisontipp.html", \
 		{  \
@@ -405,5 +405,6 @@ def saisontipp(request, spielzeit_id=None):
 		"spielzeit_id" :spielzeit_id,  \
 		"spielzeit" :spielzeit,  \
 		"is_pokal"    :is_pokal,     \
+		"message"     :message,      \
 		}, \
 		context_instance=RequestContext(request))

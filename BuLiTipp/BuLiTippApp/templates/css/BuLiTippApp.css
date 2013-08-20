@@ -3,4 +3,7 @@
 *.tipp2 { color:blue; }
 *.tipp1 { color:orange; }
 *.tipp0 { color:red;  }
+
+*.message {margin:5px;color:#417690;font-weight:bold;}
+
 </style>
