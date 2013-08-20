@@ -13,6 +13,7 @@ class News(models.Model):
 
 class Spielzeit(models.Model):
 	bezeichner = models.CharField(max_length=50)
+	saisontipp_end = models.DateTimeField(null=True)
 	def __init__(self, *args, **kwargs):
 		super(Spielzeit, self).__init__(*args, **kwargs)
 	def __unicode__(self):
@@ -39,6 +40,8 @@ class Spielzeit(models.Model):
 			return self.spieltag_set.all().order_by("nummer").reverse()[0]
 	def userpunkteplatz(self):
 		return Bestenliste().spielzeit(self.id)
+        def is_tippable(self):
+                return timezone.now()<self.saisontipp_end
 	
 
 class Spieltag(models.Model):

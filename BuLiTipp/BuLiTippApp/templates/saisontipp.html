@@ -72,8 +72,8 @@ function disableOptions() {
 	
 	<div>
 	<h3>Meistertipp</h3>
-	Diese Saison wird gewinnen: 
-	<select name="meistertipp_id" size="1">
+	Diese Saison wird gewinnen:
+	<select name="meistertipp_id" size="1" {% if not spielzeit.is_tippable %}disabled{% endif %}>
 		{% for m in mannschaften %}
 			<option {% if m.id == meistertipp.mannschaft_id %}selected{% endif %} value="{{ m.id }}">{{ m }}</option>
 		{% endfor %}
@@ -83,7 +83,7 @@ function disableOptions() {
 	
 	<h3>Herbstmeistertipp</h3>
 	Herbstmeister wird: 
-	<select name="herbstmeistertipp_id" size="1">
+	<select name="herbstmeistertipp_id" size="1" {% if not spielzeit.is_tippable %}disabled{% endif %}>
 		{% for m in mannschaften %}
 			<option {% if m.id == herbstmeistertipp.mannschaft_id %}selected{% endif %} value="{{ m.id }}">{{ m }}</option>
 		{% endfor %}
@@ -91,17 +91,17 @@ function disableOptions() {
 
 	<h3>Absteigertipp</h3>
 	Absteigen wird: 
-	<select name="absteigertipp1_id" size="1" onchange="disableOptions()">
+	<select name="absteigertipp1_id" size="1" onchange="disableOptions()"  {% if not spielzeit.is_tippable %}disabled{% endif %}>
 		{% for m in mannschaften %}
 			<option {% if m.id == absteiger1.mannschaft_id %}selected{% endif %} value="{{ m.id }}">{{ m }}</option>
 		{% endfor %}
 	</select>
-	<select name="absteigertipp2_id" size="1" onchange="disableOptions()">
+	<select name="absteigertipp2_id" size="1" onchange="disableOptions()" {% if not spielzeit.is_tippable %}disabled{% endif %}>
 		{% for m in mannschaften %}
 			<option {% if m.id == absteiger2.mannschaft_id %}selected{% endif %} value="{{ m.id }}">{{ m }}</option>
 		{% endfor %}
 	</select>
-	<select name="absteigertipp3_id" size="1" onchange="disableOptions()">
+	<select name="absteigertipp3_id" size="1" onchange="disableOptions()" {% if not spielzeit.is_tippable %}disabled{% endif %}>
 		{% for m in mannschaften %}
 			<option {% if m.id == absteiger3.mannschaft_id %}selected{% endif %} value="{{ m.id }}">{{ m }}</option>
 		{% endfor %}
@@ -114,7 +114,7 @@ disableOptions();
 
 	</div>
 
-	<input type="submit" value="Speichern !" />
+	<input type="submit" value="Speichern !" {% if not spielzeit.is_tippable %}disabled{% endif %}/>
 
 
 	</form>
