@@ -318,7 +318,9 @@ def saisontipp(request, spielzeit_id=None):
 	spielzeiten = Spielzeit.objects.all()
 	if spielzeit_id is None:
 		spielzeit_id = spielzeiten[0].id
-	is_pokal = "Pokal" in Spielzeit.objects.get(pk=spielzeit_id).bezeichner
+		return HttpResponseRedirect(reverse("BuLiTippApp.views.saisontipp", args=(spielzeit_id,)))
+	spielzeit = Spielzeit.objects.get(pk=spielzeit_id)
+	is_pokal = "pokal" in spielzeit.bezeichner.lower()
 	mannschaften=Verein.objects.all()
 	try:
 		meistertipp=Meistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
@@ -401,6 +403,7 @@ def saisontipp(request, spielzeit_id=None):
 		"absteiger3"  :absteiger3,   \
 		"herbstmeistertipp" :herbstmeistertipp,  \
 		"spielzeit_id" :spielzeit_id,  \
-		"spielzeitid" :spielzeit_id,  \
+		"spielzeit" :spielzeit,  \
+		"is_pokal"    :is_pokal,     \
 		}, \
 		context_instance=RequestContext(request))
