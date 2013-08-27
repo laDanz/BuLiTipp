@@ -140,10 +140,18 @@ class Spiel(models.Model):
 	auswaertsmannschaft = models.ForeignKey(Verein, related_name="auswaertsmannschaft")
 	spieltag = models.ForeignKey(Spieltag)
 	ergebniss = models.CharField(max_length=5)
+	datum = models.DateTimeField(null=True)
 	def __unicode__(self):
 		return "%s vs %s" % (unicode(self.heimmannschaft), unicode(self.auswaertsmannschaft))
 	def tipps(self):
 		return self.tipp_set.all()
+	def is_tippable(self):
+		if (self.datum is not None):
+	                return timezone.now()<self.datum
+		if (self.spieltag is not None):
+			return self.spieltag.is_tippable()
+		return False
+
 
 class Tipp(models.Model):
 	user = models.ForeignKey(User)

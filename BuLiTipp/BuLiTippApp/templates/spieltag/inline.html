@@ -25,7 +25,7 @@
 		<td>
 		<center>
 		{% if spiel.ergebniss == "DNF" %}
-			{% if spieltag.is_tippable %}
+			{% if spieltag.is_tippable and spiel.is_tippable %}
 				tippen!
 			{% else %}
 				{% if user.is_staff %}
@@ -45,7 +45,7 @@
 		</td>
 		{% if user.is_authenticated %}
 		<td>
-			{% if spieltag.is_tippable  %}
+			{% if spieltag.is_tippable and spiel.is_tippable  %}
 			<input type="text" name="tipp_{{ spiel.id  }}" style="width:50px"
 			id="tipp{{ spiel.id  }}" value="{{ tipp.ergebniss }}" 
 			pattern="[0-9]{1,2}:[0-9]{1,2}" 
