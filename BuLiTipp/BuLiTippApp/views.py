@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login as djlogin, logout as djlogo
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from models import Spieltag, Spielzeit, Spiel, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger
+from models import Spieltag, Spielzeit, Spiel, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle
 from datetime import datetime
 from sets import Set
 import operator
@@ -116,6 +116,7 @@ def user_site(request, spielzeit_id=None):
                 "worst_tipp":worst_tipp,\
                 "punkte_anteile":punkte_anteile,\
                 "spielzeiten":spielzeiten,\
+                "tabelle":Tabelle().getMannschaftPlatz(aktuelle_spielzeit),\
                 "spieltag_punkte_diff_player":spieltag_punkte_diff_player,\
 				"spieltipp":spieltipp_previous} ,\
                 context_instance=RequestContext(request))
@@ -217,6 +218,7 @@ def index(request, spielzeit_id=-1):
 		"aktuelle_spielzeit":aktuelle_spielzeit, \
 		"spieltipp_next":spieltipp_next, \
 		"spieltipp_previous":spieltipp_previous, \
+		"tabelle":Tabelle().getMannschaftPlatz(aktuelle_spielzeit), \
 		"news":news} ,\
 		context_instance=RequestContext(request))
 #	return HttpResponse("This is the Index view.")
@@ -280,9 +282,10 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 	tipps = Tipp.objects.filter(spiel_id__spieltag_id=spieltag_id).filter(user_id=request.user.id)
 	tipps = {t.spiel_id: t for t in tipps}
 	spieltipp = spieltag.spieltipp(request.user.id)
+	mannschaftplatz = Tabelle().getMannschaftPlatz(spielzeit)
 	args={"spieltag" : spieltag, "spielzeit" : spielzeit, \
 		"spieltag_next" : str(spieltag_next), "spieltag_previous" : str(spieltag_previous), \
-		"spieltipp": spieltipp}
+		"spieltipp": spieltipp, "tabelle":mannschaftplatz}
 	if info is not None:
 		args["message"]=info
 	return render_to_response("spieltag/detail.html", args, context_instance=RequestContext(request))

@@ -3,10 +3,11 @@
 
 {% if spieltipp %}
 {% load url from future %}
-
+{% load filters %}
 
 <form action="{% url "BuLiTippApp.views.tippen" spieltag.id  %}" method="post">
 {% csrf_token  %}
+
     <table>
         <tr>
 		<td><b>Spiel</b></td>
@@ -20,8 +21,9 @@
 		{% endif %}
 	</tr>
     {% for spiel, tipp, punkte, fremdtipps in spieltipp  %}
+    {% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id%}
 		<tr>
-		<td><center><b>{{ spiel.heimmannschaft }}</b> vs <b>{{ spiel.auswaertsmannschaft }}</b></center></td>
+		<td><center><b>{{ spiel.heimmannschaft }}</b> ({{tabelle|get:h}}.) vs <b>{{ spiel.auswaertsmannschaft }}</b> ({{tabelle|get:a}}.)</center></td>
 		<td>
 		<center>
 		{% if spiel.ergebniss == "DNF" %}
@@ -71,6 +73,7 @@
 			</td>
 		{% endfor %}
 		</tr>
+    {% endwith %}
     {% endfor %}
     </table>
 {% if user.is_authenticated %}	

@@ -33,6 +33,12 @@ class Punkterechner():
 			return 1
 		else:
 			return 2
+	def diff(self, erg):
+		assert ":" in erg
+		assert len(erg.split(":"))==2
+		heim=int(erg.split(":")[0])
+		ausw=int(erg.split(":")[1])
+		return ausw-heim
 	def punkte(self, tipp):
 		try:
 			spiel = tipp.spiel

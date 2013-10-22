@@ -2,16 +2,19 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from punkterechner import Punkterechner
-
 # Create your models here.
 
 class News(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
 	author = models.ForeignKey(User)
 	datum = models.DateTimeField()
 	text = models.CharField(max_length=1000)
 	
 
 class Spielzeit(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
 	bezeichner = models.CharField(max_length=50)
 	saisontipp_end = models.DateTimeField(null=True)
 	def __init__(self, *args, **kwargs):
@@ -45,6 +48,8 @@ class Spielzeit(models.Model):
 	
 
 class Spieltag(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
 	spielzeit = models.ForeignKey(Spielzeit)
 	datum = models.DateTimeField()
 	nummer = models.IntegerField()
@@ -89,6 +94,8 @@ class Spieltag(models.Model):
 		return Bestenliste().spieltag(self.id)
 
 class Bestenliste():
+	class Meta:
+		app_label = 'BuLiTippApp'
 	def all(self, user_id=-1, full=True):
 		return self.query(user_id=user_id, full=full)
 	def spieltag(self, spieltag_id, user_id=-1, full=True):
@@ -131,11 +138,15 @@ class Bestenliste():
 		return userpunkteplatz
 
 class Verein(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
 	name = models.CharField(max_length=75)
 	def __unicode__(self):
 		return unicode(self.name)
 
 class Spiel(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
 	heimmannschaft = models.ForeignKey(Verein, related_name="heimmannschaft")
 	auswaertsmannschaft = models.ForeignKey(Verein, related_name="auswaertsmannschaft")
 	spieltag = models.ForeignKey(Spieltag)
@@ -154,6 +165,8 @@ class Spiel(models.Model):
 
 
 class Tipp(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
 	user = models.ForeignKey(User)
 	spiel = models.ForeignKey(Spiel)
 	def ergebniss_h(self):
@@ -174,6 +187,8 @@ class Tipp(models.Model):
 		return Punkterechner().punkte(self)
 	
 class Kommentar(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
 	datum = models.DateTimeField()
 	text = models.CharField(max_length=500)
 	user = models.ForeignKey(User)
@@ -185,35 +200,38 @@ class Kommentar(models.Model):
 ############################################################################
 
 class Meistertipp(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
+		unique_together = ("user", "spielzeit")
 	datum = models.DateTimeField(auto_now=True)
 	user = models.ForeignKey(User)
 	mannschaft = models.ForeignKey(Verein)
 	spielzeit = models.ForeignKey(Spielzeit)
-	class Meta:
-		unique_together = ("user", "spielzeit")
 	def __unicode__(self):
 		s = "%s: %s (%s)" % (self.user, unicode(self.mannschaft), self.spielzeit)
 		return unicode(s)
 
 class Herbstmeistertipp(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
+		unique_together = ("user", "spielzeit")
 	datum = models.DateTimeField(auto_now=True)
 	user = models.ForeignKey(User)
 	mannschaft = models.ForeignKey(Verein)
 	spielzeit = models.ForeignKey(Spielzeit)
-	class Meta:
-		unique_together = ("user", "spielzeit")
 	def __unicode__(self):
 		s = "%s: %s (%s)" % (self.user, unicode(self.mannschaft), self.spielzeit)
 		return unicode(s)
 
 class Absteiger(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
+		unique_together = ("user", "spielzeit", "mannschaft")
 	datum = models.DateTimeField(auto_now=True)
 	user = models.ForeignKey(User)
 	mannschaft = models.ForeignKey(Verein)
 	spielzeit = models.ForeignKey(Spielzeit)
 	ABSTEIGER_ANZAHL = 3
-	class Meta:
-		unique_together = ("user", "spielzeit", "mannschaft")
 	def __unicode__(self):
 		s = "%s: %s (%s)" % (self.user, unicode(self.mannschaft), self.spielzeit)
 		return unicode(s)
