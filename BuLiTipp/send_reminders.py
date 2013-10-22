@@ -8,8 +8,8 @@ from django.contrib.auth.models import User
 import BuLiTippApp.mail as mail
 
 ERINNERUNG_SUBJECT = "Jetzt den nächsten Spieltag tippen!"
-ERINNERUNG_MSG = 'Hallo %s,\n\nEs wird höchste Zeit, dass du den nächsten Spieltag tippst!\nGehe gleich auf http://ladanz.kicks-ass.net:8000/BuLiTipp/BuLiTipp/sp%s/ um deinen Tipp abzugeben!\n\nViele Grüße,\ndie BuLiTippApp\n\n*psst* unter uns: Du kannst auch gleich mehrere Spieltage "vorraus" tippen ;)'
-ERINNERUNG_MSG_HTML = '<html>Hallo %s,<br><br>Es wird höchste Zeit, dass du den nächsten Spieltag tippst!<br>Gehe gleich auf <a href="http://ladanz.kicks-ass.net:8000/BuLiTipp/BuLiTipp/sp%s/">http://ladanz.kicks-ass.net:8000/BuLiTipp</a> um deinen Tipp abzugeben!<br><br>Viele Grüße,<br>die BuLiTippApp<br><br><b>*psst*: Nur unter uns:</b> Du kannst auch gleich mehrere Spieltage "vorraus" tippen ;)'
+ERINNERUNG_MSG = 'Hallo %s,\n\nEs wird höchste Zeit, dass du den nächsten Spieltag tippst!\nGehe gleich auf http://TippBuLi.de/BuLiTipp/sp%s/ um deinen Tipp abzugeben!\n\nViele Grüße,\ndie BuLiTippApp\n\n*psst* unter uns: Du kannst auch gleich mehrere Spieltage "vorraus" tippen ;)'
+ERINNERUNG_MSG_HTML = '<html>Hallo %s,<br><br>Es wird höchste Zeit, dass du den nächsten Spieltag tippst!<br>Gehe gleich auf <a href="http://TippBuLi.de/BuLiTipp/sp%s/">http://TippBuLi.de/</a> um deinen Tipp abzugeben!<br><br>Viele Grüße,<br>die BuLiTippApp<br><br><b>*psst*: Nur unter uns:</b> Du kannst auch gleich mehrere Spieltage "vorraus" tippen ;)'
 
 def run(test=False):
 	global ERINNERUNG_SUBJECT
