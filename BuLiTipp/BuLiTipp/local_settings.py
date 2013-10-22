@@ -1,1 +1,0 @@
-DATABASE_NAME="c:/Users/Chrissie/Documents/Hacking/hackinggit/BuLiTipp/BuLiTipp/database.db"
