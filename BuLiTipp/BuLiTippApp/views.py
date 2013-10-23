@@ -71,7 +71,10 @@ def user_site(request, spielzeit_id=None):
 	#alle tipps des users dieser spielzeit
 	tipps = Tipp.objects.filter(user_id=user.id, spiel_id__spieltag__spielzeit_id=aktuelle_spielzeit.id)
 	points_sum = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
-	spieltage_tipped = len(Set([tipp.spiel.spieltag.id for tipp in tipps]))
+	#nur die spieltage, die abgelaufen sind
+	set = Set([tipp.spiel.spieltag.id if tipp.spiel.spieltag.is_tippable() == False else None for tipp in tipps])
+	set.add(None)
+	spieltage_tipped = len(set)-1
 	if (spieltage_tipped ==0):
 		spieltage_tipped = 1
 	spieltag_punkte_diff_player = points_spieltag - (points_sum / spieltage_tipped)
