@@ -69,7 +69,7 @@ class Tabelle(models.Model):
                                 t=Tabelle()
                                 t.spielzeit = sz
                                 t.platz = i+1
-				print v
+				#print v
                                 t.mannschaft_id = v[0]
                                 t.punkte = v[1][0]
                                 t.save()
