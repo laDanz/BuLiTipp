@@ -40,10 +40,11 @@ def run(test=False):
 					if test:
 						print "User %s has not tipped(%s/%s), lets send him an riminder to %s" % (user.username, tipps_anz, spiele_anz, email)
 					else:
+						ERINNERUNG_SUBJECT_ = ERINNERUNG_SUBJECT+"(%s)" % str(latest_spielzeit.bezeichner)
 						ERINNERUNG_MSG_ = ERINNERUNG_MSG % (str(user.username), next_spieltag.id)
 						ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % (str(user.username), next_spieltag.id)
 						if send:
-							mail.send(ERINNERUNG_SUBJECT+"(%s)" % latest_spielzeit.bezeichner, user.email, ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)
+							mail.send(ERINNERUNG_SUBJECT_, user.email, ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)
 def install():
 	#um 7:15 an jedem DIe+Do gucken
 	INSTALL_STRING = "15  7    * * 2,4   ladanz  cd "+ os.getcwd()  +" && ./send_reminders.py\n"
