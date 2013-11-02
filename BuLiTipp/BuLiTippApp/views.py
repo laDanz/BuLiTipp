@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: latin-1 -*-
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login as djlogin, logout as djlogo
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from models import Spieltag, Spielzeit, Spiel, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle
+from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle
 from datetime import datetime
 from sets import Set
 import operator
@@ -36,7 +36,7 @@ def user_site(request, spielzeit_id=None):
 		aktuelle_spielzeit = spielzeiten[0]
 	else:
 		aktuelle_spielzeit = Spielzeit.objects.get(pk=spielzeit_id)
- 	spieltag = aktuelle_spielzeit.next_spieltag()
+	spieltag = aktuelle_spielzeit.next_spieltag()
 
 	if(spieltag is None or (spieltag.previous() is not None and spieltag.previous().is_tippable())):
 		#noch kein abgeschlossener Spieltag -> noch keine Statistik!
@@ -72,9 +72,9 @@ def user_site(request, spielzeit_id=None):
 	tipps = Tipp.objects.filter(user_id=user.id, spiel_id__spieltag__spielzeit_id=aktuelle_spielzeit.id)
 	points_sum = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
 	#nur die spieltage, die abgelaufen sind
-	set = Set([tipp.spiel.spieltag.id if tipp.spiel.spieltag.is_tippable() == False else None for tipp in tipps])
-	set.add(None)
-	spieltage_tipped = len(set)-1
+	set_ = Set([tipp.spiel.spieltag.id if tipp.spiel.spieltag.is_tippable() == False else None for tipp in tipps])
+	set_.add(None)
+	spieltage_tipped = len(set_)-1
 	if (spieltage_tipped ==0):
 		spieltage_tipped = 1
 	spieltag_punkte_diff_player = points_spieltag - (points_sum / spieltage_tipped)
@@ -203,7 +203,7 @@ def index(request, spielzeit_id=-1):
 			#letzten Spieltag erreicht
 			spieltipp_next=None
 		if(spieltag.previous() is not None):
-	        	if(spieltag.is_tippable()):
+			if(spieltag.is_tippable()):
 				spieltipp_previous = spieltag.previous().spieltipp(request.user.id)
 			else:
 				#kein naechster spieltag
@@ -242,6 +242,7 @@ def register(request):
 		#assert username unique
 		try:
 			user = User.objects.create_user(u, e, p)
+			user.first_name = f
 			user = authenticate(username=u, password=p)
 			djlogin(request, user)
 		except IntegrityError:
@@ -414,3 +415,36 @@ def saisontipp(request, spielzeit_id=None, message=None):
 		"message"     :message,      \
 		}, \
 		context_instance=RequestContext(request))
+
+@login_required
+def account(request, info=""):
+	# redirect on cancel to index page
+	if "cancel" in request.POST.keys() :
+		return redirect(reverse("BuLiTippApp.views.index"), context_instance=RequestContext(request))
+	if "delete" in request.POST.keys() :
+		return delete_account(request)
+	args = {}
+	user = request.user
+	# if POST, then update submitted user values
+	if "submit" in request.POST.keys() :
+		user.first_name = request.POST["first_name"]
+		user.last_name = request.POST["last_name"]
+		user.email = request.POST["email"]
+		user.save()
+		info = "Speichern erfolgreich!"
+	if info is not None:
+		args["message"]=info
+	return render_to_response("user/account.html", args, context_instance=RequestContext(request))
+
+@login_required
+def delete_account(request, info=""):
+	# redirect on cancel to account page
+	if "cancel" in request.POST.keys() :
+		return redirect(reverse("BuLiTippApp.views.account"), context_instance=RequestContext(request))
+	# on submit: delete user, redirect to index page
+	if "submit" in request.POST.keys() :
+		user = request.user
+		user.delete()
+		djlogout(request)
+		return redirect(reverse("BuLiTippApp.views.index"), context_instance=RequestContext(request))
+	return render_to_response("user/delete_account.html", {}, context_instance=RequestContext(request))

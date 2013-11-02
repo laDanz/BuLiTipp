@@ -1,0 +1,30 @@
+{% extends "base_site.html" %}
+{% load url from future %}
+
+{% block content %}
+{% include "css/BuLiTippApp.css" %}
+
+	<h1>Accountdetails für user {{ user.username }}:</h1>
+	<form method="POST" action="{% url 'BuLiTippApp.views.delete_account' %}">
+	{% csrf_token %}
+		<div>
+			<fieldset class="module aligned ">
+    			<h2>Persönliche Infos</h2>
+		        <div class="form-row field-first_name">
+	                <div>
+    	                <label for="id_first_name">Account wirklich löschen?</label>
+
+	                </div>
+		        </div>
+			</fieldset>
+		</div>
+		
+		<div class="submit-row">
+			<input type="submit" name="submit" value="Löschen" class="default"/>
+			<p class="deletelink-box"></p>
+			<input type="submit" name="cancel" value="abbrechen" />
+		</div>
+	
+	</form>
+
+{% endblock %}
