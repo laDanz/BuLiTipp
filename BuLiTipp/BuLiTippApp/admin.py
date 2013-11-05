@@ -1,4 +1,4 @@
-from BuLiTippApp.models import Verein, Spielzeit, Spieltag, Spiel, News
+from models import Verein, Spielzeit, Spieltag, Spiel, News
 from django.contrib import admin
 
 admin.site.register(Verein)
@@ -14,7 +14,7 @@ class SpieltagAdmin(admin.ModelAdmin):
 	fieldsets = [
         (None,               {'fields': ['spielzeit']}),
         ('Datum', {'fields': ['datum'], 'classes': ['collapse']}),
-		('Nummer', {'fields': ['nummer'], 'classes': ['collapse']}),
+		('Anzeige', {'fields': ['nummer', 'bezeichner'], 'classes': ['collapse']}),
     ]
 
 admin.site.register(Spieltag, SpieltagAdmin)

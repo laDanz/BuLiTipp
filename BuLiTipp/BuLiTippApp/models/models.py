@@ -54,6 +54,7 @@ class Spieltag(models.Model):
 	spielzeit = models.ForeignKey(Spielzeit)
 	datum = models.DateTimeField()
 	nummer = models.IntegerField()
+	bezeichner = models.CharField(max_length=50)
 	admin_order_field = "nummer"
 #	def __init__(self, *args, **kwargs):
 #		super(Spieltag, self).__init__(*args, **kwargs)

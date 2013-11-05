@@ -32,7 +32,12 @@
 {% block content %}
 {% include "css/BuLiTippApp.css" %}
 
-<h2>Der {{ spieltag.nummer }}. Spieltag der Saison "{{ spielzeit.bezeichner  }}"</h2>
+{% if spieltag.bezeichner != None %}
+	<h2>{{ spieltag.bezeichner }}</h2>
+{% else %}
+	<h2>Der {{ spieltag.nummer }}. Spieltag der Saison "{{ spielzeit.bezeichner  }}"</h2>
+{% endif %}
+
 {% if spieltag.is_tippable %}
 Jetzt tippen bis zum {{ spieltag.datum }}.
 {% else %}
