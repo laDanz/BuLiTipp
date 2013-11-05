@@ -215,14 +215,15 @@ def index(request, spielzeit_id=-1):
 			spieltipp_previous = spieltag.spieltipp(request.user.id)
 	except:
 		spielzeiten=Spielzeit.objects.all()
-	
-	return render_to_response("index.html",\
-		{"spielzeiten":spielzeiten, \
+	args = {"spielzeiten":spielzeiten, \
 		"aktuelle_spielzeit":aktuelle_spielzeit, \
 		"spieltipp_next":spieltipp_next, \
 		"spieltipp_previous":spieltipp_previous, \
-		"tabelle":Tabelle().getMannschaftPlatz(aktuelle_spielzeit), \
-		"news":news} ,\
+		"news":news}
+	if not aktuelle_spielzeit is None and not aktuelle_spielzeit.isPokal:
+		args["tabelle"] = Tabelle().getMannschaftPlatz(aktuelle_spielzeit)
+	return render_to_response("index.html",\
+		args ,\
 		context_instance=RequestContext(request))
 #	return HttpResponse("This is the Index view.")
 
@@ -253,29 +254,6 @@ def register(request):
 		return redirect(reverse("BuLiTippApp.views.index"), context_instance=RequestContext(request))
 	return render_to_response("register.html", context_instance=RequestContext(request))
 	
-# using django.contrib.auth.views.login instead as login view
-#def login(request):
-#	if "username" in request.POST.keys():
-#		u = request.POST['username']
-#		p = request.POST['password']
-#		user = authenticate(username=u, password=p)
-#		if user is not None:
-#			if user.is_active:
-#				djlogin(request, user)
-#				next=request.GET.get('next', '')
-#				print "Get: "+str(request.GET)
-#				print "Post: "+str(request.POST)
-#				print "Next: "+next
-#				if next != "":
-#					return redirect(next)
-#				else:
-#					return redirect(reverse("BuLiTippApp.views.home"))
-#					#return HttpResponseRedirect(reverse("BuLiTippApp.views.index") )
-#			else:
-#				return HttpResponse("Falscher Username/Password!")
-#		else:
-#			return HttpResponse("Falscher Username/Password!")
-#	return render_to_response("login.html", context_instance=RequestContext(request))
 
 @login_required
 def detail(request, spieltag_id, spielzeit_id=-1, info=""):
@@ -286,10 +264,11 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 	tipps = Tipp.objects.filter(spiel_id__spieltag_id=spieltag_id).filter(user_id=request.user.id)
 	tipps = {t.spiel_id: t for t in tipps}
 	spieltipp = spieltag.spieltipp(request.user.id)
-	mannschaftplatz = Tabelle().getMannschaftPlatz(spielzeit)
 	args={"spieltag" : spieltag, "spielzeit" : spielzeit, \
 		"spieltag_next" : str(spieltag_next), "spieltag_previous" : str(spieltag_previous), \
-		"spieltipp": spieltipp, "tabelle":mannschaftplatz}
+		"spieltipp": spieltipp}
+	if not spielzeit.isPokal:
+		args["tabelle"] = Tabelle().getMannschaftPlatz(spielzeit)
 	if info is not None:
 		args["message"]=info
 	return render_to_response("spieltag/detail.html", args, context_instance=RequestContext(request))
@@ -327,7 +306,7 @@ def saisontipp(request, spielzeit_id=None, message=None):
 		spielzeit_id = spielzeiten[0].id
 		return HttpResponseRedirect(reverse("BuLiTippApp.views.saisontipp", args=(spielzeit_id,)))
 	spielzeit = Spielzeit.objects.get(pk=spielzeit_id)
-	is_pokal = "pokal" in spielzeit.bezeichner.lower()
+	is_pokal = spielzeit.isPokal
 	mannschaften=Verein.objects.all()
 	try:
 		meistertipp=Meistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)

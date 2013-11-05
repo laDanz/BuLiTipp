@@ -17,6 +17,7 @@ class Spielzeit(models.Model):
 		app_label = 'BuLiTippApp'
 	bezeichner = models.CharField(max_length=50)
 	saisontipp_end = models.DateTimeField(null=True)
+	isPokal = models.BooleanField()
 	def __init__(self, *args, **kwargs):
 		super(Spielzeit, self).__init__(*args, **kwargs)
 	def __unicode__(self):

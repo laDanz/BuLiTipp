@@ -23,7 +23,7 @@
     {% for spiel, tipp, punkte, fremdtipps in spieltipp  %}
     {% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id%}
 		<tr>
-		<td><center><b>{{ spiel.heimmannschaft }}</b> ({{tabelle|get:h}}.) vs <b>{{ spiel.auswaertsmannschaft }}</b> ({{tabelle|get:a}}.)</center></td>
+		<td><center><b>{{ spiel.heimmannschaft }}</b> {% if tabelle != None %}({{tabelle|get:h}}.){% endif %} vs <b>{{ spiel.auswaertsmannschaft }}</b> {% if tabelle != None %}({{tabelle|get:a}}.){% endif %}</center></td>
 		<td>
 		<center>
 		{% if spiel.ergebniss == "DNF" %}
