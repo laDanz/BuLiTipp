@@ -1,0 +1,21 @@
+{% extends "base_site.html" %}
+{% load i18n static %}
+{% load url from future %}
+
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+		<a href="{% url 'BuLiTippApp.views.index' %}">{% trans 'Home' %}</a>
+		&rsaquo;
+		<a href="{% url 'BuLiTippApp.views.account' %}">Benutzerverwaltung</a>
+		&rsaquo; {% trans 'Password change' %}
+	</div>
+{% endblock %}
+
+{% block content %}
+{% include "css/BuLiTippApp.css" %}
+
+<h1>Passwort erfolgreich geändert</h1>
+
+<p>Ihr Passwort wurde geändert.</p>
+
+{% endblock %}

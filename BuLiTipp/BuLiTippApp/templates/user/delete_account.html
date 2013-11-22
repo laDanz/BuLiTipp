@@ -1,5 +1,15 @@
 {% extends "base_site.html" %}
+{% load i18n static %}
 {% load url from future %}
+
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+		<a href="{% url 'BuLiTippApp.views.index' %}">{% trans 'Home' %}</a>
+		&rsaquo;
+		<a href="{% url 'BuLiTippApp.views.account' %}">Benutzerverwaltung</a>
+		&rsaquo; Account löschen
+	</div>
+{% endblock %}
 
 {% block content %}
 {% include "css/BuLiTippApp.css" %}
@@ -10,10 +20,10 @@
 		<div>
 			<fieldset class="module aligned ">
     			<h2>Persönliche Infos</h2>
-		        <div class="form-row field-first_name">
+		        <div class="form-row">
 	                <div>
-    	                <label for="id_first_name">Account wirklich löschen?</label>
-
+    	                <label for="id_first_name" style="width:18em;">Account wirklich löschen?</label>
+    	                Das wird alle deine Tipps und Punkte löschen!
 	                </div>
 		        </div>
 			</fieldset>

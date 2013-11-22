@@ -1,10 +1,19 @@
 {% extends "base_site.html" %}
+{% load i18n static %}
 {% load url from future %}
+
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+		<a href="{% url 'BuLiTippApp.views.index' %}">{% trans 'Home' %}</a>
+		&rsaquo;
+		<a href="{% url 'BuLiTippApp.views.account' %}">Benutzerverwaltung</a>
+	</div>
+{% endblock %}
 
 {% block content %}
 {% include "css/BuLiTippApp.css" %}
 
-	<h1>Accountdetails für user {{ user.username }}:</h1>
+	<h1>Accountdetails für Benutzer {{ user.username }}:</h1>
 	<form method="POST" action="{% url 'BuLiTippApp.views.account' %}">
 	{% csrf_token %}
 		<div>
@@ -38,7 +47,7 @@
 			        <div class="form-row">
 		                <div>
         	                <label for="id_change_pw">Passwort ändern:</label>
-                            <a id="id_change_pw" href="{% url 'django.contrib.auth.views.password_change' %}">hier</a>
+                            <a id="id_change_pw" href="{% url 'BuLiTippApp.views.change_pw' %}">hier</a>
 		                </div>
 			        </div>
 			</fieldset>

@@ -23,8 +23,8 @@ urlpatterns = patterns('',
     url(r'^account/delete/$', "BuLiTippApp.views.delete_account"),
     
     # Change password functionality
-    url(r'^pwchange/', "django.contrib.auth.views.password_change"),
-    url(r'^pwchangedone/', "django.contrib.auth.views.password_change_done"),
+    url(r'^pwchange/', "BuLiTippApp.views.change_pw"),
+    url(r'^pwchangedone/', "BuLiTippApp.views.change_pw_done"),
 
     url(r'^BuLiTipp/$', 'BuLiTippApp.views.index'),
     url(r'^BuLiTipp/(?P<spielzeit_id>\d+)/$', 'BuLiTippApp.views.index'),

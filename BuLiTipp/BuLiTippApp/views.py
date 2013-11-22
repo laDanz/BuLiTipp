@@ -7,6 +7,9 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login as djlogin, logout as djlogout
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.debug import sensitive_post_parameters
+from django.views.decorators.csrf import csrf_protect
+from django.template.response import TemplateResponse
 from django.db import IntegrityError
 from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle
 from datetime import datetime
@@ -427,3 +430,33 @@ def delete_account(request, info=""):
 		djlogout(request)
 		return redirect(reverse("BuLiTippApp.views.index"), context_instance=RequestContext(request))
 	return render_to_response("user/delete_account.html", {}, context_instance=RequestContext(request))
+
+@login_required
+@csrf_protect
+@sensitive_post_parameters()
+def change_pw(request):
+	from django.contrib.auth.forms import PasswordChangeForm
+	post_change_redirect = reverse('BuLiTippApp.views.change_pw_done')
+	template_name = "user/pwchange.html"
+	password_change_form=PasswordChangeForm
+	
+	if request.method == "POST":
+		if "cancel" in request.POST.keys() :
+			return redirect(reverse("BuLiTippApp.views.account"), context_instance=RequestContext(request))
+		form = password_change_form(user=request.user, data=request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(post_change_redirect)
+	else:
+		form = password_change_form(user=request.user)
+	context = {
+		'form': form,
+	}
+	return TemplateResponse(request, template_name, context, current_app="BuLiTippApp")
+
+@login_required
+def change_pw_done(request):
+	template_name='user/pwchangedone.html'
+	context = {}
+
+	return TemplateResponse(request, template_name, context, current_app=None)
