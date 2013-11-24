@@ -145,6 +145,9 @@ class Verein(models.Model):
 	name = models.CharField(max_length=75)
 	def __unicode__(self):
 		return unicode(self.name)
+	def serie(self):
+		from models_statistics import Serie
+		return{s.spielzeit.id:s for s in Serie.objects.filter(mannschaft__id=self.id)}
 
 class Spiel(models.Model):
 	class Meta:

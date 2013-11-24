@@ -1,5 +1,3 @@
-import models
-
 class Punkterechner():
 	'''Der Standard-Punkterecher: 3 Punkte fuer korrektes Ergebnis, 2 fuer Differenz, 1 fuer tendenz.
 	'''

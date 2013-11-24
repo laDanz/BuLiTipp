@@ -21,9 +21,9 @@
 		{% endif %}
 	</tr>
     {% for spiel, tipp, punkte, fremdtipps in spieltipp  %}
-    {% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id%}
+    {% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id szid=spieltag.spielzeit.id%}
 		<tr>
-		<td><center><b>{{ spiel.heimmannschaft }}</b> {% if tabelle != None %}({{tabelle|get:h}}.){% endif %} vs <b>{{ spiel.auswaertsmannschaft }}</b> {% if tabelle != None %}({{tabelle|get:a}}.){% endif %}</center></td>
+		<td><center><b title="{{ spiel.heimmannschaft.serie|get:szid }}">{{ spiel.heimmannschaft }}</b> {% if tabelle != None %}({{tabelle|get:h}}.){% endif %} vs <b title="{{ spiel.auswaertsmannschaft.serie|get:szid }}">{{ spiel.auswaertsmannschaft }}</b> {% if tabelle != None %}({{tabelle|get:a}}.){% endif %}</center></td>
 		<td>
 		<center>
 		{% if spiel.ergebniss == "DNF" %}
