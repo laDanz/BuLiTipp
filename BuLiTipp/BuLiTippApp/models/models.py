@@ -44,9 +44,9 @@ class Spielzeit(models.Model):
 			return self.spieltag_set.all().order_by("nummer").reverse()[0]
 	def userpunkteplatz(self):
 		return Bestenliste().spielzeit(self.id)
-        def is_tippable(self):
-                return timezone.now()<self.saisontipp_end
-	
+	def is_tippable(self):
+		return timezone.now()<self.saisontipp_end
+
 
 class Spieltag(models.Model):
 	class Meta:
@@ -54,7 +54,7 @@ class Spieltag(models.Model):
 	spielzeit = models.ForeignKey(Spielzeit)
 	datum = models.DateTimeField()
 	nummer = models.IntegerField()
-	bezeichner = models.CharField(max_length=50)
+	bezeichner = models.CharField(max_length=50, blank=True)
 	admin_order_field = "nummer"
 #	def __init__(self, *args, **kwargs):
 #		super(Spieltag, self).__init__(*args, **kwargs)
@@ -105,21 +105,21 @@ class Bestenliste():
 	def spielzeit(self, spielzeit_id, user_id=-1, full=True):
 		return self.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full)
 	def query(self, user_id=-1, full=True, spieltag_id=None, spielzeit_id=None):
+		from models_statistics import Punkte
 		userpunkte=[]
 		#fuer jeden user
 		for user in User.objects.all():
-			#ermittle alle tipps
-	                tipps = Tipp.objects.filter(user_id=user.id)
+			punkte = Punkte.objects.filter(user=user)
 			if spieltag_id is not None:
-				tipps=tipps.filter(spiel_id__spieltag_id=spieltag_id)
+				punkte = punkte.filter(spieltag__id=spieltag_id)
 			if spielzeit_id is not None:
-				tipps=tipps.filter(spiel_id__spieltag_id__spielzeit_id=spielzeit_id)
+				punkte = punkte.filter(spieltag__spielzeit_id=spielzeit_id)
 			#summiere die punkte der Tipps
-			punkte = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+			punkte = sum(punkte)
 			userpunkte.append((user, punkte))
 		userpunkte.sort(key=lambda punkt:punkt[1], reverse=True)
 		userpunkteplatz=[(userpunkt[0], userpunkt[1], platz+1) for platz, userpunkt in enumerate(userpunkte)]
-	        for i, userp in enumerate(userpunkte):
+		for i, userp in enumerate(userpunkte):
 			if user_id == userp[0].id:
 				platz=i
 				break
@@ -163,7 +163,7 @@ class Spiel(models.Model):
 		return self.tipp_set.all()
 	def is_tippable(self):
 		if (self.datum is not None):
-	                return timezone.now()<self.datum
+			return timezone.now()<self.datum
 		if (self.spieltag is not None):
 			return self.spieltag.is_tippable()
 		return False

@@ -32,7 +32,7 @@
 {% block content %}
 {% include "css/BuLiTippApp.css" %}
 
-{% if spieltag.bezeichner != None %}
+{% if spieltag.bezeichner != None and spieltag.bezeichner|length > 0  %}
 	<h2>{{ spieltag.bezeichner }}</h2>
 {% else %}
 	<h2>Der {{ spieltag.nummer }}. Spieltag der Saison "{{ spielzeit.bezeichner  }}"</h2>

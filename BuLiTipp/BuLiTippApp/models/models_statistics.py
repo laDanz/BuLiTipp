@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.contrib.auth.models import User
 from punkterechner import Punkterechner
-from models import Spielzeit, Verein, Spiel
+from models import Spielzeit, Verein, Spiel, Spieltag, Tipp
 
 # Create your models here.
 
@@ -121,7 +121,6 @@ class Serie(models.Model):
                     # fuer jedes der letzten x Spiele:
                     spiele = Spiel.objects.filter(Q(heimmannschaft_id=m.id)|Q(auswaertsmannschaft_id=m.id)).filter(datum__lt=timezone.now()).order_by('datum').reverse()
                     spiele = spiele[:SERIE_ANZAHL_LETZTER_SPIELE]
-                    print spiele.count()
                     for s in spiele:
                         try:
                             toto = pr.toto(s.ergebniss)
@@ -140,4 +139,39 @@ class Serie(models.Model):
                         elif (toto == 0):
                             serie.unent += 1
                     serie.save()
+
+class Punkte(models.Model):
+    '''
+    Setzt einen User in Beziehung zu den Punkten, die er an einem bestimmten Spieltag erzielt hat.
+    '''
+    class Meta:
+        app_label = 'BuLiTippApp'
+    spieltag = models.ForeignKey(Spieltag)
+    user = models.ForeignKey(User)
+    punkte = models.IntegerField()
+    def __add__(self, x):
+        if hasattr(x,"punkte"):
+            return self.punkte + x.punkte;
+        return self.punkte + x
+    def __radd__(self, x):
+        return self.__add__(x)
+    def refresh(self):
+        Punkte.objects.all().delete()
+        #fuer jeden user
+        for user in User.objects.all():
+            spieltag_punkte={}
+            #ermittle alle tipps
+            tipps = Tipp.objects.filter(user_id=user.id)
+            for tipp in tipps:
+                punkte = 0 if tipp.punkte() is None else tipp.punkte()
+                key = tipp.spiel.spieltag.id
+                alt = spieltag_punkte[key] if key in spieltag_punkte.keys() else 0
+                spieltag_punkte[key] = alt + punkte
+            #abspeichern
+            for item in spieltag_punkte.iteritems():
+                p = Punkte()
+                p.spieltag_id = item[0]
+                p.user = user
+                p.punkte = item[1]
+                p.save()
 

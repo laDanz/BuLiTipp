@@ -11,7 +11,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.csrf import csrf_protect
 from django.template.response import TemplateResponse
 from django.db import IntegrityError
-from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle
+from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte
 from datetime import datetime
 from sets import Set
 import operator
@@ -57,7 +57,8 @@ def user_site(request, spielzeit_id=None):
 
 	#alle tipps eines users an diesem spieltag	
 	tipps = Tipp.objects.filter(user_id=user.id, spiel_id__spieltag_id=spieltag.id)
-	points_spieltag = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+	punkte = Punkte.objects.filter(user=user, spieltag=spieltag)
+	points_spieltag = sum(punkte)
 	
 	punkte_anteile = {}
 	for tipp in tipps:
@@ -73,7 +74,8 @@ def user_site(request, spielzeit_id=None):
 	
 	#alle tipps des users dieser spielzeit
 	tipps = Tipp.objects.filter(user_id=user.id, spiel_id__spieltag__spielzeit_id=aktuelle_spielzeit.id)
-	points_sum = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+	punkte = Punkte.objects.filter(user=user, spieltag__spielzeit_id=aktuelle_spielzeit.id)
+	points_sum = sum(punkte)
 	#nur die spieltage, die abgelaufen sind
 	set_ = Set([tipp.spiel.spieltag.id if tipp.spiel.spieltag.is_tippable() == False else None for tipp in tipps])
 	set_.add(None)
@@ -84,7 +86,8 @@ def user_site(request, spielzeit_id=None):
 	
 	#tipps
 	tipps = Tipp.objects.filter(spiel_id__spieltag_id=spieltag.id)
-	points_spieltag_sum = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+	punkte = Punkte.objects.filter(spieltag=spieltag)
+	points_spieltag_sum = sum(punkte)
 	
 	spiele_punkte = {}
 	for tipp in tipps:
@@ -134,10 +137,8 @@ def best(request, full=True):
 	userpunkte=[]
 	#fuer jeden user
 	for user in User.objects.all():
-		#ermittle alle tipps
-		tipps = Tipp.objects.filter(user_id=user.id)
 		#summiere die punkte der Tipps
-		punkte = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+		punkte = sum(Punkte.objects.filter(user__id=user.id))
 		userpunkte.append((user, punkte))
 	userpunkte.sort(key=lambda punkt:punkt[1], reverse=True)
 	userpunkteplatz=[(userpunkt[0], userpunkt[1], platz+1) for platz, userpunkt in enumerate(userpunkte)]
@@ -264,8 +265,8 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 	spielzeit = Spielzeit.objects.get(pk=spieltag.spielzeit_id)
 	spieltag_next = int(spieltag_id) + 1
 	spieltag_previous = int(spieltag_id) - 1
-	tipps = Tipp.objects.filter(spiel_id__spieltag_id=spieltag_id).filter(user_id=request.user.id)
-	tipps = {t.spiel_id: t for t in tipps}
+	#tipps = Tipp.objects.filter(spiel_id__spieltag_id=spieltag_id).filter(user_id=request.user.id)
+	#tipps = {t.spiel_id: t for t in tipps}
 	spieltipp = spieltag.spieltipp(request.user.id)
 	args={"spieltag" : spieltag, "spielzeit" : spielzeit, \
 		"spieltag_next" : str(spieltag_next), "spieltag_previous" : str(spieltag_previous), \
