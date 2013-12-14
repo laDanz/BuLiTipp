@@ -79,6 +79,9 @@
 {% if user.is_authenticated %}	
 <input type="submit" value="Tipp abgeben!" 
 	{% if not spieltag.is_tippable  %} Disabled {% endif %} />
+	{% if user.is_staff %}
+         <a href ="{% url "admin:BuLiTippApp_spieltag_change" spieltag.id %}">als Admin bearbeiten</a>
+    {% endif %}
 {% endif %}
 </form>
 {% else %}
