@@ -5,7 +5,7 @@
         <tr><td><b>{{platz}}</b>
         </td><td>
         {% if user.id == user_.id %}<strong>{% endif %}
-        {{user_.username}}
+        {% firstof user_.first_name user_.username %}
         </strong> </td><td>
         {{punkte}}
         </td>
