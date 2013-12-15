@@ -94,7 +94,7 @@ class Spieltag(models.Model):
 					ftipps= spiel.tipps()
 					ftipps= ftipps.exclude(user_id=user_id)
 					fremdtipps[spiel.id] = [(t.user.username, t.ergebniss, t.punkte()) for t in ftipps]
-		return [(spiel, tipps[spiel.id] if spiel.id in tipps.keys() else None, punkte[spiel.id] if spiel.id in punkte.keys() else None, fremdtipps[spiel.id] if spiel.id in fremdtipps.keys() else None) for spiel in self.spiel_set.all()]
+		return [(spiel, tipps[spiel.id] if spiel.id in tipps.keys() else None, punkte[spiel.id] if spiel.id in punkte.keys() else None, fremdtipps[spiel.id] if spiel.id in fremdtipps.keys() else None) for spiel in self.spiel_set.all().order_by("datum")]
 	def userpunkteplatz(self):
 		return Bestenliste().spieltag(self.id)
 
