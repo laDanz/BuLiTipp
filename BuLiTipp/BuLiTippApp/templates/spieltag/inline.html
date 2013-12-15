@@ -14,8 +14,7 @@
 		<td><b>Ergebnis</b></td>
 		{% if user.is_authenticated %}
 			<td><b>mein Tipp</b></td>
-			{% if not spieltag.is_tippable %}
-				<!--td><b>Punkte</b></td-->{% endif %}{% endif %}
+		{% endif %}
 		{% if not spieltag.is_tippable %}
 			<td><b><a onclick='if (document.getElementsByName("fremdtipp")[0].style.display==""){s="None";}else{ s="";}; for (var i = 0; i < document.getElementsByName("fremdtipp").length; i++) {document.getElementsByName("fremdtipp")[i].style.display=s; }' href="#">Andere:</a></b></td>
 		{% endif %}
@@ -47,38 +46,30 @@
 		</td>
 		{% if user.is_authenticated %}
 		<td>
-			{% if spieltag.is_tippable and spiel.is_tippable  %}
-			<input type="text" name="tipp_{{ spiel.id  }}" style="width:50px"
-			id="tipp{{ spiel.id  }}" value="{{ tipp.ergebniss }}" 
-			pattern="[0-9]{1,2}:[0-9]{1,2}" 
-			title="Bitte Ergebnis im Format x:y angeben!"
-			{% if not spieltag.is_tippable  %} Disabled {% endif %}>
+			{% if spiel.is_tippable  %}
+			    <input type="text" name="tipp_{{ spiel.id  }}" style="width:50px" id="tipp{{ spiel.id  }}"
+			        value="{{ tipp.ergebniss }}" pattern="[0-9]{1,2}:[0-9]{1,2}" 
+			        title="Bitte Ergebnis im Format x:y angeben!">
 			{% else %}
-			<center class="tipp{{punkte}}">{{ tipp.ergebniss }} ({{punkte}})</center>
+			    <center class="tipp{{punkte}}">{{ tipp.ergebniss }} ({{punkte}})</center>
 			{% endif %}
 		</td>
 		{% endif %}
-		{% if user.is_authenticated and not spieltag.is_tippable %}
-		<!--td>
-		{% if punkte != None %}
-			<center>{{punkte}}</center>
+		{% if not spiel.is_tippable %}
+    		{% for fremdtipp in fremdtipps %}
+    			<td name="fremdtipp" class="tipp{{fremdtipp.2}}">
+    			{% if fremdtipp.1 != "" %}
+    				{{fremdtipp.0}}: {{fremdtipp.1}} ({{fremdtipp.2}})
+    			{% endif %}
+    			</td>
+    		{% endfor %}
 		{% endif %}
-		</td-->
-		{% endif %}
-		{% for fremdtipp in fremdtipps %}
-			<td name="fremdtipp" class="tipp{{fremdtipp.2}}">
-			{% if fremdtipp.1 != "" %}
-				{{fremdtipp.0}}: {{fremdtipp.1}} ({{fremdtipp.2}})
-			{% endif %}
-			</td>
-		{% endfor %}
 		</tr>
     {% endwith %}
     {% endfor %}
     </table>
 {% if user.is_authenticated %}	
-<input type="submit" value="Tipp abgeben!" 
-	{% if not spieltag.is_tippable  %} Disabled {% endif %} />
+<input type="submit" value="Tipp abgeben!" />
 	{% if user.is_staff %}
          <a href ="{% url "admin:BuLiTippApp_spieltag_change" spieltag.id %}">als Admin bearbeiten</a>
     {% endif %}

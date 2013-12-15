@@ -2,7 +2,10 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from punkterechner import Punkterechner
+from datetime import timedelta
 # Create your models here.
+
+spiel_zeit_vorlauf=timedelta(hours = 1)
 
 class News(models.Model):
 	class Meta:
@@ -163,7 +166,7 @@ class Spiel(models.Model):
 		return self.tipp_set.all()
 	def is_tippable(self):
 		if (self.datum is not None):
-			return timezone.now()<self.datum
+			return timezone.now()<self.datum-spiel_zeit_vorlauf
 		if (self.spieltag is not None):
 			return self.spieltag.is_tippable()
 		return False
