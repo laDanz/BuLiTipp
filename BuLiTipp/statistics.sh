@@ -24,3 +24,5 @@ echo "insegesamt wurde " $(sqlite3 $filename 'select count(t.id) as count from b
 echo $(sqlite3 $filename 'select t.ergebniss, count(t.id) as count from bulitippapp_tipp t left join bulitippapp_spiel s on t.spiel_id = s.id , bulitippapp_spieltag st  where s.spieltag_id=st.id and t.ergebniss=s.ergebniss and st.spielzeit_id in '$spielzeit' group by t.ergebniss order by count desc;')
 echo "Diese User haben richtig getippt:"
 echo $(sqlite3 $filename 'select u.username, count(t.id) as count from bulitippapp_tipp t left join bulitippapp_spiel s on t.spiel_id = s.id, auth_user u , bulitippapp_spieltag st where s.spieltag_id=st.id and u.id=t.user_id and t.ergebniss=s.ergebniss and st.spielzeit_id in '$spielzeit' group by u.username order by count desc;')
+
+echo "import statistics" | ./manage.py shell #2> /dev/null
