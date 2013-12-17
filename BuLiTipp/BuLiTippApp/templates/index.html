@@ -32,7 +32,7 @@ Ideen für weitere Inhalte oder Änderungen/Kritik/Gestaltung gerne an: <a href=
 <h2>Neueste Mitteilungen</h2>
 <a href="{% url BuLiTippApp.views.news %}">alle Mitteilungen</a>
 {% for news_ in news %}
-	<div style="border: 1px solid rgb(200, 200, 200); padding:5px;margin:5px; background-image: url(/static/admin/img/default-bg-reverse.gif); background-repeat:repeat-x" >
+	<div style="border: 1px solid rgb(200, 200, 200); padding:5px;margin:5px; background-repeat:repeat-x" >
 	von {% firstof news_.author.first_name news_.author.username %} am {{news_.datum}}
 
 	<br>
