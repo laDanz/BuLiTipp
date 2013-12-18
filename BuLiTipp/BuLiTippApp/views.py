@@ -9,21 +9,36 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.csrf import csrf_protect
+from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
 from django.db import IntegrityError
 from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte
+from models import NewsTO
 from datetime import datetime
 from sets import Set
 import operator
 
+### new:
+class NewsPageView(TemplateView):
+    template_name = 'new_news.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(NewsPageView, self).get_context_data(**kwargs)
+        return context
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context["news"]=get_news_by_request(request)
+        return self.render_to_response(context)
+
+def get_news_by_request(request):
+    news=News.objects.all().order_by("datum").reverse()
+    return NewsTO(news)
+
+### old:
+
 def home(request):
 	return redirect("BuLiTippApp.views.index")
 
-def news(request):
-	news=News.objects.all().order_by("datum").reverse()
-	return render_to_response("news.html",\
-		{"news":news} ,\
-		context_instance=RequestContext(request))
 
 @login_required
 def user_site(request, spielzeit_id=None):
