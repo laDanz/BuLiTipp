@@ -1,27 +1,27 @@
-{% extends "base_site.html" %}
+{% extends 'base.html' %}
+
+{% block title %}BuLiTipp Spieltag 2000{% endblock %}
 
 <!-- benötigte Variablen: news : newsTO -->
 {% load i18n  %}
 {% block breadcrumbs %}
-    <div class="breadcrumbs">
-    	<div style="float:left">
-		    <a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
-		    {% if title %} &rsaquo; {{ title }}{% endif %}
-		    
+	<div class="breadcrumbs">
+		<div style="float:left">
+			<a href="{% url BuLiTippApp.views.index %}">{% trans 'Home' %}</a>
+			{% if title %} &rsaquo; {{ title }}{% endif %}
+			
 			-&rsaquo;
 			<a href="{% url news %}">Mitteilungen</a>
-		    
-	    </div>
-    	<div style="float:right;">
-    		{% include "navigation.html" %}
-    	</div>
-    	<div style="clear:both"></div>
-    </div>
+			
+		</div>
+		<div style="float:right;">
+		</div>
+		<div style="clear:both"></div>
+	</div>
 {% endblock %}
 
 
 {% block content %}
-{% include "css/BuLiTippApp.css" %}
 
 <h2>{{news.anzahl_insg}} Mitteilungen</h2>
 {% for news_ in news.news %}

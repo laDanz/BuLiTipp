@@ -1,5 +1,12 @@
 #!/usr/bin/python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.views.generic import FormView
+from django.views.generic.base import TemplateView
+from django.contrib import messages
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
@@ -9,46 +16,51 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
 from django.db import IntegrityError
 from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte
-from models import NewsTO
 from datetime import datetime
 from sets import Set
 import operator
+from BuLiTippApp.models.transferObjects import NewsTO
+
+#from .forms import ContactForm
+#from BuLiApp.forms import UserForm
 
 ### new:
 class NewsPageView(TemplateView):
-    template_name = 'new_news.html'
+	template_name = 'new_news.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(NewsPageView, self).get_context_data(**kwargs)
-        return context
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context["news"]=get_news_by_request(request)
-        return self.render_to_response(context)
+	def get_context_data(self, **kwargs):
+		context = super(NewsPageView, self).get_context_data(**kwargs)
+		return context
+	def get(self, request, *args, **kwargs):
+		context = self.get_context_data(**kwargs)
+		context["news"]=get_news_by_request(request)
+		return self.render_to_response(context)
 
 def get_news_by_request(request):
-    news=News.objects.all().order_by("datum").reverse()
-    return NewsTO(news)
-
-### old:
+	news=News.objects.all().order_by("datum").reverse()
+	return NewsTO(news)
 
 def home(request):
 	return redirect("BuLiTippApp.views.index")
 
+def news(request):
+	news=News.objects.all().order_by("datum").reverse()
+	return render_to_response("messages/ms_index.html",\
+		{"news":news} ,\
+		context_instance=RequestContext(request))
 
 @login_required
 def user_site(request, spielzeit_id=None):
 	user = request.user
 	
-# 	points_spielzeit = {}
-# 	for sz in Spielzeit.objects.all():
-# 		tipps = Tipp.objects.filter(user_id=user.id).filter(spiel__spieltag__spielzeit_id=sz.id)
-# 		points = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
-# 		points_spielzeit.append((sz, points))
+# points_spielzeit = {}
+# for sz in Spielzeit.objects.all():
+#		tipps = Tipp.objects.filter(user_id=user.id).filter(spiel__spieltag__spielzeit_id=sz.id)
+#		points = sum(map(lambda tipp: 0 if tipp.punkte() is None else tipp.punkte(), tipps))
+#		points_spielzeit.append((sz, points))
 	spielzeiten = Spielzeit.objects.order_by('id').reverse()
 	if spielzeit_id is None:
 		aktuelle_spielzeit = spielzeiten[0]
@@ -59,10 +71,10 @@ def user_site(request, spielzeit_id=None):
 	if(spieltag is None or (spieltag.previous() is not None and spieltag.previous().is_tippable())):
 		#noch kein abgeschlossener Spieltag -> noch keine Statistik!
 		return render_to_response("stats/user.html",\
-                {"spieltag":spieltag,\
-                "spielzeit":aktuelle_spielzeit,\
-                "spielzeiten":spielzeiten} ,\
-                context_instance=RequestContext(request))
+				{"spieltag":spieltag,\
+				"spielzeit":aktuelle_spielzeit,\
+				"spielzeiten":spielzeiten} ,\
+				context_instance=RequestContext(request))
 		
 	if(spieltag.is_tippable()):
 		spieltag=spieltag.previous()
@@ -70,7 +82,7 @@ def user_site(request, spielzeit_id=None):
 	spieltipp_previous = spieltag.spieltipp(request.user.id)
 
 
-	#alle tipps eines users an diesem spieltag	
+	#alle tipps eines users an diesem spieltag 
 	tipps = Tipp.objects.filter(user_id=user.id, spiel_id__spieltag_id=spieltag.id)
 	punkte = Punkte.objects.filter(user=user, spieltag=spieltag)
 	points_spieltag = sum(punkte)
@@ -128,56 +140,61 @@ def user_site(request, spielzeit_id=None):
 	if (user_tipped == 0):
 		user_tipped = 1;
 	points_diff = points_spieltag - (points_spieltag_sum / user_tipped)
-	
-	
 
 	return render_to_response("stats/user.html",\
-                {"spieltag":spieltag,\
-                "spielzeit":aktuelle_spielzeit,\
-                "spieltag_punkte":points_spieltag,\
-                "spieltag_punkte_diff":points_diff,\
-                "best_tipp":best_tipp,\
-                "worst_tipp":worst_tipp,\
-                "punkte_anteile":punkte_anteile,\
-                "spielzeiten":spielzeiten,\
-                "tabelle":Tabelle().getMannschaftPlatz(aktuelle_spielzeit),\
-                "spieltag_punkte_diff_player":spieltag_punkte_diff_player,\
-				"spieltipp":spieltipp_previous} ,\
-                context_instance=RequestContext(request))
+		{\
+			"spieltag":spieltag,\
+			"spielzeit":aktuelle_spielzeit,\
+			"spieltag_punkte":points_spieltag,\
+			"spieltag_punkte_diff":points_diff,\
+			"best_tipp":best_tipp,\
+			"worst_tipp":worst_tipp,\
+			"punkte_anteile":punkte_anteile,\
+			"spielzeiten":spielzeiten,\
+			"tabelle":Tabelle().getMannschaftPlatz(aktuelle_spielzeit),\
+			"spieltag_punkte_diff_player":spieltag_punkte_diff_player,\
+			"spieltipp":spieltipp_previous\
+		} ,\
+		context_instance=RequestContext(request))
 
-
+@login_required
 def best(request, full=True):
 	''' Ausgabe beschränken auf max. ersten 3 Plätze + eigener Platz + den davor und den dahinter 
 	'''
 	userpunkte=[]
-	#fuer jeden user
-	for user in User.objects.all():
-		#summiere die punkte der Tipps
-		punkte = sum(Punkte.objects.filter(user__id=user.id))
-		userpunkte.append((user, punkte))
-	userpunkte.sort(key=lambda punkt:punkt[1], reverse=True)
-	userpunkteplatz=[(userpunkt[0], userpunkt[1], platz+1) for platz, userpunkt in enumerate(userpunkte)]
-	user=request.user
-	for i, userp in enumerate(userpunkte):
-		if user.id == userp[0].id:
-			platz=i
-			break
-	first=True
-	j=0
-	if not full:
-		for i, userp in enumerate(userpunkteplatz[:]):
-			if i < 3 or platz -2 < i < platz + 2:
-				j+=1
-				first=True
-				continue
-			if first:
-				first=False
-				userpunkteplatz[i]=("...", "...", "...")
-				j+=1
-			else:
-				del userpunkteplatz[j]
-	return render_to_response("bestenliste/detail.html",{"userpunkteplatz":userpunkteplatz}, context_instance=RequestContext(request))
-# sicherheitsabfrage!?	
+	try:
+		#fuer jeden user
+		for user in User.objects.all():
+			#summiere die punkte der Tipps
+			punkte = sum(Punkte.objects.filter(user__id=user.id))
+			userpunkte.append((user, punkte))
+		userpunkte.sort(key=lambda punkt:punkt[1], reverse=True)
+		userpunkteplatz=[(userpunkt[0], userpunkt[1], platz+1) for platz, userpunkt in enumerate(userpunkte)]
+		user=request.user
+		for i, userp in enumerate(userpunkte):
+			if user.id == userp[0].id:
+				platz=i
+				break
+		first=True
+		j=0
+		if not full:
+			for i, userp in enumerate(userpunkteplatz[:]):
+				if i < 3 or platz -2 < i < platz + 2:
+					j+=1
+					first=True
+					continue
+				if first:
+					first=False
+					userpunkteplatz[i]=("...", "...", "...")
+					j+=1
+				else:
+					del userpunkteplatz[j]
+	except:
+		userpunkteplatz=none
+
+	return render_to_response("bestenliste/bl_detail.html",{"userpunkteplatz":userpunkteplatz}, context_instance=RequestContext(request))
+
+# sicherheitsabfrage!? 
 def delete_kommentar(request):
 	kommentar_id=request.POST["kommentar_id"]
 	spieltag_id=request.POST["spieltag_id"]
@@ -234,17 +251,19 @@ def index(request, spielzeit_id=-1):
 			spieltipp_previous = spieltag.spieltipp(request.user.id)
 	except:
 		spielzeiten=Spielzeit.objects.all()
-	args = {"spielzeiten":spielzeiten, \
+	args = {\
+		"spielzeiten":spielzeiten, \
 		"aktuelle_spielzeit":aktuelle_spielzeit, \
 		"spieltipp_next":spieltipp_next, \
 		"spieltipp_previous":spieltipp_previous, \
-		"news":news}
+		"news":news\
+		}
 	if not aktuelle_spielzeit is None and not aktuelle_spielzeit.isPokal:
 		args["tabelle"] = Tabelle().getMannschaftPlatz(aktuelle_spielzeit)
-	return render_to_response("index.html",\
+	return render_to_response("home/hm_index.html",\
 		args ,\
 		context_instance=RequestContext(request))
-#	return HttpResponse("This is the Index view.")
+# return HttpResponse("This is the Index view.")
 
 def logout(request):
 	djlogout(request)
@@ -283,14 +302,19 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 	#tipps = Tipp.objects.filter(spiel_id__spieltag_id=spieltag_id).filter(user_id=request.user.id)
 	#tipps = {t.spiel_id: t for t in tipps}
 	spieltipp = spieltag.spieltipp(request.user.id)
-	args={"spieltag" : spieltag, "spielzeit" : spielzeit, \
-		"spieltag_next" : str(spieltag_next), "spieltag_previous" : str(spieltag_previous), \
-		"spieltipp": spieltipp}
+	args={\
+		"spieltag" : spieltag, \
+		"spielzeit" : spielzeit, \
+		"spieltag_next" : str(spieltag_next), \
+		"spieltag_previous" : str(spieltag_previous), \
+		"spieltipp": spieltipp\
+		}
 	if not spielzeit.isPokal:
 		args["tabelle"] = Tabelle().getMannschaftPlatz(spielzeit)
 	if info is not None:
 		args["message"]=info
-	return render_to_response("spieltag/detail.html", args, context_instance=RequestContext(request))
+	return render_to_response("spieltag/st_details.html", args, context_instance=RequestContext(request))
+
 @login_required
 def tippen(request, spieltag_id):
 	''' request.POST.items() enthaelt die Tipps in der Form: [("tipp_"spielID : tipp), ]
@@ -401,16 +425,16 @@ def saisontipp(request, spielzeit_id=None, message=None):
 		"saisontipp.html", \
 		{  \
 		"mannschaften":mannschaften, \
-		"spielzeiten" :spielzeiten,  \
-		"meistertipp" :meistertipp,  \
-		"absteiger1"  :absteiger1,   \
-		"absteiger2"  :absteiger2,   \
-		"absteiger3"  :absteiger3,   \
+		"spielzeiten" :spielzeiten, \
+		"meistertipp" :meistertipp, \
+		"absteiger1"  :absteiger1, \
+		"absteiger2"  :absteiger2, \
+		"absteiger3"  :absteiger3, \
 		"herbstmeistertipp" :herbstmeistertipp,  \
 		"spielzeit_id" :spielzeit_id,  \
 		"spielzeit" :spielzeit,  \
-		"is_pokal"    :is_pokal,     \
-		"message"     :message,      \
+		"is_pokal"   :is_pokal,  \
+		"message"   :message,			\
 		}, \
 		context_instance=RequestContext(request))
 
@@ -476,3 +500,13 @@ def change_pw_done(request):
 	context = {}
 
 	return TemplateResponse(request, template_name, context, current_app=None)
+
+# neue views
+class SpieltagView(TemplateView):
+	template_name = 'spieltag/st_index.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(SpieltagView, self).get_context_data(**kwargs)
+		messages.info(self.request, 'This is a demo of a message.')
+		return context
+

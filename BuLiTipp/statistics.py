@@ -44,8 +44,8 @@ print user_tore
 
 tore=0
 for s in Spiel.objects.filter(spieltag__spielzeit_id=sz.id).filter(datum__lte = timezone.now()):
-    if s.ergebniss != None and s.ergebniss != "" and s.ergebniss !="DNF":
-        tore= tore + int(s.ergebniss.split(":")[0]) + int(s.ergebniss.split(":")[1])
+	if s.ergebniss != None and s.ergebniss != "" and s.ergebniss !="DNF":
+		tore= tore + int(s.ergebniss.split(":")[0]) + int(s.ergebniss.split(":")[1])
 print "soviel Tore waren es in echt: %s" % str(tore)
 
 

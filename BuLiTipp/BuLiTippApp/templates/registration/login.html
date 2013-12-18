@@ -1,18 +1,42 @@
-{% extends "base_site.html" %}
+{% extends 'base.html' %}
+
+{% block title %}BuLiTipp Spieltag 2000{% endblock %}
 
 {% block content %}
-{% if request.user.is_authenticated %}
-	Hello {{ request.user.username  }}!
-{% else %}
-	Please sign in!
-	<form method="POST" action="{% url django.contrib.auth.views.login %}">
-	{% csrf_token %}
-		<label for="uname">Username:</label>
-		<input type="text" id="uname" name="username" />
-		<label for="pword">Passwort:</label>
-		<input type="password" id="pword" name="password" />
-		<input type="submit" value="einloggen" />
-		<input type="hidden" name="next" value="{{ next }}" />
-	</form>
-{% endif %}
+	{% if request.user.is_authenticated %}
+		Hello {{ request.user.username	}}!
+	{% else %}
+		Please sign in!
+		<form class="form-horizontal" role="form" method="POST" action="{% url django.contrib.auth.views.login %}">
+		{% csrf_token %}
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="uname">Username:</label>
+				<div class="col-sm-10">
+					<input class="form-control" type="text" id="uname" name="username" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="pword">Passwort:</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="pword" name="password" />
+				</div>
+			</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox"> Remember me
+				</label>
+			</div>
+		</div>
+	</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input	class="btn btn-default" type="submit" value="einloggen" />
+				</div>
+			</div>
+			<input type="hidden" name="next" value="{{ next }}" />
+		</form>
+	{% endif %}
+
 {% endblock %}
