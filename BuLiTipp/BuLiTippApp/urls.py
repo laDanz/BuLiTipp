@@ -2,14 +2,12 @@
 from __future__ import unicode_literals
 
 from django.conf.urls import patterns, url
-import BuLiTipp
 
-from BuLiTippApp.views import NewsPageView, SpieltagView
+from views import NewsPageView, HomePageView
 
 urlpatterns = patterns('',
-	url(r'^news/$', NewsPageView.as_view(), name='news'),
-	# neue url's
-	url(r'^home$', 'BuLiTippApp.views.index'),
-	url(r'^spieltag$', SpieltagView.as_view(), name='st'),
-	url(r'^bestenliste/$', 'BuLiTippApp.views.best'),
+    url(r'^news/$', NewsPageView.as_view(), name='news'),
+    url(r'^home/$', HomePageView.as_view(), name='home'),
+    url(r'^home/(?P<spielzeit_id>\d+)/$', HomePageView.as_view(), name='home'),
+    url(r'^home/(?P<spielzeit_id>\d+)/(?P<spieltag_id>\d+)/$', HomePageView.as_view(), name='home'),
 )

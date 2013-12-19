@@ -1,0 +1,39 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}BuLiTipp 2000{% endblock %}
+
+{% block content %}
+<ul class="nav nav-tabs">
+   <li class="active"><a href="#home" data-toggle="tab">Bundesliga</a></li>
+   <li ><a href="#pokal" data-toggle="tab">DFB-Pokal</a></li>
+   <li ><a href="#wm" data-toggle="tab">WM</a></li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content">
+	<div class="tab-pane active" id="home">
+		<div class="row">
+			<div class="col-md-4 hidden-md">
+				{% include "messages/ms_details.html" %}
+			</div>
+			<div class="col-md-1 visible-md">
+				<a href="#">Profile</a>
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</div>
+			<div class="col-md-4 hidden-md">
+				{% include "spieltag/st_details.html" %}
+			</div>
+			<div class="col-md-10 visible-md">
+				{% include "spieltag/st_details.html" %}
+			</div>
+			<div class="col-md-4 hidden-md">
+				{% include "bestenliste/bl_details.html" %}
+				</div>
+			<div class="col-md-1 visible-md">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</div>
+		</div>
+	</div>
+	<div class="tab-pane" id="pokal">pokal</div>
+	<div class="tab-pane" id="wm">wm</div>
+</div>
+{% endblock %}

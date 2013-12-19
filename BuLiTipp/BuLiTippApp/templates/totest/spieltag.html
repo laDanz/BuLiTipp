@@ -1,0 +1,93 @@
+<!-- Optional: no_navigation="true"  -->
+
+
+{% load url from future %}
+{% load filters %}
+{% if spieltag.spiele %}
+<form action="{% url "BuLiTippApp.views.tippen" 1  %}" method="post">
+{% csrf_token  %}
+
+    <table>
+        <tr>
+		<td><b>Spiel</b></td>
+		<td><b>Ergebnis</b></td>
+		{% if user.is_authenticated %}
+			<td><b>mein Tipp</b></td>
+		{% endif %}
+		
+	</tr>
+    {% for spiel in spieltag.spiele  %}
+    {% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id szid=spieltag.spielzeit.id%}
+		<tr>
+		<td><center><b>{{ spiel.heimTeam }}</b>  vs <b>{{ spiel.auswTeam }}</b> </center></td>
+		<td>
+		<center>
+		{% if spiel.ergebnis == "DNF" %}
+			{% if spiel.tippbar %}
+				tippen!
+			{% else %}
+				{% if user.is_staff %}
+
+					<a href ="{% url "admin:BuLiTippApp_spieltag_change" 1 %}">
+				
+				{% endif %}
+					eintragen!
+				{% if user.is_staff %}
+					</a>
+				{% endif %}
+			{% endif %}
+		{% else %}
+			{{ spiel.ergebnis  }}
+		{% endif %}
+		</center>
+		</td>
+		{% if user.is_authenticated %}
+		<td>
+			{% if spiel.tippbar  %}
+			    <input type="text" name="tipp_{{ spiel.id  }}" style="width:50px" id="tipp{{ spiel.id  }}"
+			        value="{{ spiel.eigenerTipp.ergebnis }}" pattern="[0-9]{1,2}:[0-9]{1,2}" 
+			        title="Bitte Ergebnis im Format x:y angeben!">
+			{% else %}
+			    <center class="tipp{{punkte}}">{{ spiel.eigenerTipp.ergebnis }} ({{spiel.eigenerTipp.punkte}})</center>
+			{% endif %}
+		</td>
+		{% endif %}
+		
+		</tr>
+    {% endwith %}
+    {% endfor %}
+    </table>
+{% if user.is_authenticated %}	
+<input type="submit" value="Tipp abgeben!" />
+	{% if user.is_staff %}
+         <a href ="{% url "admin:BuLiTippApp_spieltag_change" 1 %}">als Admin bearbeiten</a>
+    {% endif %}
+{% endif %}
+</form>
+{% else %}
+    <p>Keine Spiele an diesem Spieltag.</p>
+{% endif %}
+
+{% if no_navigation != "true" %}
+{% if spieltag.vorheriger.id > 0 %}
+	<a href="{% url "home" 2 spieltag.vorheriger.id %}">
+	{% endif %}
+	<- vorheriger
+	{% if spieltag.vorheriger.id > 0 %}
+	</a>
+{% endif %}
+
+{% if spieltag.naechster.id > 0 %}
+	<a href="{% url "home" 2 spieltag.naechster.id %}">
+	{% endif %}
+	naechster ->
+	{% if spieltag.naechster.id > 0 %}
+	</a>
+{% endif %}
+direkt zu:
+<select name="spieltag" size="1" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+{% for st in spieltag.spielzeit.spieltag_set.all %}
+	<option value="{% url "BuLiTippApp.views.detail" st.id %}">{{st.nummer}}</option>
+{% endfor %}
+</select>
+{% endif %}
