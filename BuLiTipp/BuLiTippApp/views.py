@@ -69,12 +69,12 @@ def get_spielzeit_by_request(request, spielzeit_id, spieltag_id):
         sz = Spielzeit.objects.get(pk=spielzeit_id)
     if spieltag_id == None:
         st = sz.next_spieltag()
+        if st.is_tippable():
+            st_prev = st.previous()
+            if st_prev != None:
+                st = st_prev
     else:
         st = sz.spieltag_set.get(pk=spieltag_id)
-    if st.is_tippable():
-        st_prev = st.previous()
-        if st_prev != None:
-            st = st_prev
     aktueller_spieltagTO = get_spieltag_by_request(request, st)
     tabelle = TabelleDAO.spielzeit(sz.id)
     bestenliste = BestenlisteDAO.spielzeit(sz.id)
