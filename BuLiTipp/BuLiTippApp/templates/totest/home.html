@@ -5,13 +5,13 @@
 {% block content %}
 <ul class="nav nav-tabs">
 {% for sz in spielzeiten%}
-   <li {% if forloop.first %}class="active"{% endif %}><a href="#sz{{sz.id}}" data-toggle="tab">{{sz.bezeichner}}</a></li>
+   <li {% if forloop.first %}class="active"{% endif %}><a href="{% url home sz.id %}" data-toggle="tab">{{sz.bezeichner}}</a></li>
    
 {% endfor %}
    
 </ul>
 <!-- Tab panes -->
-{% for sz in spielzeiten%}
+{% with sz=spielzeit %}
 <div class="tab-content">
     <div class="tab-pane {% if forloop.first %}active{% endif %}" id="sz{{sz.id}}">
         <div class="row">
@@ -37,5 +37,5 @@
         </div>
     </div>
 </div>
-{% endfor %}
+{% endwith %}
 {% endblock %}

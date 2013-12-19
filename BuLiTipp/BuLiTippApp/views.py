@@ -13,7 +13,7 @@ from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
 from django.db import IntegrityError
 from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte
-from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO
+from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichnerTO
 from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
 from sets import Set
@@ -38,10 +38,18 @@ class HomePageView(TemplateView):
         context = super(HomePageView, self).get_context_data(**kwargs)
         return context
     def get(self, request, *args, **kwargs):
+        if "spieltag_id" in kwargs:
+            spieltag_id = kwargs["spieltag_id"]
+        else:
+            spieltag_id = None
+        if "spielzeit_id" in kwargs:
+            spielzeit_id = kwargs["spielzeit_id"]
+        else:
+            spielzeit_id = None
         context = self.get_context_data(**kwargs)
         context["news"]=get_news_by_request(request)
-        # immer alle Spielzeiten+Tabellen+Bestenlisten übergeben, oder nur die jeweils aktuelle? Perfomanz?
         context["spielzeiten"]=get_spielzeiten_by_request(request)
+        context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id, spieltag_id)
         return self.render_to_response(context)
 
 def get_news_by_request(request):
@@ -49,20 +57,28 @@ def get_news_by_request(request):
     return NewsTO(news)
 
 def get_spielzeiten_by_request(request):
-    spielzeitenTO = []
-    spielzeiten = Spielzeit.objects.all().order_by("id")
-    for sz in spielzeiten:
-        # den letzten Spieltag ermitteln
+    szTOs=[]
+    for sz in Spielzeit.objects.all().order_by("id"):
+        szTOs.append(SpielzeitBezeichnerTO(sz))
+    return szTOs
+
+def get_spielzeit_by_request(request, spielzeit_id, spieltag_id):
+    if spielzeit_id == None:
+        sz = Spielzeit.objects.all().order_by("id")[0]
+    else:
+        sz = Spielzeit.objects.get(pk=spielzeit_id)
+    if spieltag_id == None:
         st = sz.next_spieltag()
-        if st.is_tippable():
-            st_prev = st.previous()
-            if st_prev != None:
-                st = st_prev
-        aktueller_spieltagTO = get_spieltag_by_request(request, st)
-        tabelle = TabelleDAO.spielzeit(sz.id)
-        bestenliste = BestenlisteDAO.spielzeit(sz.id)
-        spielzeitenTO.append( SpielzeitTO(sz, aktueller_spieltagTO, tabelle, bestenliste) )
-    return spielzeitenTO
+    else:
+        st = sz.spieltag_set.get(pk=spieltag_id)
+    if st.is_tippable():
+        st_prev = st.previous()
+        if st_prev != None:
+            st = st_prev
+    aktueller_spieltagTO = get_spieltag_by_request(request, st)
+    tabelle = TabelleDAO.spielzeit(sz.id)
+    bestenliste = BestenlisteDAO.spielzeit(sz.id)
+    return SpielzeitTO(sz, aktueller_spieltagTO, tabelle, bestenliste)
 
 def get_spieltag_by_request(request, st):
     count_spiele = 0

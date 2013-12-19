@@ -53,6 +53,7 @@ class TippTO(object):
 
 class SpielTO(object):
     def __init__(self, spiel=None, eigenerTipp=None, andereTipps=[]):
+        self.id = spiel.id
         self.heimTeam = spiel.heimmannschaft
         self.auswTeam = spiel.auswaertsmannschaft
         self.ergebnis = ErgebnisTO(spiel.ergebniss)
@@ -70,6 +71,7 @@ class SpielTO(object):
 
 class SpieltagTO(object):
     def __init__(self, spieltag=None, spieleTOs=[], vollstaendigGetippt=False, naechster=None, vorheriger=None, bestenliste=None):
+        self.id = spieltag.id
         self.bezeichner = spieltag.bezeichner
         self.nummer = spieltag.nummer
         self.datum = spieltag.datum
@@ -85,17 +87,22 @@ class SpieltagTO(object):
     def __str__(self):
         return unicode(self)
 
-class SpielzeitTO(object):
-    def __init__(self, spielzeit=None, aktueller_spieltagTO=None, tabelle=None, bestenliste=None):
+class SpielzeitBezeichnerTO(object):
+    def __init__(self, spielzeit=None):
+        self.id = spielzeit.id
         self.bezeichner = spielzeit.bezeichner
         self.istPokal = spielzeit.isPokal
-        self.aktuellerSpieltag = aktueller_spieltagTO
-        self.tabelle = tabelle
-        self.bestenliste = bestenliste
     def __unicode__(self):
         return "Spielzeit %s(Pokal:%s)" % (self.bezeichner, self.istPokal)
     def __str__(self):
         return unicode(self)
+
+class SpielzeitTO(SpielzeitBezeichnerTO):
+    def __init__(self, spielzeit=None, aktueller_spieltagTO=None, tabelle=None, bestenliste=None):
+        super(SpielzeitTO, self).__init__(spielzeit)
+        self.aktuellerSpieltag = aktueller_spieltagTO
+        self.tabelle = tabelle
+        self.bestenliste = bestenliste
 
 class BestenlistenPlatzTO(object):
     def __init__(self, position=None, user=None, punkte=None):
