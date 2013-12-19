@@ -75,7 +75,7 @@ def get_spieltag_by_request(request, st):
             eigenerTipp = tipps.filter(user_id = request.user.id)[0]
             count_eigene_tipps += 1
         except:
-            pass
+            eigenerTipp = None
         andereTipps = tipps.exclude(user_id = request.user.id)
         spieleTOs.append(SpielTO(spiel, eigenerTipp, andereTipps))
     naechster = st.next()
