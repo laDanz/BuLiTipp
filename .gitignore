@@ -168,3 +168,6 @@ dist
 /.pydevproject
 /.project
 /.settings
+
+# Visual Studio config
+/BuLiTipp.sln
