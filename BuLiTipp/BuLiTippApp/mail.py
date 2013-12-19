@@ -1,4 +1,8 @@
-﻿#http://yuji.wordpress.com/2011/06/22/python-imaplib-imap-example-with-gmail/
+﻿#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+#http://yuji.wordpress.com/2011/06/22/python-imaplib-imap-example-with-gmail/
 #http://docs.python.org/2/library/email-examples.html#email-examples
 import mail_settings
 ''' required: mail_settings. USERNAME and PASSWORD as gmail credentials

@@ -154,8 +154,6 @@
     <Content Include="BuLiTippApp\templates\spieltag\st_zukunft.html" />
     <Content Include="BuLiTippApp\templates\stats\user.html" />
     <Content Include="BuLiTippApp\templates\tippen\saisontipp.html" />
-    <Content Include="BuLiTippApp\templatetags\filters.pyc" />
-    <Content Include="BuLiTippApp\templatetags\__init__.pyc" />
     <Content Include="BuLiTipp\.gitignore" />
     <Content Include="BuLiTipp\database.db" />
     <Content Include="misc\install\README" />

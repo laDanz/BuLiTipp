@@ -1,5 +1,7 @@
 #!/usr/bin/python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
@@ -21,83 +23,83 @@ import operator
 
 ### new:
 class NewsPageView(TemplateView):
-    template_name = 'new_news.html'
+	template_name = 'new_news.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(NewsPageView, self).get_context_data(**kwargs)
-        return context
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context["news"]=get_news_by_request(request)
-        return self.render_to_response(context)
+	def get_context_data(self, **kwargs):
+		context = super(NewsPageView, self).get_context_data(**kwargs)
+		return context
+	def get(self, request, *args, **kwargs):
+		context = self.get_context_data(**kwargs)
+		context["news"]=get_news_by_request(request)
+		return self.render_to_response(context)
 
 class HomePageView(TemplateView):
-    template_name = 'totest/home.html'
+	template_name = 'totest/home.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(HomePageView, self).get_context_data(**kwargs)
-        return context
-    def get(self, request, *args, **kwargs):
-        if "spieltag_id" in kwargs:
-            spieltag_id = kwargs["spieltag_id"]
-        else:
-            spieltag_id = None
-        if "spielzeit_id" in kwargs:
-            spielzeit_id = kwargs["spielzeit_id"]
-        else:
-            spielzeit_id = None
-        context = self.get_context_data(**kwargs)
-        context["news"]=get_news_by_request(request)
-        context["spielzeiten"]=get_spielzeiten_by_request(request)
-        context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id, spieltag_id)
-        return self.render_to_response(context)
+	def get_context_data(self, **kwargs):
+		context = super(HomePageView, self).get_context_data(**kwargs)
+		return context
+	def get(self, request, *args, **kwargs):
+		if "spieltag_id" in kwargs:
+				spieltag_id = kwargs["spieltag_id"]
+		else:
+				spieltag_id = None
+		if "spielzeit_id" in kwargs:
+				spielzeit_id = kwargs["spielzeit_id"]
+		else:
+				spielzeit_id = None
+		context = self.get_context_data(**kwargs)
+		context["news"]=get_news_by_request(request)
+		context["spielzeiten"]=get_spielzeiten_by_request(request)
+		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id, spieltag_id)
+		return self.render_to_response(context)
 
 def get_news_by_request(request):
-    news=News.objects.all().order_by("datum").reverse()
-    return NewsTO(news)
+	news=News.objects.all().order_by("datum").reverse()
+	return NewsTO(news)
 
 def get_spielzeiten_by_request(request):
-    szTOs=[]
-    for sz in Spielzeit.objects.all().order_by("id"):
-        szTOs.append(SpielzeitBezeichnerTO(sz))
-    return szTOs
+	szTOs=[]
+	for sz in Spielzeit.objects.all().order_by("id"):
+		szTOs.append(SpielzeitBezeichnerTO(sz))
+	return szTOs
 
 def get_spielzeit_by_request(request, spielzeit_id, spieltag_id):
-    if spielzeit_id == None:
-        sz = Spielzeit.objects.all().order_by("id")[0]
-    else:
-        sz = Spielzeit.objects.get(pk=spielzeit_id)
-    if spieltag_id == None:
-        st = sz.next_spieltag()
-        if st.is_tippable():
-            st_prev = st.previous()
-            if st_prev != None:
-                st = st_prev
-    else:
-        st = sz.spieltag_set.get(pk=spieltag_id)
-    aktueller_spieltagTO = get_spieltag_by_request(request, st)
-    tabelle = TabelleDAO.spielzeit(sz.id)
-    bestenliste = BestenlisteDAO.spielzeit(sz.id)
-    return SpielzeitTO(sz, aktueller_spieltagTO, tabelle, bestenliste)
+	if spielzeit_id == None:
+		sz = Spielzeit.objects.all().order_by("id")[0]
+	else:
+		sz = Spielzeit.objects.get(pk=spielzeit_id)
+	if spieltag_id == None:
+		st = sz.next_spieltag()
+		if st.is_tippable():
+				st_prev = st.previous()
+				if st_prev != None:
+					st = st_prev
+	else:
+		st = sz.spieltag_set.get(pk=spieltag_id)
+	aktueller_spieltagTO = get_spieltag_by_request(request, st)
+	tabelle = TabelleDAO.spielzeit(sz.id)
+	bestenliste = BestenlisteDAO.spielzeit(sz.id)
+	return SpielzeitTO(sz, aktueller_spieltagTO, tabelle, bestenliste)
 
 def get_spieltag_by_request(request, st):
-    count_spiele = 0
-    count_eigene_tipps = 0
-    spieleTOs = []
-    for spiel in st.spiel_set.all().order_by("datum"):
-        count_spiele += 1
-        tipps = spiel.tipp_set.all()
-        try:
-            eigenerTipp = tipps.filter(user_id = request.user.id)[0]
-            count_eigene_tipps += 1
-        except:
-            eigenerTipp = None
-        andereTipps = tipps.exclude(user_id = request.user.id)
-        spieleTOs.append(SpielTO(spiel, eigenerTipp, andereTipps))
-    naechster = st.next()
-    vorheriger = st.previous()
-    bestenliste = BestenlisteDAO.spieltag(st.id)
-    return SpieltagTO(st, spieleTOs, count_spiele == count_eigene_tipps, naechster, vorheriger, bestenliste)
+	count_spiele = 0
+	count_eigene_tipps = 0
+	spieleTOs = []
+	for spiel in st.spiel_set.all().order_by("datum"):
+		count_spiele += 1
+		tipps = spiel.tipp_set.all()
+		try:
+				eigenerTipp = tipps.filter(user_id = request.user.id)[0]
+				count_eigene_tipps += 1
+		except:
+				eigenerTipp = None
+		andereTipps = tipps.exclude(user_id = request.user.id)
+		spieleTOs.append(SpielTO(spiel, eigenerTipp, andereTipps))
+	naechster = st.next()
+	vorheriger = st.previous()
+	bestenliste = BestenlisteDAO.spieltag(st.id)
+	return SpieltagTO(st, spieleTOs, count_spiele == count_eigene_tipps, naechster, vorheriger, bestenliste)
 
 ### old:
 
@@ -124,10 +126,10 @@ def user_site(request, spielzeit_id=None):
 	if(spieltag is None or (spieltag.previous() is not None and spieltag.previous().is_tippable())):
 		#noch kein abgeschlossener Spieltag -> noch keine Statistik!
 		return render_to_response("stats/user.html",\
-                {"spieltag":spieltag,\
-                "spielzeit":aktuelle_spielzeit,\
-                "spielzeiten":spielzeiten} ,\
-                context_instance=RequestContext(request))
+					{"spieltag":spieltag,\
+					"spielzeit":aktuelle_spielzeit,\
+					"spielzeiten":spielzeiten} ,\
+					context_instance=RequestContext(request))
 		
 	if(spieltag.is_tippable()):
 		spieltag=spieltag.previous()
@@ -197,18 +199,18 @@ def user_site(request, spielzeit_id=None):
 	
 
 	return render_to_response("stats/user.html",\
-                {"spieltag":spieltag,\
-                "spielzeit":aktuelle_spielzeit,\
-                "spieltag_punkte":points_spieltag,\
-                "spieltag_punkte_diff":points_diff,\
-                "best_tipp":best_tipp,\
-                "worst_tipp":worst_tipp,\
-                "punkte_anteile":punkte_anteile,\
-                "spielzeiten":spielzeiten,\
-                "tabelle":Tabelle().getMannschaftPlatz(aktuelle_spielzeit),\
-                "spieltag_punkte_diff_player":spieltag_punkte_diff_player,\
+					{"spieltag":spieltag,\
+					"spielzeit":aktuelle_spielzeit,\
+					"spieltag_punkte":points_spieltag,\
+					"spieltag_punkte_diff":points_diff,\
+					"best_tipp":best_tipp,\
+					"worst_tipp":worst_tipp,\
+					"punkte_anteile":punkte_anteile,\
+					"spielzeiten":spielzeiten,\
+					"tabelle":Tabelle().getMannschaftPlatz(aktuelle_spielzeit),\
+					"spieltag_punkte_diff_player":spieltag_punkte_diff_player,\
 				"spieltipp":spieltipp_previous} ,\
-                context_instance=RequestContext(request))
+					context_instance=RequestContext(request))
 
 
 def best(request, full=True):
@@ -468,14 +470,14 @@ def saisontipp(request, spielzeit_id=None, message=None):
 		"mannschaften":mannschaften, \
 		"spielzeiten" :spielzeiten,  \
 		"meistertipp" :meistertipp,  \
-		"absteiger1"  :absteiger1,   \
-		"absteiger2"  :absteiger2,   \
-		"absteiger3"  :absteiger3,   \
+		"absteiger1"  :absteiger1,	\
+		"absteiger2"  :absteiger2,	\
+		"absteiger3"  :absteiger3,	\
 		"herbstmeistertipp" :herbstmeistertipp,  \
 		"spielzeit_id" :spielzeit_id,  \
 		"spielzeit" :spielzeit,  \
-		"is_pokal"    :is_pokal,     \
-		"message"     :message,      \
+		"is_pokal"	:is_pokal,	\
+		"message"	:message,		\
 		}, \
 		context_instance=RequestContext(request))
 

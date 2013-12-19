@@ -1,3 +1,7 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from models	import Verein, Spielzeit, Spieltag,	Spiel, News
 from django.contrib	import admin
 
@@ -12,7 +16,7 @@ class SpieltagAdmin(admin.ModelAdmin):
 	list_filter	= ["spielzeit"]
 	inlines	= [SpielInline]
 	fieldsets =	[
-		(None,				 {'fields':	['spielzeit']}),
+		(None,				{'fields':	['spielzeit']}),
 		('Datum', {'fields': ['datum'],	'classes': ['collapse']}),
 		('Anzeige',	{'fields': ['nummer', 'bezeichner'], 'classes':	['collapse']}),
 	]

@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 
 
 class BootstrapException(Exception):
-    pass
+	pass
 
 
 class BootstrapError(BootstrapException):
-    pass
+	pass
