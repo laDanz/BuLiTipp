@@ -5,16 +5,14 @@
 {% block content %}
 <ul class="nav nav-tabs">
 {% for sz in spielzeiten%}
-	<li 
-		{% if forloop.first %} class="active"{% endif %}><a href="{% url home sz.id %}" data-toggle="tab">{{sz.bezeichner}}</a></li>
-	
+	<li {% if sz.id == spielzeit.id %} class="active"{% endif %}><a href="{% url home sz.id %}">{{sz.bezeichner}}</a></li>
 {% endfor %}
 	
 </ul>
 <!-- Tab panes -->
 {% with sz=spielzeit %}
 <div class="tab-content">
-	 <div class="tab-pane {% if forloop.first %}active{% endif %}" id="sz{{sz.id}}">
+	 <div class="tab-pane active" id="sz{{sz.id}}">
 		  <div class="row">
 				<div class="col-md-4 hidden-md">
 					 {% include "totest/messages.html" %}
