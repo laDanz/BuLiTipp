@@ -1,0 +1,41 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}BuLiTipp 2000{% endblock %}
+
+{% block content %}
+<ul class="nav nav-tabs">
+{% for sz in spielzeiten%}
+   <li {% if forloop.first %}class="active"{% endif %}><a href="#sz{{sz.id}}" data-toggle="tab">{{sz.bezeichner}}</a></li>
+   
+{% endfor %}
+   
+</ul>
+<!-- Tab panes -->
+{% for sz in spielzeiten%}
+<div class="tab-content">
+    <div class="tab-pane {% if forloop.first %}active{% endif %}" id="sz{{sz.id}}">
+        <div class="row">
+            <div class="col-md-4 hidden-md">
+                {% include "totest/messages.html" %}
+            </div>
+            <div class="col-md-1 visible-md">
+                link
+            </div>
+            <div class="col-md-5 hidden-md">
+            {% with spieltag=sz.aktuellerSpieltag %}
+                {% include "totest/spieltag.html" %}
+            {% endwith %}
+            </div>
+            <div class="col-md-10 visible-md">
+                {% include "totest/spieltag.html" %}
+            </div>
+            <div class="col-md-3 hidden-md">
+                {% with bestenliste=sz.bestenliste  %}
+                    {% include "totest/bestenliste.html" %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

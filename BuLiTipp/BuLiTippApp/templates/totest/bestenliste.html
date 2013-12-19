@@ -1,0 +1,18 @@
+﻿{% load url from future %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th >Platz</th ><th >Mitspieler</th ><th >Punkte</th >
+            </tr>
+        </thead>
+        <tbody>
+        
+        {% for blp in bestenliste.bestenlistenPlatz %}
+            <tr>
+                <td>{{blp.position}}</td><td>{{blp.user.username}}</td><td>{{blp.punkte}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,19 @@
+﻿{% load url from future %}
+<div class="panel-group" id="accordion">
+{% for news_ in news.news%}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Nachricht von {% firstof news_.author.first_name news_.author.username %} am {{news_.datum}}
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+        {{news_.text|safe}}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>

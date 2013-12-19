@@ -30,6 +30,8 @@ class ErgebnisTO(object):
             self.auswTore = None
             self.toto = None
     def __unicode__(self):
+        if self.heimTore == None or self.auswTore == None:
+            return "DNF"
         return "%s:%s" % (self.heimTore, self.auswTore)
     def __str__(self):
         return unicode(self)
@@ -67,7 +69,7 @@ class SpielTO(object):
         return unicode(self)
 
 class SpieltagTO(object):
-    def __init__(self, spieltag=None, spieleTOs=[], vollstaendigGetippt=False, naechster=None, vorheriger=None):
+    def __init__(self, spieltag=None, spieleTOs=[], vollstaendigGetippt=False, naechster=None, vorheriger=None, bestenliste=None):
         self.bezeichner = spieltag.bezeichner
         self.nummer = spieltag.nummer
         self.datum = spieltag.datum
@@ -77,6 +79,7 @@ class SpieltagTO(object):
             self.naechster = SpieltagTO(naechster)
         if vorheriger != None:
             self.vorheriger = SpieltagTO(vorheriger)
+        self.bestenliste = bestenliste
     def __unicode__(self):
         return "Spieltag %s(%s)" % (str(self.nummer), self.bezeichner)
     def __str__(self):

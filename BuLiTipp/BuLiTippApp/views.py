@@ -13,7 +13,8 @@ from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
 from django.db import IntegrityError
 from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte
-from models import NewsTO
+from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO
+from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
 from sets import Set
 import operator
@@ -30,9 +31,57 @@ class NewsPageView(TemplateView):
         context["news"]=get_news_by_request(request)
         return self.render_to_response(context)
 
+class HomePageView(TemplateView):
+    template_name = 'totest/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomePageView, self).get_context_data(**kwargs)
+        return context
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context["news"]=get_news_by_request(request)
+        # immer alle Spielzeiten+Tabellen+Bestenlisten übergeben, oder nur die jeweils aktuelle? Perfomanz?
+        context["spielzeiten"]=get_spielzeiten_by_request(request)
+        return self.render_to_response(context)
+
 def get_news_by_request(request):
     news=News.objects.all().order_by("datum").reverse()
     return NewsTO(news)
+
+def get_spielzeiten_by_request(request):
+    spielzeitenTO = []
+    spielzeiten = Spielzeit.objects.all().order_by("id")
+    for sz in spielzeiten:
+        # den letzten Spieltag ermitteln
+        st = sz.next_spieltag()
+        if st.is_tippable():
+            st_prev = st.previous()
+            if st_prev != None:
+                st = st_prev
+        aktueller_spieltagTO = get_spieltag_by_request(request, st)
+        tabelle = TabelleDAO.spielzeit(sz.id)
+        bestenliste = BestenlisteDAO.spielzeit(sz.id)
+        spielzeitenTO.append( SpielzeitTO(sz, aktueller_spieltagTO, tabelle, bestenliste) )
+    return spielzeitenTO
+
+def get_spieltag_by_request(request, st):
+    count_spiele = 0
+    count_eigene_tipps = 0
+    spieleTOs = []
+    for spiel in st.spiel_set.all().order_by("datum"):
+        count_spiele += 1
+        tipps = spiel.tipp_set.all()
+        try:
+            eigenerTipp = tipps.filter(user_id = request.user.id)[0]
+            count_eigene_tipps += 1
+        except:
+            pass
+        andereTipps = tipps.exclude(user_id = request.user.id)
+        spieleTOs.append(SpielTO(spiel, eigenerTipp, andereTipps))
+    naechster = st.next()
+    vorheriger = st.previous()
+    bestenliste = BestenlisteDAO.spieltag(st.id)
+    return SpieltagTO(st, spieleTOs, count_spiele == count_eigene_tipps, naechster, vorheriger, bestenliste)
 
 ### old:
 
