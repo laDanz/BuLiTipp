@@ -69,19 +69,19 @@
 {% endif %}
 
 {% if no_navigation != "true" %}
-{% if spieltag.previous.id > 0 %}
-	<a href="{% url "BuLiTippApp.views.detail" spieltag.previous.id %}">
+{% if spieltag.vorheriger.id > 0 %}
+	<a href="{% url "home" 2 spieltag.vorheriger.id %}">
 	{% endif %}
 	<- vorheriger
-	{% if spieltag.previous.id > 0 %}
+	{% if spieltag.vorheriger.id > 0 %}
 	</a>
 {% endif %}
 
-{% if spieltag.next.id > 0 %}
-	<a href="{% url "BuLiTippApp.views.detail" spieltag.next.id %}">
+{% if spieltag.naechster.id > 0 %}
+	<a href="{% url "home" 2 spieltag.naechster.id %}">
 	{% endif %}
 	naechster ->
-	{% if spieltag.next.id > 0 %}
+	{% if spieltag.naechster.id > 0 %}
 	</a>
 {% endif %}
 direkt zu:
