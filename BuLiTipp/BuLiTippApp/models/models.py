@@ -16,6 +16,7 @@ class News(models.Model):
 		app_label = 'BuLiTippApp'
 	author = models.ForeignKey(User)
 	datum = models.DateTimeField()
+	title = models.CharField(max_length=100)
 	text = models.CharField(max_length=1000)
 	
 

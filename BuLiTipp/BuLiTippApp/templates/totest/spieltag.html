@@ -28,7 +28,7 @@
 			{% else %}
 				{% if user.is_staff %}
 
-					<a href ="{% url "admin:BuLiTippApp_spieltag_change" 1 %}">
+					<a href ="{% url "admin:BuLiTippApp_spieltag_change" spieltag.id %}">
 				
 				{% endif %}
 					eintragen!
@@ -60,7 +60,7 @@
 {% if user.is_authenticated %}	
 <input type="submit" value="Tipp abgeben!" />
 	{% if user.is_staff %}
-         <a href ="{% url "admin:BuLiTippApp_spieltag_change" 1 %}">als Admin bearbeiten</a>
+         <a href ="{% url "admin:BuLiTippApp_spieltag_change" spieltag.id %}">als Admin bearbeiten</a>
     {% endif %}
 {% endif %}
 </form>
@@ -70,7 +70,7 @@
 
 {% if no_navigation != "true" %}
 {% if spieltag.vorheriger.id > 0 %}
-	<a href="{% url "home" 2 spieltag.vorheriger.id %}">
+	<a href="{% url "home" spielzeit.id spieltag.vorheriger.id %}">
 	{% endif %}
 	<- vorheriger
 	{% if spieltag.vorheriger.id > 0 %}
@@ -78,7 +78,7 @@
 {% endif %}
 
 {% if spieltag.naechster.id > 0 %}
-	<a href="{% url "home" 2 spieltag.naechster.id %}">
+	<a href="{% url "home" spielzeit.id spieltag.naechster.id %}">
 	{% endif %}
 	naechster ->
 	{% if spieltag.naechster.id > 0 %}
