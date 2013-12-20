@@ -52,7 +52,8 @@ class HomePageView(TemplateView):
 		context = self.get_context_data(**kwargs)
 		context["news"]=get_news_by_request(request)
 		context["spielzeiten"]=get_spielzeiten_by_request(request)
-		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id, spieltag_id)
+		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id)
+		context["spieltag"]=get_spieltag_by_request(request, spielzeit_id, spieltag_id)
 		return self.render_to_response(context)
 	def post(self, request, *args, **kwargs):
 		return self.get(request, *args, **kwargs)
@@ -67,7 +68,26 @@ def get_spielzeiten_by_request(request):
 		szTOs.append(SpielzeitBezeichnerTO(sz))
 	return szTOs
 
-def get_spielzeit_by_request(request, spielzeit_id, spieltag_id):
+def get_spielzeit_by_request(request, spielzeit_id):
+	if spielzeit_id == None:
+		sz = Spielzeit.objects.all().order_by("id")[0]
+	else:
+		sz = Spielzeit.objects.get(pk=spielzeit_id)
+	st = sz.next_spieltag()
+	if st.is_tippable():
+			st_prev = st.previous()
+			if st_prev != None:
+				st = st_prev
+	# TODO: kompletten SpieltagTO, oder abgespeckte Variante fuer aktuellenSpieltag?
+	aktueller_spieltagTO = get_spieltagTO_by_request(request, st)
+	tabelle = TabelleDAO.spielzeit(sz.id)
+	bestenliste = BestenlisteDAO.spielzeit(sz.id)
+	spieltage = []
+	for st in sz.spieltag_set.all().order_by("nummer"):
+		spieltage.append(SpieltagTO(st))
+	return SpielzeitTO(sz, aktueller_spieltagTO, tabelle, bestenliste, spieltage)
+
+def get_spieltag_by_request(request, spielzeit_id, spieltag_id):
 	if spielzeit_id == None:
 		if spieltag_id != None:
 			# wenn spieltag, aber nicht spielzeit übergeben ist, dann bestimme spielzeit aus spieltag
@@ -84,15 +104,9 @@ def get_spielzeit_by_request(request, spielzeit_id, spieltag_id):
 					st = st_prev
 	else:
 		st = sz.spieltag_set.get(pk=spieltag_id)
-	aktueller_spieltagTO = get_spieltag_by_request(request, st)
-	tabelle = TabelleDAO.spielzeit(sz.id)
-	bestenliste = BestenlisteDAO.spielzeit(sz.id)
-	spieltage = []
-	for st in sz.spieltag_set.all().order_by("nummer"):
-		spieltage.append(SpieltagTO(st))
-	return SpielzeitTO(sz, aktueller_spieltagTO, tabelle, bestenliste, spieltage)
+	return get_spieltagTO_by_request(request, st)
 
-def get_spieltag_by_request(request, st):
+def get_spieltagTO_by_request(request, st):
 	count_spiele = 0
 	count_eigene_tipps = 0
 	spieleTOs = []
