@@ -36,7 +36,7 @@ class NewsPageView(TemplateView):
 
 class HomePageView(TemplateView):
 	template_name = 'totest/home.html'
-
+	referer = "home"
 	def get_context_data(self, **kwargs):
 		context = super(HomePageView, self).get_context_data(**kwargs)
 		return context
@@ -54,9 +54,14 @@ class HomePageView(TemplateView):
 		context["spielzeiten"]=get_spielzeiten_by_request(request)
 		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id)
 		context["spieltag"]=get_spieltag_by_request(request, spielzeit_id, spieltag_id)
+		context["referer"]=self.referer #request.META["HTTP_REFERER"]
 		return self.render_to_response(context)
 	def post(self, request, *args, **kwargs):
 		return self.get(request, *args, **kwargs)
+
+class SpieltagView(HomePageView):
+	template_name = 'totest/st.html'
+	referer = "spieltag"
 
 def get_news_by_request(request):
 	news=News.objects.all().order_by("datum").reverse()
