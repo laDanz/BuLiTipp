@@ -14,9 +14,17 @@
 <div class="tab-content">
 	 <div class="tab-pane active" id="sz{{sz.id}}">
 		  <div class="row">
-				<div class="col-md-4 hidden-md">
-					 {% include "totest/messages.html" %}
-				</div>
+				{% if spielzeit.istPokal %}
+					<div class="col-md-4 hidden-md">
+						{% include "totest/messages.html" %}
+					</div>
+				{% else %}
+					<div class="col-md-4 hidden-md">
+						{% with tabelle=spielzeit.tabelle %}
+							{% include "totest/tabelle.html" %}
+						{% endwith %}
+					</div>
+				{% endif %}
 				<div class="col-md-1 visible-md">
 					 link
 				</div>
