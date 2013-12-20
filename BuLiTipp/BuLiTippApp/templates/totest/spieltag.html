@@ -86,8 +86,8 @@
 {% endif %}
 direkt zu:
 <select name="spieltag" size="1" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-{% for st in spieltag.spielzeit.spieltag_set.all %}
-	<option value="{% url "BuLiTippApp.views.detail" st.id %}">{{st.nummer}}</option>
+{% for st in spielzeit.spieltage %}
+	<option value="{% url "home" spielzeit.id st.id %}">{{st.nummer}}</option>
 {% endfor %}
 </select>
 {% endif %}

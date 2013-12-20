@@ -87,7 +87,10 @@ def get_spielzeit_by_request(request, spielzeit_id, spieltag_id):
 	aktueller_spieltagTO = get_spieltag_by_request(request, st)
 	tabelle = TabelleDAO.spielzeit(sz.id)
 	bestenliste = BestenlisteDAO.spielzeit(sz.id)
-	return SpielzeitTO(sz, aktueller_spieltagTO, tabelle, bestenliste)
+	spieltage = []
+	for st in sz.spieltag_set.all().order_by("nummer"):
+		spieltage.append(SpieltagTO(st))
+	return SpielzeitTO(sz, aktueller_spieltagTO, tabelle, bestenliste, spieltage)
 
 def get_spieltag_by_request(request, st):
 	count_spiele = 0
