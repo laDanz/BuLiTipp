@@ -34,20 +34,21 @@ class NewsPageView(TemplateView):
 		return self.render_to_response(context)
 
 class HomePageView(TemplateView):
-	template_name = 'totest/home.html'
+#	template_name = 'home/hm_index.html'
+	template_name = 'totest/spieltag.html'
 
 	def get_context_data(self, **kwargs):
 		context = super(HomePageView, self).get_context_data(**kwargs)
 		return context
 	def get(self, request, *args, **kwargs):
 		if "spieltag_id" in kwargs:
-				spieltag_id = kwargs["spieltag_id"]
+			spieltag_id = kwargs["spieltag_id"]
 		else:
-				spieltag_id = None
+			spieltag_id = None
 		if "spielzeit_id" in kwargs:
-				spielzeit_id = kwargs["spielzeit_id"]
+			spielzeit_id = kwargs["spielzeit_id"]
 		else:
-				spielzeit_id = None
+			spielzeit_id = None
 		context = self.get_context_data(**kwargs)
 		context["news"]=get_news_by_request(request)
 		context["spielzeiten"]=get_spielzeiten_by_request(request)
