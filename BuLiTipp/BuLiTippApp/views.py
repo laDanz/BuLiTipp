@@ -78,8 +78,7 @@ def get_spielzeit_by_request(request, spielzeit_id):
 			st_prev = st.previous()
 			if st_prev != None:
 				st = st_prev
-	# TODO: kompletten SpieltagTO, oder abgespeckte Variante fuer aktuellenSpieltag?
-	aktueller_spieltagTO = get_spieltagTO_by_request(request, st)
+	aktueller_spieltagTO = SpieltagTO(st)
 	tabelle = TabelleDAO.spielzeit(sz.id)
 	bestenliste = BestenlisteDAO.spielzeit(sz.id)
 	spieltage = []
