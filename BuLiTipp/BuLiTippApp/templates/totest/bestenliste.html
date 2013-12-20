@@ -9,7 +9,7 @@
         <tbody>
         
         {% for blp in bestenliste.bestenlistenPlatz %}
-            <tr>
+            <tr {% if user = blp.user %}class="active"{% endif %}>
                 <td>{{blp.position}}</td><td>{{blp.user.username}}</td><td>{{blp.punkte}}</td>
             </tr>
         {% endfor %}

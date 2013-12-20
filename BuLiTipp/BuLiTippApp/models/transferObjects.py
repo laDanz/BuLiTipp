@@ -102,11 +102,12 @@ class SpielzeitBezeichnerTO(object):
 		return unicode(self)
 
 class SpielzeitTO(SpielzeitBezeichnerTO):
-	def __init__(self, spielzeit=None, aktueller_spieltagTO=None, tabelle=None, bestenliste=None):
+	def __init__(self, spielzeit=None, aktueller_spieltagTO=None, tabelle=None, bestenliste=None, spieltage=None):
 		super(SpielzeitTO, self).__init__(spielzeit)
 		self.aktuellerSpieltag = aktueller_spieltagTO
 		self.tabelle = tabelle
 		self.bestenliste = bestenliste
+		self.spieltage = spieltage
 
 class BestenlistenPlatzTO(object):
 	def __init__(self, position=None, user=None, punkte=None):
