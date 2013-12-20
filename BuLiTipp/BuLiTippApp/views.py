@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login as djlogin, logout as djlogout
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic.base import TemplateView
@@ -53,6 +54,8 @@ class HomePageView(TemplateView):
 		context["spielzeiten"]=get_spielzeiten_by_request(request)
 		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id, spieltag_id)
 		return self.render_to_response(context)
+	def post(self, request, *args, **kwargs):
+		return self.get(request, *args, **kwargs)
 
 def get_news_by_request(request):
 	news=News.objects.all().order_by("datum").reverse()
@@ -66,7 +69,11 @@ def get_spielzeiten_by_request(request):
 
 def get_spielzeit_by_request(request, spielzeit_id, spieltag_id):
 	if spielzeit_id == None:
-		sz = Spielzeit.objects.all().order_by("id")[0]
+		if spieltag_id != None:
+			# wenn spieltag, aber nicht spielzeit übergeben ist, dann bestimme spielzeit aus spieltag
+			sz = Spieltag.objects.get(pk=spieltag_id).spielzeit
+		else:
+			sz = Spielzeit.objects.all().order_by("id")[0]
 	else:
 		sz = Spielzeit.objects.get(pk=spielzeit_id)
 	if spieltag_id == None:
@@ -383,7 +390,9 @@ def tippen(request, spieltag_id):
 	#GET -> redirect to detail page
 	if len(tipps)==0:
 		return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
-	return detail(request, spieltag_id, info=info)
+	#return detail(request, spieltag_id, info=info)
+	messages.success(request, 'Erfolgreich getippt!')
+	return HomePageView.as_view()(request, spieltag_id=spieltag_id)
 
 @login_required
 def saisontipp(request, spielzeit_id=None, message=None):

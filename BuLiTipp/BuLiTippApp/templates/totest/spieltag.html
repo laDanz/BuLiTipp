@@ -4,7 +4,7 @@
 {% load url from future %}
 {% load filters %}
 {% if spieltag.spiele %}
-<form action="{% url "BuLiTippApp.views.tippen" 1  %}" method="post">
+<form action="{% url "BuLiTippApp.views.tippen" spieltag.id  %}" method="post">
 {% csrf_token  %}
 
     <table>
