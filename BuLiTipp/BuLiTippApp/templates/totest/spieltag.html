@@ -3,7 +3,6 @@
 
 {% load url from future %}
 {% load filters %}
-Demo
 {% if spieltag.spiele %}
 <form action="{% url "BuLiTippApp.views.tippen" spieltag.id  %}" method="post">
 {% csrf_token  %}
@@ -71,7 +70,7 @@ Demo
 
 {% if no_navigation != "true" %}
 {% if spieltag.vorheriger.id > 0 %}
-	<a href="{% url "home" spielzeit.id spieltag.vorheriger.id %}">
+	<a href="{% url referer spielzeit.id spieltag.vorheriger.id %}">
 	{% endif %}
 	<- vorheriger
 	{% if spieltag.vorheriger.id > 0 %}
@@ -79,7 +78,7 @@ Demo
 {% endif %}
 
 {% if spieltag.naechster.id > 0 %}
-	<a href="{% url "home" spielzeit.id spieltag.naechster.id %}">
+	<a href="{% url referer spielzeit.id spieltag.naechster.id %}">
 	{% endif %}
 	naechster ->
 	{% if spieltag.naechster.id > 0 %}
@@ -88,7 +87,7 @@ Demo
 direkt zu:
 <select name="spieltag" size="1" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
 {% for st in spielzeit.spieltage %}
-	<option value="{% url "home" spielzeit.id st.id %}">{{st.nummer}}</option>
+	<option value="{% url referer spielzeit.id st.id %}">{{st.nummer}}</option>
 {% endfor %}
 </select>
 {% endif %}

@@ -35,29 +35,33 @@ class NewsPageView(TemplateView):
 		return self.render_to_response(context)
 
 class HomePageView(TemplateView):
-	template_name = 'home/hm_index.html'
-	#template_name = 'totest/home.html'
-
+	template_name = 'totest/home.html'
+	referer = "home"
 	def get_context_data(self, **kwargs):
 		context = super(HomePageView, self).get_context_data(**kwargs)
 		return context
 	def get(self, request, *args, **kwargs):
 		if "spieltag_id" in kwargs:
-			spieltag_id = kwargs["spieltag_id"]
+				spieltag_id = kwargs["spieltag_id"]
 		else:
-			spieltag_id = None
+				spieltag_id = None
 		if "spielzeit_id" in kwargs:
-			spielzeit_id = kwargs["spielzeit_id"]
+				spielzeit_id = kwargs["spielzeit_id"]
 		else:
-			spielzeit_id = None
+				spielzeit_id = None
 		context = self.get_context_data(**kwargs)
 		context["news"]=get_news_by_request(request)
 		context["spielzeiten"]=get_spielzeiten_by_request(request)
 		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id)
 		context["spieltag"]=get_spieltag_by_request(request, spielzeit_id, spieltag_id)
+		context["referer"]=self.referer #request.META["HTTP_REFERER"]
 		return self.render_to_response(context)
 	def post(self, request, *args, **kwargs):
 		return self.get(request, *args, **kwargs)
+
+class SpieltagView(HomePageView):
+	template_name = 'totest/st.html'
+	referer = "spieltag"
 
 def get_news_by_request(request):
 	news=News.objects.all().order_by("datum").reverse()
@@ -79,8 +83,7 @@ def get_spielzeit_by_request(request, spielzeit_id):
 			st_prev = st.previous()
 			if st_prev != None:
 				st = st_prev
-	# TODO: kompletten SpieltagTO, oder abgespeckte Variante fuer aktuellenSpieltag?
-	aktueller_spieltagTO = get_spieltagTO_by_request(request, st)
+	aktueller_spieltagTO = SpieltagTO(st)
 	tabelle = TabelleDAO.spielzeit(sz.id)
 	bestenliste = BestenlisteDAO.spielzeit(sz.id)
 	spieltage = []
