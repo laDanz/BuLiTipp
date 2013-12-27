@@ -3,6 +3,7 @@
 
 {% load url from future %}
 {% load filters %}
+Demo
 {% if spieltag.spiele %}
 <form action="{% url "BuLiTippApp.views.tippen" spieltag.id  %}" method="post">
 {% csrf_token  %}

@@ -1,5 +1,5 @@
 ﻿{% load url from future %}
-
+STNx
 <form id="form_v" action="" method="get">
 		{% csrf_token %}
 		<input type="hidden" name="spieltag" value="{{spieltag|add:"-1"}}" />
@@ -15,17 +15,33 @@
 				<a href="javascript:{}" onclick="document.getElementById('form_v').submit(); return false;">Voriger</a>
 		</li>
 		<li class="dropdown">
-				<a id="drop5" class="dropdown-toggle" data-toggle="dropdown" href="#">Spieltag {{spieltag}} <b class="caret"></b></a><!-- role="button"		-->
-				<ul id="menu2" class="dropdown-menu" role="menu" aria-labelledby="drop5">
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spieltag 01</a></li>
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spieltag 02</a></li>
-						<li role="presentation" class="active"><a role="menuitem" tabindex="-1" href="#">Spieltag 03</a></li>
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spieltag 04</a></li>
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spieltag 05</a></li>
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spieltag 06</a></li>
-		  </ul>
+			<a id="drop5" class="dropdown-toggle" data-toggle="dropdown" href="#">
+				Spieltag {{spielzeit.aktuellerSpieltag.nummer}} <b class="caret"></b>
+			</a><!-- role="button"		-->
+			<ul id="menu2" class="dropdown-menu" role="menu" aria-labelledby="drop5">
+			{% for st in spielzeit.spieltage %}
+				<li role="presentation" 
+					{% if st.nummer == spielzeit.aktuellerSpieltag.nummer %}
+						class="active"
+					{% endif %}
+				><a role="menuitem" tabindex="-1" href="#">Spieltag {{st.nummer}}</a></li>
+			{% endfor %}
+			</ul>
 		</li>
 		<li>
 				<a href="javascript:{}" onclick="document.getElementById('form_n').submit(); return false;">Nächster</a>
 		</li>
 </ul>
+<div class="dropdown">
+  <button class="btn dropdown-toggle sr-only" type="button" id="dropdownMenu1" data-toggle="dropdown">
+    Dropdown
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+    <li role="presentation" class="divider"></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+  </ul>
+</div>

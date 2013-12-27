@@ -35,8 +35,8 @@ class NewsPageView(TemplateView):
 		return self.render_to_response(context)
 
 class HomePageView(TemplateView):
-#	template_name = 'home/hm_index.html'
-	template_name = 'totest/spieltag.html'
+	template_name = 'home/hm_index.html'
+	#template_name = 'totest/home.html'
 
 	def get_context_data(self, **kwargs):
 		context = super(HomePageView, self).get_context_data(**kwargs)
