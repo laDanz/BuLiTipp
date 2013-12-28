@@ -1,12 +1,10 @@
 <!-- Optional: no_navigation="true"  -->
-
-
 {% load url from future %}
 {% load filters %}
 {% if spieltag.spiele %}
 <form action="{% url "BuLiTippApp.views.tippen" spieltag.id  %}" method="post">
 {% csrf_token  %}
-
+toTest_spieltag
     <table>
         <tr>
 		<td><b>Spiel</b></td>

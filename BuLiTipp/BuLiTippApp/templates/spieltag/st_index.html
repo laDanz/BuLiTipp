@@ -3,71 +3,66 @@
 {% block title %}BuLiTipp Spieltag 2000{% endblock %}
 
 {% block content %}
-
+<!--st_index-->
 <ul class="nav nav-tabs">
-		<li ><a href="#buli" data-toggle="tab">Bundesliga</a></li>
-		<li class="active"><a href="#pokal" data-toggle="tab">DFB-Pokal</a></li>
-		<li ><a href="#wm" data-toggle="tab">WM</a></li>
+	<li ><a href="#buli" data-toggle="tab">Bundesliga</a></li>
+	<li class="active"><a href="#pokal" data-toggle="tab">DFB-Pokal</a></li>
+	<li ><a href="#wm" data-toggle="tab">WM</a></li>
 </ul>
-
-
 
 <!-- Tab panes -->
 <div class="tab-content">
-		<div class="tab-pane" id="buli">
-				<div class="row">
-						<div class="col-md-8">
-								{% include "spieltag/st_buli.html" %}
-						</div>
-						<div class="col-md-4">
-								<h2>Bestenliste</h2>
-								{% include "bestenliste/bl_buli.html" %}
-						</div>
+	<div class="tab-pane" id="buli">
+		<div class="row">
+			<div class="col-md-8">
+				{% include "spieltag/st_detail.html" %}
+			</div>
+			<div class="col-md-4">
+				<h2>Bestenliste</h2>
+				{% include "bestenliste/bl_detail.html" %}
+			</div>
+		</div>
+	</div>
+	<div class="tab-pane active" id="pokal">
+		<div class="row">
+			{% if spieltag <= 3 %}
+				<div class="col-md-6">
+					{% include "spieltag/st_detail.html" %}
 				</div>
-		</div>
-		<div class="tab-pane active" id="pokal">
-				<div class="row">
-						{% if spieltag <= 3 %}
-								<div class="col-md-6">
-										{% include "spieltag/st_dfb.html" %}
-								</div>
-								<div class="col-md-2" id="andereTable" style="overflow: hidden; padding-top:55px;" onmouseout="pid=setInterval(move, 100);" onmouseover="clearInterval(pid);">
-												{% include "spieltag/andere.html" %}
-								</div>
-								<script>
-										tab=document.getElementById('andereTable')
-										tab.scrollLeft=0
-										reverse=true
-										diff=2
-										x=0
-										function move(){
-												if(reverse){
-														x+=diff
-												}else{
-														x-=diff
-												}
-												
-												tab.scrollLeft=x
-												if(x>tab.offsetWidth || x<0){
-														reverse= !reverse
-												}
-										}
-										pid=setInterval(move, 100);
-										
-								</script>
-						{% else %}
-								<div class="col-md-8">
-										{% include "spieltag/st_dfb.html" %}
-								</div>
-						{% endif %}
-						<div class="col-md-4">
-								<h2>Bestenliste</h2>
-								{% include "bestenliste/bl_dfb.html" %}
-						</div>
+				<div class="col-md-2" id="andereTable" style="overflow: hidden; padding-top:55px;" onmouseout="pid=setInterval(move, 100);" onmouseover="clearInterval(pid);">
 				</div>
-		</div>
-		<div class="tab-pane" id="wm">
-				wm
-		</div>
+				<script>
+					tab=document.getElementById('andereTable')
+					tab.scrollLeft=0
+					reverse=true
+					diff=2
+					x=0
+					function move(){
+							if(reverse){
+									x+=diff
+							}else{
+									x-=diff
+							}
+							tab.scrollLeft=x
+							if(x>tab.offsetWidth || x<0){
+									reverse= !reverse
+							}
+					}
+					pid=setInterval(move, 100);
+				</script>
+			{% else %}
+				<div class="col-md-8">
+					{% include "spieltag/st_detail.html" %}
+				</div>
+			{% endif %}
+			<div class="col-md-4">
+				{% include "bestenliste/bl_detail.html" %}
+			</div>
+		</div><!-- row-->
+	</div><!-- pane-->
+	<div class="tab-pane" id="wm">
+			wm
+	</div>
+</div><!-- content-->
 
 {% endblock %}

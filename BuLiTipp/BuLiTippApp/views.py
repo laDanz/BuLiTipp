@@ -12,19 +12,25 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.csrf import csrf_protect
+from django.views.generic import FormView
 from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
+
 from django.db import IntegrityError
 from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte
 from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichnerTO
 from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
 from sets import Set
+from BuLiTippApp.forms import UserForm, LoginForm
+
 import operator
+from django.forms.forms import Form
 
 ### new:
 class NewsPageView(TemplateView):
-	template_name = 'new_news.html'
+	template_name = 'messages/ms_index.html'
+	referer = "news"
 
 	def get_context_data(self, **kwargs):
 		context = super(NewsPageView, self).get_context_data(**kwargs)
@@ -32,10 +38,12 @@ class NewsPageView(TemplateView):
 	def get(self, request, *args, **kwargs):
 		context = self.get_context_data(**kwargs)
 		context["news"]=get_news_by_request(request)
+		context["referer"]=self.referer #request.META["HTTP_REFERER"]
 		return self.render_to_response(context)
 
 class HomePageView(TemplateView):
-	template_name = 'totest/home.html'
+	#template_name = 'totest/home.html'
+	template_name = 'home/hm_index.html'
 	referer = "home"
 	def get_context_data(self, **kwargs):
 		context = super(HomePageView, self).get_context_data(**kwargs)
@@ -61,7 +69,12 @@ class HomePageView(TemplateView):
 
 class SpieltagView(HomePageView):
 	template_name = 'totest/st.html'
+	template_name = 'spieltag/st_index.html'
 	referer = "spieltag"
+
+class BestenlisteView(HomePageView):
+	template_name = 'bestenliste/bl_index.html'
+	referer = "bestenliste"
 
 def get_news_by_request(request):
 	news=News.objects.all().order_by("datum").reverse()
@@ -103,9 +116,9 @@ def get_spieltag_by_request(request, spielzeit_id, spieltag_id):
 	if spieltag_id == None:
 		st = sz.next_spieltag()
 		if st.is_tippable():
-				st_prev = st.previous()
-				if st_prev != None:
-					st = st_prev
+			st_prev = st.previous()
+			if st_prev != None:
+				st = st_prev
 	else:
 		st = sz.spieltag_set.get(pk=spieltag_id)
 	return get_spieltagTO_by_request(request, st)
@@ -118,16 +131,32 @@ def get_spieltagTO_by_request(request, st):
 		count_spiele += 1
 		tipps = spiel.tipp_set.all()
 		try:
-				eigenerTipp = tipps.filter(user_id = request.user.id)[0]
-				count_eigene_tipps += 1
+			eigenerTipp = tipps.filter(user_id = request.user.id)[0]
+			count_eigene_tipps += 1
 		except:
-				eigenerTipp = None
+			eigenerTipp = None
 		andereTipps = tipps.exclude(user_id = request.user.id)
 		spieleTOs.append(SpielTO(spiel, eigenerTipp, andereTipps))
 	naechster = st.next()
 	vorheriger = st.previous()
 	bestenliste = BestenlisteDAO.spieltag(st.id)
 	return SpieltagTO(st, spieleTOs, count_spiele == count_eigene_tipps, naechster, vorheriger, bestenliste)
+
+class ImpressumView(TemplateView):
+	template_name = 'home/hm_impress.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(ImpressumView, self).get_context_data(**kwargs)
+		messages.info(self.request, 'This is a demo of a message.')
+		return context
+
+class UserFormView(FormView):
+	template_name = 'user/user.html'
+	form_class = UserForm
+
+class LoginFormView(FormView):
+	template_name = 'registration/login.html'
+	form_class = LoginForm
 
 ### old:
 
