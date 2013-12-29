@@ -11,25 +11,25 @@
 		{% csrf_token %}
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="uname">Username:</label>
-				<div class="col-sm-10">
+				<div class="col-sm-4">
 					<input class="form-control" type="text" id="uname" name="username" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="pword">Passwort:</label>
-				<div class="col-sm-10">
+				<div class="col-sm-4">
 					<input type="password" class="form-control" id="pword" name="password" />
 				</div>
 			</div>
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<div class="checkbox">
-				<label>
-					<input type="checkbox"> Remember me
-				</label>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox"> Remember me
+						</label>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<input	class="btn btn-default" type="submit" value="einloggen" />

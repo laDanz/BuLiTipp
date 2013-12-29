@@ -266,7 +266,7 @@ def user_site(request, spielzeit_id=None):
 					"spielzeiten":spielzeiten,\
 					"tabelle":Tabelle().getMannschaftPlatz(aktuelle_spielzeit),\
 					"spieltag_punkte_diff_player":spieltag_punkte_diff_player,\
-				"spieltipp":spieltipp_previous} ,\
+					"spieltipp":spieltipp_previous} ,\
 					context_instance=RequestContext(request))
 
 

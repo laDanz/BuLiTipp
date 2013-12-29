@@ -5,25 +5,30 @@
 {% block content %}
 <!--st_index-->
 <ul class="nav nav-tabs">
-	<li ><a href="#buli" data-toggle="tab">Bundesliga</a></li>
-	<li class="active"><a href="#pokal" data-toggle="tab">DFB-Pokal</a></li>
+	<li class="active"><a href="#buli" data-toggle="tab">Bundesliga</a></li>
+	<li ><a href="#pokal" data-toggle="tab">DFB-Pokal</a></li>
 	<li ><a href="#wm" data-toggle="tab">WM</a></li>
 </ul>
-
 <!-- Tab panes -->
 <div class="tab-content">
-	<div class="tab-pane" id="buli">
+	<div class="tab-pane active" id="buli">
 		<div class="row">
-			<div class="col-md-8">
+			<div class="col-lg-4 hidden-md hidden-sm hidden-xs  ">
+				<h4> Neuigkeiten</h4>
+				{% include "messages/ms_details.html" %}
+			</div>
+			<div class="col-xs-12 col-sm-8 hidden-md hidden-lg ">
+				{% include "spieltag/st_detail_xs.html" %}
+			</div>
+			<div class="col-md-8 col-lg-6 hidden-sm hidden-xs ">
 				{% include "spieltag/st_detail.html" %}
 			</div>
-			<div class="col-md-4">
-				<h2>Bestenliste</h2>
+			<div class="col-sm-4 col-lg-2 ">
 				{% include "bestenliste/bl_detail.html" %}
 			</div>
 		</div>
 	</div>
-	<div class="tab-pane active" id="pokal">
+	<div class="tab-pane" id="pokal">
 		<div class="row">
 			{% if spieltag <= 3 %}
 				<div class="col-md-6">

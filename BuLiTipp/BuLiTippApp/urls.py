@@ -8,6 +8,7 @@ from views import NewsPageView, HomePageView, SpieltagView
 from BuLiTippApp.views import BestenlisteView, UserFormView, ImpressumView, LoginFormView
 
 urlpatterns = patterns('',
+	url(r'^$', HomePageView.as_view(), name='home'),
 	url(r'^/$', HomePageView.as_view(), name='home'),
 	url(r'^news/$', NewsPageView.as_view(), name='news'),
 	url(r'^home/$', HomePageView.as_view(), name='home'),
