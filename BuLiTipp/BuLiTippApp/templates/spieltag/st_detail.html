@@ -1,0 +1,83 @@
+﻿<!-- Optional: no_navigation="true"  -->
+{% load url from future %}
+{% load filters %}
+<!--st_detail-->
+{% if spieltag.spiele %}
+	<form method="post">
+	{% csrf_token  %}
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr >
+					<th colspan=3 class="text-center">Spiel</th >
+					<th class="text-center">Ergebnis</th > 
+					{% if user.is_authenticated %}
+						<th class="text-center">mein_Tipp</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for spiel in spieltag.spiele  %}
+				{% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id szid=spieltag.spielzeit.id%}
+				<tr>
+				<td class="text-right">
+					<b>{{ spiel.heimTeam }}</b>  
+				</td>
+				<td class="text-center">
+					vs 
+				</td>
+				<td class="text-left">
+					<b>{{ spiel.auswTeam }}</b> 
+				</td>
+				<td>
+					<center>
+					{% if spiel.ergebnis == "DNF" %}
+						{% if spiel.tippbar %}
+							tippen!
+						{% else %}
+							{% if user.is_staff %}
+							{% endif %}
+							eintragen!
+							{% if user.is_staff %}
+								</a>
+							{% endif %}
+						{% endif %}
+					{% else %}
+						{{ spiel.ergebnis  }}
+					{% endif %}
+					</center>
+				</td>
+				{% if user.is_authenticated %}
+				<td>
+					{% if spiel.tippbar  %}
+						<input type="text" 
+							name="tipp_{{ spiel.id  }}" 
+							style="width:50px" 
+							id="tipp{{ spiel.id  }}"
+							value="{{ spiel.eigenerTipp.ergebnis }}" 
+							pattern="[0-9]{1,2}:[0-9]{1,2}" 
+							title="Bitte Ergebnis im Format x:y angeben!">
+					{% else %}
+						<center class="tipp{{punkte}}">
+							{{ spiel.eigenerTipp.ergebnis }} 
+							({{spiel.eigenerTipp.punkte}})
+						</center>
+					{% endif %}
+				</td>
+				{% endif %}
+			</tr>
+			{% endwith %}
+			{% endfor %}
+		</table>
+	</div>
+	{% include "spieltag/st_nav.html" %}
+	{% if user.is_authenticated %}	
+	<input type="submit" value="Tipp abgeben!" />
+		{% if user.is_staff %}
+		{% endif %}
+	{% endif %}
+	</form>
+{% else %}
+	<p>Keine Spiele an diesem Spieltag.</p>
+{% endif %}
+

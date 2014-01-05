@@ -1,0 +1,23 @@
+﻿{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+
+{% block title %}BuLiTipp Spieltag 2000{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Daten ändern</h2>
+        <form role="form" class="form-horizontal" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form layout="horizontal" %}
+            {% buttons submit='OK' reset='Cancel' layout='horizontal' %}{% endbuttons %}
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h2>Gruppe ändern</h2>
+        {% include "user/password.html" %}
+    </div>
+</div>
+{% endblock %}

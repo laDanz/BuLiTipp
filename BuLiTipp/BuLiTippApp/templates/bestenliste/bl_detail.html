@@ -1,0 +1,19 @@
+﻿{% load url from future %}
+<!--bl_buli-->
+<div class="table-responsive">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th >Platz</th ><th >Mitspieler</th ><th >Punkte</th >
+			</tr>
+		</thead>
+		<tbody>
+		
+		{% for blp in spieltag.bestenliste.bestenlistenPlatz %}
+			<tr {% if user = blp.user %}class="active"{% endif %}>
+				<td>{{blp.position}}</td><td>{{blp.user.username}}</td><td>{{blp.punkte}}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>

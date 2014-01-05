@@ -254,7 +254,6 @@ def user_site(request, spielzeit_id=None):
 	points_diff = points_spieltag - (points_spieltag_sum / user_tipped)
 	
 	
-
 	return render_to_response("stats/user.html",\
 					{"spieltag":spieltag,\
 					"spielzeit":aktuelle_spielzeit,\
