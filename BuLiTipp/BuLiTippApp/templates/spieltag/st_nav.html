@@ -1,30 +1,24 @@
 ﻿{% load url from future %}
 <!--st_nav-->
-<form id="form_v" action="" method="get">
-	{% csrf_token %}
-	<input type="hidden" name="spieltag" value="{{spieltag|add:"-1"}}" />
-</form>
-
-<form id="form_n" action="" method="get">
-	{% csrf_token %}
-	<input type="hidden" name="spieltag" value="{{spieltag|add:"1"}}" />
-</form>
-
 <div class="text-center">
-	<a class="btn btn-primary pull-left" href="javascript:{}" onclick="document.getElementById('form_v').submit(); return false;">Voriger</a>
+	{% with prev=spieltag.id|add:"-1" %}
+		<a class="btn btn-primary pull-left" href="{% url 'home' spielzeit.id prev %}">Voriger</a>
+	{% endwith %}
 	<div class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-			Spieltag {{spielzeit.aktuellerSpieltag.nummer}} <span class="caret"></span>
+			Spieltag {{spieltag.nummer}} <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu" >
 		{% for st in spielzeit.spieltage %}
 			<li role="presentation" 
-				{% if st.nummer == spielzeit.aktuellerSpieltag.nummer %}
+				{% if st.nummer == spieltag.nummer %}
 					class="active"
 				{% endif %}
-			><a role="menuitem" tabindex="-1" href="#">Spieltag {{st.nummer}}</a></li>
+			><a role="menuitem" tabindex="-1" href="{% url 'home' spielzeit.id st.id %}">Spieltag {{st.nummer}}</a></li>
 		{% endfor %}
 		</ul>
 	</div>
-	<a class="btn btn-primary pull-right" href="javascript:{}" onclick="document.getElementById('form_n').submit(); return false;" class="right">Nächster</a>
+	{% with next=spieltag.id|add:"1" %}
+		<a class="btn btn-primary pull-right" href="{% url 'home' spielzeit.id next %}" class="right">Nächster</a>
+	{% endwith %}
 </div>
