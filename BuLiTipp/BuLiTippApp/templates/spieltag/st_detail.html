@@ -2,8 +2,11 @@
 {% load url from future %}
 {% load filters %}
 <!--st_detail-->
+<script>
+spiele_tippbar=0
+</script>
 {% if spieltag.spiele %}
-	<form method="post">
+	<form method="post" action="{% url "tipp" spieltag.id %}">
 	{% csrf_token  %}
 	<div class="table-responsive">
 		<table class="table">
@@ -12,7 +15,7 @@
 					<th colspan=3 class="text-center">Spiel</th >
 					<th class="text-center">Ergebnis</th > 
 					{% if user.is_authenticated %}
-						<th class="text-center">mein_Tipp</th>
+						<th class="text-center"><nobr>mein Tipp</nobr></th>
 					{% endif %}
 				</tr>
 			</thead>
@@ -50,6 +53,9 @@
 				{% if user.is_authenticated %}
 				<td>
 					{% if spiel.tippbar  %}
+						<script>
+						spiele_tippbar+=1
+						</script>
 						<input type="text" 
 							name="tipp_{{ spiel.id  }}" 
 							style="width:50px" 
@@ -58,9 +64,9 @@
 							pattern="[0-9]{1,2}:[0-9]{1,2}" 
 							title="Bitte Ergebnis im Format x:y angeben!">
 					{% else %}
-						<center class="tipp{{punkte}}">
+						<center class="tipp{{spiel.eigenerTipp.punkte}}">
 							{{ spiel.eigenerTipp.ergebnis }} 
-							({{spiel.eigenerTipp.punkte}})
+							({{ spiel.eigenerTipp.punkte }})
 						</center>
 					{% endif %}
 				</td>
@@ -70,13 +76,17 @@
 			{% endfor %}
 		</table>
 	</div>
-	{% include "spieltag/st_nav.html" %}
-	{% if user.is_authenticated %}	
-	<input type="submit" value="Tipp abgeben!" />
+	{% if user.is_authenticated %}
+	<input class="btn btn-success pull-right right" type="submit" value="Tipp abgeben!" id="tippabgeben_button" /><br>
+	<script>
+	if (spiele_tippbar == 0)
+		document.getElementById('tippabgeben_button').remove()
+	</script>
 		{% if user.is_staff %}
 		{% endif %}
 	{% endif %}
 	</form>
+	{% include "spieltag/st_nav.html" %}
 {% else %}
 	<p>Keine Spiele an diesem Spieltag.</p>
 {% endif %}

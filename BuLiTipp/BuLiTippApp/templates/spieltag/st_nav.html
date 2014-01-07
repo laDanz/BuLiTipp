@@ -1,9 +1,11 @@
 ﻿{% load url from future %}
 <!--st_nav-->
 <div class="text-center">
-	{% with prev=spieltag.id|add:"-1" %}
-		<a class="btn btn-primary pull-left" href="{% url 'home' spielzeit.id prev %}">Voriger</a>
-	{% endwith %}
+	{% if spieltag.vorheriger %}
+		<a class="btn btn-primary pull-left" href="{% url 'home' spielzeit.id spieltag.vorheriger.id %}">Voriger</a>
+	{% else %}
+		<a class="btn btn-disabled pull-left" href="#" disabled>Voriger</a>
+	{% endif %}
 	<div class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 			Spieltag {{spieltag.nummer}} <span class="caret"></span>
@@ -18,7 +20,9 @@
 		{% endfor %}
 		</ul>
 	</div>
-	{% with next=spieltag.id|add:"1" %}
-		<a class="btn btn-primary pull-right" href="{% url 'home' spielzeit.id next %}" class="right">Nächster</a>
-	{% endwith %}
+	{% if spieltag.naechster %}
+		<a class="btn btn-primary pull-right" href="{% url 'home' spielzeit.id spieltag.naechster.id %}" class="right">Nächster</a>
+	{% else %}
+		<a class="btn btn-disabled pull-right" href="#" class="right" disabled>Nächster</a>
+	{% endif %}
 </div>

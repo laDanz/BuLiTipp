@@ -3,9 +3,6 @@
 {% load bootstrap3 %}
 
 {% block bootstrap3_content	%}
-{{user.first_name}}
-{{user.last_name}}
-{{user.email}}
 	<div class="container">
 		<h1>{% block title %}(no title){% endblock %}</h1>
 		<div class="text-center">
@@ -44,9 +41,11 @@
 						<a href="/BuLiTipp/bestenliste">Bestenlisten</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/BuLiTipp/login">Log in</a></li>
 					{% if user.is_authenticated %}
 						<li><a href="/BuLiTipp/user">Einstellungen</a></li>
+						<li><a href="/logout">Log out</a></li>
+					{% else %}
+						<li><a href="/BuLiTipp/login">Log in</a></li>
 					{% endif %}
 					<li ><a href="/BuLiTipp/impressum">Impressum</a></li>
 				</ul>
