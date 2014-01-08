@@ -415,7 +415,7 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 		args["message"]=info
 	return render_to_response("spieltag/detail.html", args, context_instance=RequestContext(request))
 @login_required
-def tippen(request, spieltag_id):
+def tippen(request, spielzeit_id, spieltag_id):
 	''' request.POST.items() enthaelt die Tipps in der Form: [("tipp_"spielID : tipp), ]
 	'''
 	import string
@@ -437,11 +437,11 @@ def tippen(request, spieltag_id):
 		tipp.save()
 		info="Erfolgreich gespeichert!"
 	#GET -> redirect to detail page
-	if len(tipps)==0:
-		return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
+	#if len(tipps)==0:
+	#	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
 	#return detail(request, spieltag_id, info=info)
 	messages.success(request, 'Erfolgreich getippt!')
-	return HomePageView.as_view()(request, spieltag_id=spieltag_id)
+	return HomePageView.as_view()(request, spieltag_id=spieltag_id, spielzeit_id=spielzeit_id)
 
 @login_required
 def saisontipp(request, spielzeit_id=None, message=None):

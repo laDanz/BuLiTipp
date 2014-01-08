@@ -6,7 +6,7 @@
 spiele_tippbar=0
 </script>
 {% if spieltag.spiele %}
-	<form method="post" action="{% url "tipp" spieltag.id %}">
+	<form method="post" action="{% url "tipp" spielzeit.id spieltag.id %}">
 	{% csrf_token  %}
 	<div class="table-responsive">
 		<table class="table">
@@ -34,19 +34,21 @@ spiele_tippbar=0
 				</td>
 				<td>
 					<center>
-					{% if spiel.ergebnis == "DNF" %}
 						{% if spiel.tippbar %}
 							tippen!
 						{% else %}
-							{% if user.is_staff %}
-							{% endif %}
-							eintragen!
-							{% if user.is_staff %}
+							{% comment %}striptags is used to convert ergebnis to string, bc somehow it seems not to be a real string sometimes{% endcomment %}
+							{% if spiel.ergebnis and "DNF" not in spiel.ergebnis|striptags %}
+								{{ spiel.ergebnis }}
+							{% else %}
+								{% if user.is_staff %}
+								<a href ="{% url "admin:BuLiTippApp_spieltag_change" spieltag.id %}">
+								{% endif %}
+								eintragen!
+								{% if user.is_staff %}
 								</a>
+								{% endif %}
 							{% endif %}
-						{% endif %}
-					{% else %}
-						{{ spiel.ergebnis  }}
 					{% endif %}
 					</center>
 				</td>
@@ -60,13 +62,19 @@ spiele_tippbar=0
 							name="tipp_{{ spiel.id  }}" 
 							style="width:50px" 
 							id="tipp{{ spiel.id  }}"
-							value="{{ spiel.eigenerTipp.ergebnis }}" 
+							{% if spiel.eigenerTipp and spiel.eigenerTipp.ergebnis and "DNF" not in spiel.eigenerTipp.ergebnis|striptags %}
+							value="{{ spiel.eigenerTipp.ergebnis }}"
+							{% else %}
+							value=""
+							{% endif %}
 							pattern="[0-9]{1,2}:[0-9]{1,2}" 
 							title="Bitte Ergebnis im Format x:y angeben!">
-					{% else %}
+					{% elif spiel.eigenerTipp and spiel.eigenerTipp.ergebnis %}
 						<center class="tipp{{spiel.eigenerTipp.punkte}}">
-							{{ spiel.eigenerTipp.ergebnis }} 
-							({{ spiel.eigenerTipp.punkte }})
+							{{ spiel.eigenerTipp.ergebnis }}
+							{% if spiel.eigenerTipp.punkte >= 0 %}
+								({{ spiel.eigenerTipp.punkte }})
+							{% endif %}
 						</center>
 					{% endif %}
 				</td>

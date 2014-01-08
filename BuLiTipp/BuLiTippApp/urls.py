@@ -21,5 +21,5 @@ urlpatterns = patterns('',
 	url(r'^user$', UserFormView.as_view(), name='user'),
 	url(r'^impressum$', ImpressumView.as_view(), name='impressum'),
 	url(r'^login$', LoginFormView.as_view(), name='login'),
-	url(r'^spieltag/(?P<spieltag_id>\d+)/tipp/$', 'BuLiTippApp.views.tippen', name='tipp'),
+	url(r'^spieltag/(?P<spielzeit_id>\d+)/(?P<spieltag_id>\d+)/tipp/$', 'BuLiTippApp.views.tippen', name='tipp'),
 )
