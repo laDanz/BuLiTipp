@@ -5,6 +5,17 @@
 <script>
 spiele_tippbar=0
 </script>
+<script>
+function mark_verein(verein_id){
+	document.getElementById("tabelle_verein_" + verein_id).className="active"
+}
+function clear_marked_verein(){
+	var trs = document.getElementById("tabelle_verein").getElementsByTagName("tr");
+	for (var i = 0; i < trs.length; ++i){
+		trs[i].className = ""
+	}
+}
+</script>
 {% if spieltag.spiele %}
 	<form method="post" action="{% url "tipp" spielzeit.id spieltag.id %}">
 	{% csrf_token  %}
@@ -22,7 +33,7 @@ spiele_tippbar=0
 			<tbody>
 				{% for spiel in spieltag.spiele  %}
 				{% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id szid=spieltag.spielzeit.id%}
-				<tr>
+				<tr onmouseover="clear_marked_verein(); mark_verein({{spiel.heimTeam.id}}); mark_verein({{spiel.auswTeam.id}});">
 				<td class="text-right">
 					<b>{{ spiel.heimTeam }}</b>  
 				</td>

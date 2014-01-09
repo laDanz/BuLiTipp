@@ -3,3 +3,5 @@
 *.tipp2 { color:blue; }
 *.tipp1 { color:orange; }
 *.tipp0 { color:red;  }
+
+.table>tbody>tr.active>td { font-weight:bold; }

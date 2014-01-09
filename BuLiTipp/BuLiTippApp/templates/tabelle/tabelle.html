@@ -1,0 +1,18 @@
+﻿{% load url from future %}
+<!--tabelle_buli-->
+<div class="table-responsive">
+	<table class="table table-bordered" id="tabelle_verein">
+		<thead>
+			<tr>
+				<th colSpan=3 class="text-center">Tabelle</th >
+			</tr>
+		</thead>
+		<tbody>
+		{% for tp in spielzeit.tabelle.tabellenPlatz %}
+			<tr id="tabelle_verein_{{tp.verein.id}}">
+				<td>{{tp.position}}</td><td>{{tp.verein}}</td><td>{{tp.punkte}}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
