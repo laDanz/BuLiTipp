@@ -4,12 +4,17 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as djUser
 from punkterechner import Punkterechner
 from datetime import timedelta
 # Create your models here.
 
 spiel_zeit_vorlauf=timedelta(hours = 1)
+
+class User(djUser):
+	class Meta:
+		app_label = 'BuLiTippApp'
+	letzte_news_gelesen = models.DateTimeField(null=True)
 
 class News(models.Model):
 	class Meta:

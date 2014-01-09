@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login as djlogin, logout as djlogout
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User as djUser, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.debug import sensitive_post_parameters
@@ -17,7 +17,7 @@ from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
 
 from django.db import IntegrityError
-from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte
+from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte, User
 from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichnerTO
 from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
@@ -37,6 +37,13 @@ class NewsPageView(TemplateView):
 		return context
 	def get(self, request, *args, **kwargs):
 		context = self.get_context_data(**kwargs)
+		# may not be logged in
+		try:
+			user = User.objects.get(pk=request.user.id)
+			user.letzte_news_gelesen = datetime.now()
+			user.save()
+		except:
+			pass
 		context["news"]=get_news_by_request(request)
 		context["referer"]=self.referer #request.META["HTTP_REFERER"]
 		return self.render_to_response(context)
@@ -77,8 +84,17 @@ class BestenlisteView(HomePageView):
 	referer = "bestenliste"
 
 def get_news_by_request(request):
-	news=News.objects.all().order_by("datum").reverse()
-	return NewsTO(news)
+	news = News.objects.all().order_by("datum").reverse()
+	newsto = NewsTO(news)
+	try:
+		user = User.objects.get(pk=request.user.id)
+		date = user.letzte_news_gelesen
+	except:
+		date = None
+	if date is None:
+		date = datetime(year=2000, month=1, day=1)
+	newsto.anzahl_ungelesen = news.filter(datum__gt = date).count()
+	return newsto
 
 def get_spielzeiten_by_request(request):
 	szTOs=[]
@@ -384,6 +400,7 @@ def register(request):
 		f = request.POST["first_name"]
 		#assert username unique
 		try:
+			#FIXME new User object
 			user = User.objects.create_user(u, e, p)
 			user.first_name = f
 			user = authenticate(username=u, password=p)
