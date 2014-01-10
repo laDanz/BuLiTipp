@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.shortcuts import render_to_response, get_object_or_404, redirect, render
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login as djlogin, logout as djlogout
@@ -22,12 +22,23 @@ from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichner
 from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
 from sets import Set
-from BuLiTippApp.forms import UserForm, LoginForm
+from forms import UserForm, LoginForm, UserModelForm
 
 import operator
 from django.forms.forms import Form
 
 ### new:
+def userform(request):
+	user = User.objects.get(pk = request.user.id)
+	if request.method == 'POST':
+		form = UserModelForm(request.POST, instance = user)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Erfolgreich gespeichert!")
+	else:
+		form = UserModelForm(instance=user)
+	return render(request, 'user/user.html', {'form': form,})
+
 class NewsPageView(TemplateView):
 	template_name = 'messages/ms_index.html'
 	referer = "news"

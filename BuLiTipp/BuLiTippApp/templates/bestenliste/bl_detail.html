@@ -11,7 +11,7 @@
 		
 		{% for blp in spieltag.bestenliste.bestenlistenPlatz %}
 			<tr {% if user = blp.user %}class="active"{% endif %}>
-				<td>{{blp.position}}</td><td>{{blp.user.username}}</td><td>{{blp.punkte}}</td>
+				<td>{{blp.position}}</td><td>{% firstof blp.user.first_name blp.user.username %}</td><td>{{blp.punkte}}</td>
 			</tr>
 		{% endfor %}
 		</tbody>
