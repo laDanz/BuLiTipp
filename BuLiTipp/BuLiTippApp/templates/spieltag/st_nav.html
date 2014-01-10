@@ -2,7 +2,7 @@
 <!--st_nav-->
 <div class="text-center">
 	{% if spieltag.vorheriger %}
-		<a class="btn btn-primary pull-left" href="{% url 'home' spielzeit.id spieltag.vorheriger.id %}">Voriger</a>
+		<a class="btn btn-primary pull-left" href="{% url referer spielzeit.id spieltag.vorheriger.id %}">Voriger</a>
 	{% else %}
 		<a class="btn btn-disabled pull-left" href="#" disabled>Voriger</a>
 	{% endif %}
@@ -16,12 +16,12 @@
 				{% if st.nummer == spieltag.nummer %}
 					class="active"
 				{% endif %}
-			><a role="menuitem" tabindex="-1" href="{% url 'home' spielzeit.id st.id %}">Spieltag {{st.nummer}}</a></li>
+			><a role="menuitem" tabindex="-1" href="{% url referer spielzeit.id st.id %}">Spieltag {{st.nummer}}</a></li>
 		{% endfor %}
 		</ul>
 	</div>
 	{% if spieltag.naechster %}
-		<a class="btn btn-primary pull-right" href="{% url 'home' spielzeit.id spieltag.naechster.id %}" class="right">Nächster</a>
+		<a class="btn btn-primary pull-right" href="{% url referer spielzeit.id spieltag.naechster.id %}" class="right">Nächster</a>
 	{% else %}
 		<a class="btn btn-disabled pull-right" href="#" class="right" disabled>Nächster</a>
 	{% endif %}

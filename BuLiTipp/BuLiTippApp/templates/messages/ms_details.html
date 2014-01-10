@@ -5,8 +5,7 @@
 		<div class="panel-heading">
 		<h4 class="panel-title">
 			<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{news_.id}}">
-				<b>"{{news_.title}}"</b><br>
-				{% firstof news_.author.first_name news_.author.username %} am {{news_.datum|date:"d.m."}}
+				<b>"{{news_.title}}"</b> von <i>{% firstof news_.author.first_name news_.author.username %}</i> am {{news_.datum|date:"d.m."}}
 			</a>
 		</h4>
 		</div>

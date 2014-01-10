@@ -96,6 +96,7 @@ function clear_marked_verein(){
 			{% endfor %}
 		</table>
 	</div>
+	<input type="hidden" name="referer" value="{{referer}}" />
 	{% if user.is_authenticated %}
 	<input class="btn btn-success pull-right right" type="submit" value="Tipp abgeben!" id="tippabgeben_button" /><br>
 	<script>

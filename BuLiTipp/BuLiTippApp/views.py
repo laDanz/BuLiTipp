@@ -462,12 +462,10 @@ def tippen(request, spielzeit_id, spieltag_id):
 		tipp.ergebniss = request.POST[tipp_]
 		#tipp speichern
 		tipp.save()
-		info="Erfolgreich gespeichert!"
-	#GET -> redirect to detail page
-	#if len(tipps)==0:
-	#	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
-	#return detail(request, spieltag_id, info=info)
 	messages.success(request, 'Erfolgreich getippt!')
+	if "referer" in request.POST.keys():
+		if request.POST["referer"] == "spieltag":
+			return SpieltagView.as_view()(request, spieltag_id=spieltag_id, spielzeit_id=spielzeit_id)
 	return HomePageView.as_view()(request, spieltag_id=spieltag_id, spielzeit_id=spielzeit_id)
 
 @login_required

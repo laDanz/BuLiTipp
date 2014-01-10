@@ -5,13 +5,12 @@
 {% block content %}
 <!--st_index-->
 <ul class="nav nav-tabs">
-	<li class="active"><a href="#buli" data-toggle="tab">Bundesliga</a></li>
-	<li ><a href="#pokal" data-toggle="tab">DFB-Pokal</a></li>
-	<li ><a href="#wm" data-toggle="tab">WM</a></li>
+{% for sz in spielzeiten%}
+	<li {% if sz.id == spielzeit.id %} class="active"{% endif %}><a href="{% url spieltag sz.id %}">{{sz.bezeichner}}</a></li>
+{% endfor %}
 </ul>
-<!-- Tab panes -->
 <div class="tab-content">
-	<div class="tab-pane active" id="buli">
+	<div class="tab-pane active">
 		<div class="row">
 			<div class="col-lg-4 hidden-md hidden-sm hidden-xs  ">
 				<h4> Neuigkeiten</h4>
@@ -28,46 +27,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="tab-pane" id="pokal">
-		<div class="row">
-			{% if spieltag <= 3 %}
-				<div class="col-md-6">
-					{% include "spieltag/st_detail.html" %}
-				</div>
-				<div class="col-md-2" id="andereTable" style="overflow: hidden; padding-top:55px;" onmouseout="pid=setInterval(move, 100);" onmouseover="clearInterval(pid);">
-				</div>
-				<script>
-					tab=document.getElementById('andereTable')
-					tab.scrollLeft=0
-					reverse=true
-					diff=2
-					x=0
-					function move(){
-							if(reverse){
-									x+=diff
-							}else{
-									x-=diff
-							}
-							tab.scrollLeft=x
-							if(x>tab.offsetWidth || x<0){
-									reverse= !reverse
-							}
-					}
-					pid=setInterval(move, 100);
-				</script>
-			{% else %}
-				<div class="col-md-8">
-					{% include "spieltag/st_detail.html" %}
-				</div>
-			{% endif %}
-			<div class="col-md-4">
-				{% include "bestenliste/bl_detail.html" %}
-			</div>
-		</div><!-- row-->
-	</div><!-- pane-->
-	<div class="tab-pane" id="wm">
-			wm
-	</div>
-</div><!-- content-->
+</div>
 
 {% endblock %}
