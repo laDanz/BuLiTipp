@@ -2,22 +2,28 @@
 
 {% load bootstrap3 %}
 
-{% block title %}BuLiTipp Spieltag 2000{% endblock %}
+{% block title %}Einstellungen{% endblock %}
 
 {% block content %}
 
 <div class="row">
-    <div class="col-md-8">
-        <h2>Benutzerdaten ändern</h2>
-        <form role="form" class="form-horizontal" method="post">
-            {% csrf_token %}
-            {% bootstrap_form form layout="horizontal" %}
-            {% buttons submit='OK' reset='Cancel' layout='horizontal' %}{% endbuttons %}
-        </form>
-    </div>
-    <div class="col-md-4">
-        <h2>Gruppe ändern</h2>
-        {% include "user/password.html" %}
-    </div>
+	<div class="col-md-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Benutzereinstellungen</h3>
+			</div>
+			<div class="panel-body">
+				<form role="form" class="form-horizontal" method="post">
+					{% csrf_token %}
+					{% bootstrap_form form layout="horizontal" %}
+					{% buttons submit='OK' reset='Cancel' layout='horizontal' %}{% endbuttons %}
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<h2>Gruppe ändern</h2>
+		{% include "user/password.html" %}
+	</div>
 </div>
 {% endblock %}

@@ -78,7 +78,8 @@ function clear_marked_verein(){
 							{% else %}
 							value=""
 							{% endif %}
-							pattern="[0-9]{1,2}:[0-9]{1,2}" 
+							pattern="[0-9]{1,2}:[0-9]{1,2}"
+							placeholder="tippen"
 							title="Bitte Ergebnis im Format x:y angeben!">
 					{% elif spiel.eigenerTipp and spiel.eigenerTipp.ergebnis %}
 						<center class="tipp{{spiel.eigenerTipp.punkte}}">
