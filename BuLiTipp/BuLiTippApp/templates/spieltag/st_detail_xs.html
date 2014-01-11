@@ -1,109 +1,11 @@
-﻿<!-- Optional: no_navigation="true"  -->
-{% load url from future %}
-{% load filters %}
-<!--st_detail-->
-<script>
-spiele_tippbar=0
-</script>
-<script>
-function mark_verein(verein_id){
-	document.getElementById("tabelle_verein_" + verein_id).className="active"
-}
-function clear_marked_verein(){
-	var trs = document.getElementById("tabelle_verein").getElementsByTagName("tr");
-	for (var i = 0; i < trs.length; ++i){
-		trs[i].className = ""
-	}
-}
-</script>
-{% if spieltag.spiele %}
-	<form method="post" action="{% url "tipp" spielzeit.id spieltag.id %}">
-	{% csrf_token  %}
-	<div class="table-responsive">
-		<table class="table">
-			<thead>
-				<tr >
-					<th class="text-center">Spiel</th >
-					<th class="text-center">Ergebnis</th > 
-					{% if user.is_authenticated %}
-						<th class="text-center"><nobr>mein Tipp</nobr></th>
-					{% endif %}
-				</tr>
-			</thead>
-			<tbody>
-				{% for spiel in spieltag.spiele  %}
-				{% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id szid=spieltag.spielzeit.id%}
-				<tr onmouseover="clear_marked_verein(); mark_verein({{spiel.heimTeam.id}}); mark_verein({{spiel.auswTeam.id}});">
-				<td class="text-right">
-					<b>{{ spiel.heimTeam }}</b> <br/>
-					<b>{{ spiel.auswTeam }}</b> 
-				</td>
-				<td>
-					<center>
-						{% if spiel.tippbar %}
-							tippen!
-						{% else %}
-							{% comment %}striptags is used to convert ergebnis to string, bc somehow it seems not to be a real string sometimes{% endcomment %}
-							{% if spiel.ergebnis and "DNF" not in spiel.ergebnis|striptags %}
-								{{ spiel.ergebnis }}
-							{% else %}
-								{% if user.is_staff %}
-								<a href ="{% url "admin:BuLiTippApp_spieltag_change" spieltag.id %}">
-								{% endif %}
-								eintragen!
-								{% if user.is_staff %}
-								</a>
-								{% endif %}
-							{% endif %}
-					{% endif %}
-					</center>
-				</td>
-				{% if user.is_authenticated %}
-				<td>
-					{% if spiel.tippbar  %}
-						<script>
-						spiele_tippbar+=1
-						</script>
-						<input type="text" 
-							name="tipp_{{ spiel.id  }}" 
-							style="width:50px" 
-							id="tipp{{ spiel.id  }}"
-							{% if spiel.eigenerTipp and spiel.eigenerTipp.ergebnis and "DNF" not in spiel.eigenerTipp.ergebnis|striptags %}
-							value="{{ spiel.eigenerTipp.ergebnis }}"
-							{% else %}
-							value=""
-							{% endif %}
-							pattern="[0-9]{1,2}:[0-9]{1,2}"
-							placeholder="tippen"
-							title="Bitte Ergebnis im Format x:y angeben!">
-					{% elif spiel.eigenerTipp and spiel.eigenerTipp.ergebnis %}
-						<center class="tipp{{spiel.eigenerTipp.punkte}}">
-							{{ spiel.eigenerTipp.ergebnis }}
-							{% if spiel.eigenerTipp.punkte >= 0 %}
-								({{ spiel.eigenerTipp.punkte }})
-							{% endif %}
-						</center>
-					{% endif %}
-				</td>
-				{% endif %}
-			</tr>
-			{% endwith %}
-			{% endfor %}
-		</table>
-	</div>
-	<input type="hidden" name="referer" value="{{referer}}" />
-	{% if user.is_authenticated %}
-	<input class="btn btn-success pull-right right" type="submit" value="Tipp abgeben!" id="tippabgeben_button" /><br>
-	<script>
-	if (spiele_tippbar == 0)
-		document.getElementById('tippabgeben_button').remove()
-	</script>
-		{% if user.is_staff %}
-		{% endif %}
-	{% endif %}
-	</form>
-	{% include "spieltag/st_nav.html" %}
-{% else %}
-	<p>Keine Spiele an diesem Spieltag.</p>
-{% endif %}
+﻿{% extends 'spieltag/st_detail.html' %}
+{% block spiel_header%}
+	<th class="text-center">Spiel</th >
+{% endblock %}
 
+{% block spiel_column %}		
+	<td class="text-right">
+		<b>{{ spiel.heimTeam }}</b> <br/>
+		<b>{{ spiel.auswTeam }}</b> 
+	</td>
+{% endblock %}

@@ -23,7 +23,9 @@ function clear_marked_verein(){
 		<table class="table">
 			<thead>
 				<tr >
-					<th colspan=3 class="text-center">Spiel</th >
+					{% block spiel_header%}
+						<th colspan=3 class="text-center">Spiel</th >
+					{% endblock %}
 					<th class="text-center">Ergebnis</th > 
 					{% if user.is_authenticated %}
 						<th class="text-center"><nobr>mein Tipp</nobr></th>
@@ -34,15 +36,17 @@ function clear_marked_verein(){
 				{% for spiel in spieltag.spiele  %}
 				{% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id szid=spieltag.spielzeit.id%}
 				<tr onmouseover="clear_marked_verein(); mark_verein({{spiel.heimTeam.id}}); mark_verein({{spiel.auswTeam.id}});">
-				<td class="text-right">
-					<b>{{ spiel.heimTeam }}</b>  
-				</td>
-				<td class="text-center">
-					vs 
-				</td>
-				<td class="text-left">
-					<b>{{ spiel.auswTeam }}</b> 
-				</td>
+				{% block spiel_column %}
+					<td class="text-right">
+						<b>{{ spiel.heimTeam }}</b>  
+					</td>
+					<td class="text-center">
+						vs 
+					</td>
+					<td class="text-left">
+						<b>{{ spiel.auswTeam }}</b> 
+					</td>
+				{% endblock %}
 				<td>
 					<center>
 						{% if spiel.tippbar %}
