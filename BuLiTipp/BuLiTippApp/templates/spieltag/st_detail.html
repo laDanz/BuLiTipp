@@ -30,6 +30,8 @@ function clear_marked_verein(){
 					{% if user.is_authenticated %}
 						<th class="text-center"><nobr>mein Tipp</nobr></th>
 					{% endif %}
+					{% block additional_header %}
+					{% endblock %}
 				</tr>
 			</thead>
 			<tbody>
@@ -95,6 +97,8 @@ function clear_marked_verein(){
 					{% endif %}
 				</td>
 				{% endif %}
+				{% block additional_column %}
+				{% endblock %}
 			</tr>
 			{% endwith %}
 			{% endfor %}
