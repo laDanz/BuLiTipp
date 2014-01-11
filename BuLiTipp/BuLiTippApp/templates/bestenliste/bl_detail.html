@@ -1,19 +1,55 @@
 ﻿{% load url from future %}
 <!--bl_buli-->
-<div class="table-responsive">
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th colSpan=3 class="text-center">Bestenliste</th >
-			</tr>
-		</thead>
-		<tbody>
-		
-		{% for blp in spieltag.bestenliste.bestenlistenPlatz %}
-			<tr {% if user = blp.user %}class="active"{% endif %}>
-				<td>{{blp.position}}</td><td>{% firstof blp.user.first_name blp.user.username %}</td><td>{{blp.punkte}}</td>
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="bl1">
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th colSpan=3 class="text-center">Bestenliste <a id="abl2" href="#bl2" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a></th >
+					</tr>
+				</thead>
+				<tbody>
+				{% for blp in spieltag.bestenliste.bestenlistenPlatz %}
+					<tr {% if user = blp.user %}class="active"{% endif %}>
+						<td>{{blp.position}}</td><td>{% firstof blp.user.first_name blp.user.username %}</td><td>{{blp.punkte}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="tab-pane" id="bl2">
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th colSpan=3 class="text-center">Bestenliste <a id="abl1" href="#bl1" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a></th >
+					</tr>
+				</thead>
+				<tbody>
+				{% for blp in spielzeit.bestenliste.bestenlistenPlatz %}
+					<tr {% if user = blp.user %}class="active"{% endif %}>
+						<td>{{blp.position}}</td><td>{% firstof blp.user.first_name blp.user.username %}</td><td>{{blp.punkte}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
+
+<script>
+<!-- ids must be different, because several bestenlisten may be on one page, otherwise tabs wouldn't work -->
+var id1=Math.random()*100000000000000000;
+var id2=Math.random()*100000000000000000;
+
+document.getElementById("bl1").id="bl1" + id1
+document.getElementById("abl1").href="#bl1" + id1
+document.getElementById("abl1").id="abl1" + id1
+
+document.getElementById("bl2").id="bl2" + id2
+document.getElementById("abl2").href="#bl2" + id2
+document.getElementById("abl2").id="abl2" + id2
+</script>
