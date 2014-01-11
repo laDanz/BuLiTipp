@@ -12,19 +12,41 @@
 <div class="tab-content">
 	<div class="tab-pane active">
 		<div class="row">
-			<div class="col-lg-4 hidden-md hidden-sm hidden-xs  ">
-				<h4> Neuigkeiten</h4>
-				{% include "messages/ms_details.html" %}
-			</div>
-			<div class="col-xs-12 col-sm-8 hidden-md hidden-lg ">
+		{% if spielzeit.istPokal %}
+			<div class="hidden-lg hidden-md col-sm-8">
 				{% include "spieltag/st_detail_xs.html" %}
 			</div>
-			<div class="col-md-8 col-lg-6 hidden-sm hidden-xs ">
+			<div class="col-lg-8 col-md-8 hidden-sm hidden-xs ">
 				{% include "spieltag/st_detail.html" %}
 			</div>
-			<div class="col-sm-4 col-lg-2 ">
+			<div class="col-lg-4 col-md-4 col-sm-4">
 				{% include "bestenliste/bl_detail.html" %}
 			</div>
+		{% else %}
+			<div class="col-lg-3 col-md-3 hidden-sm">
+				{% include "tabelle/tabelle.html" %}
+			</div>
+			<div class="hidden-lg col-md-6 col-sm-8">
+				{% include "spieltag/st_detail_xs.html" %}
+			</div>
+			<div class="col-lg-6 hidden-md hidden-sm hidden-xs ">
+				{% include "spieltag/st_detail.html" %}
+			</div>
+			<div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+				{% include "bestenliste/bl_detail.html" %}
+			</div>
+			<div class="hidden-lg hidden-md col-sm-4">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs">
+				  <li class="active"><a href="#bestenliste" data-toggle="tab">Bestenliste</a></li>
+				  <li><a href="#tabelle" data-toggle="tab">Tabelle</a></li>
+				</ul>
+				<div class="tab-content">
+				  <div class="tab-pane active" id="bestenliste">{% include "bestenliste/bl_detail.html" %}</div>
+				  <div class="tab-pane" id="tabelle">{% include "tabelle/tabelle.html" %}</div>
+				</div>
+			</div>
+		{% endif %}
 		</div>
 	</div>
 </div>
