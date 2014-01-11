@@ -25,7 +25,9 @@
 				{% include "spieltag/st_detail.html" %}
 			</div>
 			<div class="col-sm-4 col-lg-3 ">
-				{% include "bestenliste/bl_detail.html" %}
+				{% with first="bl2" %}
+					{% include "bestenliste/bl_detail.html" %}
+				{% endwith %}
 			</div>
 			{% else %}
 			<div class="col-lg-3 col-md-3 hidden-sm hidden-xs  ">
@@ -38,7 +40,9 @@
 				{% include "spieltag/st_detail.html" %}
 			</div>
 			<div class="col-sm-4 col-md-3 col-lg-3 ">
-				{% include "bestenliste/bl_detail.html" %}
+				{% with first="bl2" %}
+					{% include "bestenliste/bl_detail.html" %}
+				{% endwith %}
 			</div>
 			{% endif %}
 			

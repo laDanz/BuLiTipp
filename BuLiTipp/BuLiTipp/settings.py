@@ -14,7 +14,7 @@ if BOOTSTRAP3_FOLDER not in sys.path:
 # Django settings for BuLiTipp project.
 from django.core.urlresolvers import reverse
 import local_settings
-print local_settings.DATABASE_NAME
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
