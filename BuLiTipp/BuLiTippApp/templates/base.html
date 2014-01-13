@@ -4,7 +4,7 @@
 
 {% block bootstrap3_content	%}
 	<div class="container">
-		<h1>TippBuLi <small>{% block title %}(no title){% endblock %}</small></h1>
+		<h1>{% block title %}(no title){% endblock %}</h1>
 		<div class="text-center">
 			<div class="visible-xs">
 				This is xs
@@ -41,6 +41,18 @@
 						<a href="/BuLiTipp/bestenliste">Bestenlisten</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown" id="theme-dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i> Theme<b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#" class="change-style-menu-item" rel="dist"><i class="icon-fixed-width icon-pencil"></i> (Default)</a></li>
+                        <li><a href="#" class="change-style-menu-item" rel="FCB"><i class="icon-fixed-width icon-pencil"></i> FCB</a></li>
+                        <li><a href="#" class="change-style-menu-item" rel="S04"><i class="icon-fixed-width icon-pencil"></i> Schalke</a></li>
+                        <li><a href="#" class="change-style-menu-item" rel="flatly"><i class="icon-fixed-width icon-pencil"></i> Flatly</a></li>
+                        <li><a href="#" class="change-style-menu-item" rel="journal"><i class="icon-fixed-width icon-pencil"></i> Journal</a></li>
+                        <li><a href="#" class="change-style-menu-item" rel="malachite"><i class="icon-fixed-width icon-pencil"></i> Malachite</a></li>
+                      </ul>
+                    </li>
+                    <link href="/static/dist/css/bootstrap.min.css" rel="stylesheet" title="main">
 					{% if user.is_authenticated %}
 						<li><a href="/BuLiTipp/user">Einstellungen</a></li>
 						<li><a href="/logout">Log out</a></li>
@@ -48,7 +60,9 @@
 						<li><a href="/BuLiTipp/login">Log in</a></li>
 					{% endif %}
 					<li ><a href="/BuLiTipp/impressum">Impressum</a></li>
+
 				</ul>
+
 			</div>
 		 </nav>
 {% comment %}
@@ -56,4 +70,20 @@
 		{% bootstrap_messages %}
 		{% block content %}(no content){% endblock %}
 	</div>
+<script>
+/* When a theme-change item is selected, update theme */
+jQuery(function($) {
+    $('body').on('click', '.change-style-menu-item', function() {
+      var theme_name = $(this).attr('rel');
+//      var theme = "//netdna.bootstrapcdn.com/bootswatch/3.0.0/" + theme_name + "/bootstrap.min.css";
+      var theme = "/static/" + theme_name + "/css/bootstrap.css";
+      set_theme(theme);
+    });
+});
+function set_theme(theme) {
+  $('link[title="main"]').attr('href', theme);
+}
+</script>
 {% endblock	%}
+
+

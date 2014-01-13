@@ -9,8 +9,8 @@ from BuLiTipp.settings import STATIC_URL
 BOOTSTRAP3_DEFAULTS = {
 	'jquery_url': '//code.jquery.com/jquery.min.js',
 #	'jquery_url': STATIC_URL + 'jquery-1.10.2.js',
-	'base_url': '//netdna.bootstrapcdn.com/bootstrap/3.0.2/',
-#	'base_url': STATIC_URL + 'bootstrap/',
+#	'base_url': '//netdna.bootstrapcdn.com/bootstrap/3.0.2/',
+    'base_url': STATIC_URL + 'dist/',
 	'css_url': None,
 	'theme_url': None,
 	'javascript_url': None,

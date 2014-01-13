@@ -6,16 +6,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		{% bootstrap_css %}
 		<link rel="stylesheet" media="screen" href="/static/custom.css">
-<script type='text/javascript'>
-     $(document).ready(function () {
-     if ($("[rel=tooltip]").length) {
-     $("[rel=tooltip]").tooltip();
-     }
-   });
-  </script>
 	</head>
 	<body>
-		{% block bootstrap3_content %}{% endblock %}
 		{% bootstrap_javascript jquery=1 %}
+		{% block bootstrap3_content %}{% endblock %}
+        <script type='text/javascript'>
+             $(document).ready(function () {
+             if ($("[rel=tooltip]").length) {
+             $("[rel=tooltip]").tooltip();
+             }
+           });
+          </script>
 	</body>
 </html>
