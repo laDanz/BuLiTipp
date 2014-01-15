@@ -29,6 +29,8 @@ from django.forms.forms import Form
 
 ### new:
 def userform(request):
+	context = {}
+	context["news"] = get_news_by_request(request)
 	user = User.objects.get(pk = request.user.id)
 	if request.method == 'POST':
 		form = UserModelForm(request.POST, instance = user)
@@ -37,7 +39,8 @@ def userform(request):
 			messages.success(request, "Erfolgreich gespeichert!")
 	else:
 		form = UserModelForm(instance=user)
-	return render(request, 'user/user.html', {'form': form,})
+	context["form"] = form
+	return render(request, 'user/user.html', context)
 
 class NewsPageView(TemplateView):
 	template_name = 'messages/ms_index.html'
@@ -102,6 +105,7 @@ class BestenlisteView(TemplateView):
 			sz_.aktuellerSpieltag = get_spieltag_by_request(request, sz.id, sz_.aktuellerSpieltag.id)
 			szs.append(sz_)
 		context["spielzeiten"]=szs
+		context["news"]=get_news_by_request(request)
 		context["referer"]=self.referer
 		return self.render_to_response(context)
 
