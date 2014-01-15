@@ -21,7 +21,7 @@ class UserForm(forms.Form):
 class UserModelForm(forms.ModelForm):
 	class Meta:
 		model = User
-		fields = ['first_name', 'last_name', 'username', 'email', 'id',]		
+		fields = ['first_name', 'last_name', 'username', 'email', 'theme', 'id',]		
 
 class PasswordForm(forms.Form):
 	AltesPasswort = forms.CharField(initial=42, widget=forms.PasswordInput)

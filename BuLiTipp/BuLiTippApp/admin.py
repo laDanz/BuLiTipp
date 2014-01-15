@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from models	import Verein, Spielzeit, Spieltag,	Spiel, News
+from models	import Verein, Spielzeit, Spieltag,	Spiel, News, BootstrapThemes
 from django.contrib	import admin
 
 admin.site.register(Verein)
 admin.site.register(News)
+admin.site.register(BootstrapThemes)
 
 class SpielInline(admin.TabularInline):
 	model =	Spiel

@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User as djUser
 from punkterechner import Punkterechner
 from datetime import timedelta
+from models_reference import BootstrapThemes
 # Create your models here.
 
 spiel_zeit_vorlauf=timedelta(hours = 1)
@@ -15,6 +16,9 @@ class User(djUser):
 	class Meta:
 		app_label = 'BuLiTippApp'
 	letzte_news_gelesen = models.DateTimeField(null=True)
+	theme = models.ForeignKey(BootstrapThemes, null=True)
+# FIXME: not sure if hack(that means probably pretty big hack): everyone who requests auth.User gets my User object instead 
+djUser.objects = User.objects
 
 class News(models.Model):
 	class Meta:

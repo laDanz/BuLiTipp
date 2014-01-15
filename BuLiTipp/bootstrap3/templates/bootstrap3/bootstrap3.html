@@ -6,7 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="expires" content="0">
 		{% bootstrap_css %}
-		<link rel="stylesheet" media="screen" href="/static/custom.css">
+		<link href="/static/{{ user.theme.location }}/css/bootstrap.min.css" rel="stylesheet" title="main">
+		<link rel="stylesheet" media="screen" href="/static/custom.css">		
 	</head>
 	<body>
 		{% bootstrap_javascript jquery=1 %}
