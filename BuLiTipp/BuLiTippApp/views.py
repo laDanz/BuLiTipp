@@ -17,7 +17,7 @@ from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
 
 from django.db import IntegrityError
-from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte, User
+from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte, User, Spiel
 from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichnerTO
 from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
@@ -461,23 +461,30 @@ def tippen(request, spielzeit_id, spieltag_id):
 	''' request.POST.items() enthaelt die Tipps in der Form: [("tipp_"spielID : tipp), ]
 	'''
 	import string
-	info=None
+	tipped = 0
 	tipps = filter(lambda key: key.startswith("tipp_"), request.POST.keys())
 	#fuer jeden tipp im POST
 	for tipp_ in tipps:
 		tipp, spiel_id = string.split(tipp_, "_")
 		#suche ob es fuer diesen (user, spiel) schon ein tipp gibt
-		try:
-			tipp = Tipp.objects.get(spiel_id=spiel_id, user_id=request.user.id)
-		except:
-			#wenn nein: lege einen an
-			tipp = Tipp()
-			tipp.spiel_id = spiel_id
-			tipp.user = request.user
-		tipp.ergebniss = request.POST[tipp_]
-		#tipp speichern
-		tipp.save()
-	messages.success(request, 'Erfolgreich getippt!')
+		# FIXME: better validation?
+		if ":" in request.POST[tipp_]:
+			try:
+				tipp = Tipp.objects.get(spiel_id=spiel_id, user_id=request.user.id)
+			except:
+				#wenn nein: lege einen an
+				tipp = Tipp()
+				tipp.spiel_id = spiel_id
+				tipp.user = request.user
+			tipp.ergebniss = request.POST[tipp_]
+			#tipp speichern
+			tipp.save()
+			tipped += 1
+	spiele_count = Spiel.objects.filter(spieltag__id = spieltag_id).count()
+	if tipped == spiele_count:
+		messages.success(request, 'Erfolgreich getippt!')
+	else:
+		messages.warning(request, 'Achtung! Es wurden nicht alle Spiele getippt!')
 	if "referer" in request.POST.keys():
 		if request.POST["referer"] == "spieltag":
 			return SpieltagView.as_view()(request, spieltag_id=spieltag_id, spielzeit_id=spielzeit_id)
