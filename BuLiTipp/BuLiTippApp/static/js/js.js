@@ -1,4 +1,4 @@
-function countdown(id_) {
+function countdown(element, zieldatum) {
 	startDatum=new Date(); // Aktuelles Datum
 	
 	// Countdown berechnen und anzeigen, bis Ziel-Datum erreicht ist
@@ -56,13 +56,13 @@ function countdown(id_) {
 		if(sekunden<10) sekunden="0"+sekunden;
 		(sekunden!=1)?sekunden=sekunden+" Sekunden":sekunden=sekunden+" Sekunde";
 		
-		document.getElementById(id_).innerHTML=
+		element.innerHTML=
 			"noch " + jahre + monate + tage + stunden + minuten + sekunden + " verbleibend!";
 			
-		setTimeout(function() { countdown(id_);},1000);
+		setTimeout(function() { countdown(element);},1000);
 	}
-	// Anderenfalls alles auf Null setzen
-		else document.getElementById(id_).innerHTML = "Datum: {{spieltag.datum}}";
+	// Bei abgelaufenen Spieltagen: nichts anzeigen
+		else element.innerHTML = "abgelaufen am " + zieldatum.getDay()+"."+zieldatum.getMonth()+"."+zieldatum.getFullYear()+"!";
 }
   
 function mark_verein(verein_id){

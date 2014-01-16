@@ -1,21 +1,18 @@
-﻿<!-- Optional: no_navigation="true"  -->
 {% load url from future %}
 {% load filters %}
 <!--st_detail-->
 <script>
 spiele_tippbar=0
-
-// Ziel-Datum in MEZ
-var jahr={{spieltag.datum.year}}, monat={{spieltag.datum.month}}, tag={{spieltag.datum.day}}, stunde={{spieltag.datum.hour}}, minute={{spieltag.datum.minute}}, sekunde={{spieltag.datum.second}};
-var zielDatum=new Date(jahr,monat-1,tag,stunde,minute,sekunde);
 </script>
 
-<p size="75" id="countdowninput{{spieltag.id}}" onfocus="if(this.blur)this.blur()"></p>
-
+<div class="well text-center" id="dude"></div>
 <script>
-	var id1=Math.random()*100000000000000000;
-	document.getElementById('countdowninput{{spieltag.id}}').id=document.getElementById('countdowninput{{spieltag.id}}').id+id1
-	countdown('countdowninput{{spieltag.id}}'+id1)
+var jahr={{spieltag.datum.year}}, monat={{spieltag.datum.month}}, tag={{spieltag.datum.day}}, stunde={{spieltag.datum.hour}}, minute={{spieltag.datum.minute}}, sekunde={{spieltag.datum.second}};
+var zielDatum=new Date(jahr,monat-1,tag,stunde,minute,sekunde);
+
+var p = document.getElementById('dude');
+countdown(p, zielDatum);
+p.id = "";
 </script>
 
 {% if spieltag.spiele %}

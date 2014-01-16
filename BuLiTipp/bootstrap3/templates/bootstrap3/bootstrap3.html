@@ -7,12 +7,14 @@
 		<meta http-equiv="expires" content="0">
 		{% bootstrap_css %}
 		<link href="/static/themes/{{ user.theme.location }}/css/bootstrap.min.css" rel="stylesheet" title="main">
-		<script type="text/javascript" src="/static/js/js.js"></script>
 		<link rel="stylesheet" media="screen" href="/static/css/custom.css">		
 		<link rel="stylesheet" media="screen" href="/static/themes/{{ user.theme.location }}/custom.css">
+		
+		{% bootstrap_javascript jquery=1 %}
+		<script type="text/javascript" src="/static/js/js.js"></script>
+		
 	</head>
 	<body>
-		{% bootstrap_javascript jquery=1 %}
 		{% block bootstrap3_content %}{% endblock %}
         <script type='text/javascript'>
              $(document).ready(function () {
