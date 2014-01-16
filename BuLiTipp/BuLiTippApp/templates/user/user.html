@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Benutzereinstellungen</h3>
@@ -16,14 +16,10 @@
 				<form role="form" class="form-horizontal" method="post">
 					{% csrf_token %}
 					{% bootstrap_form form layout="horizontal" %}
-					{% buttons submit='OK' reset='Cancel' layout='horizontal' %}{% endbuttons %}
+					{% buttons submit='OK' reset='Abbrechen' layout='horizontal' %}{% endbuttons %}
 				</form>
 			</div>
 		</div>
-	</div>
-	<div class="col-md-4">
-		<h2>Gruppe ändern</h2>
-		{% include "user/password.html" %}
 	</div>
 </div>
 {% endblock %}

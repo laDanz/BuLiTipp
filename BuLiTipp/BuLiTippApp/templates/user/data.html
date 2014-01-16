@@ -1,6 +1,0 @@
-﻿{% load url from future %}
-    <form role="form" class="form-horizontal" method="post">
-        {% csrf_token %}
-        {% bootstrap_form user layout="horizontal" %}
-        {% buttons submit='OK' reset='Cancel' layout='horizontal' %}{% endbuttons %}
-    </form>
