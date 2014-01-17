@@ -54,15 +54,18 @@ function countdown(element, zieldatum) {
 		(stunden!=1)?stunden=stunden+" Stunden,  ":stunden=stunden+" Stunde,  ";
 		(minuten!=1)?minuten=minuten+" Minuten  und  ":minuten=minuten+" Minute  und  ";
 		if(sekunden<10) sekunden="0"+sekunden;
-		(sekunden!=1)?sekunden=sekunden+" Sekunden":sekunden=sekunden+" Sekunde";
+		(sekunden!=1)?sekunden=sekunden+" Sekunden":sekunden=sekunden+" Sekunden";
 		
 		element.innerHTML=
 			"noch " + jahre + monate + tage + stunden + minuten + sekunden + " verbleibend!";
-			
+		element.className = "label label-primary";
 		setTimeout(function() { countdown(element);},1000);
 	}
 	// Bei abgelaufenen Spieltagen: nichts anzeigen
-		else element.innerHTML = "abgelaufen am " + zieldatum.getDay()+"."+zieldatum.getMonth()+"."+zieldatum.getFullYear()+"!";
+		else {
+			element.innerHTML = "abgelaufen am " + zieldatum.getDay()+"."+zieldatum.getMonth()+"."+zieldatum.getFullYear()+"!";
+			element.className = "label label-default";
+		}
 }
   
 function mark_verein(verein_id){

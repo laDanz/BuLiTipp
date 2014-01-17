@@ -90,6 +90,11 @@ class HomePageView(TemplateView):
 class SpieltagView(HomePageView):
 	template_name = 'spieltag/st_index.html'
 	referer = "spieltag"
+	def get(self, request, *args, **kwargs):
+		if not request.user.is_authenticated():
+			context = self.get_context_data(**kwargs)
+			return self.render_to_response(context)
+		return super(SpieltagView, self).get(request, *args, **kwargs)
 
 class BestenlisteView(TemplateView):
 	template_name = 'bestenliste/bl_index.html'
@@ -99,6 +104,8 @@ class BestenlisteView(TemplateView):
 		return context
 	def get(self, request, *args, **kwargs):
 		context = self.get_context_data(**kwargs)
+		if not request.user.is_authenticated():
+			return self.render_to_response(context)
 		szs=[]
 		for sz in get_spielzeiten_by_request(request):
 			sz_ = get_spielzeit_by_request(request, sz.id)
@@ -348,7 +355,7 @@ def delete_kommentar(request):
 	Kommentar.objects.get(pk=kommentar_id).delete()
 	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
 	
-def post_kommentar(request):
+def post_kommentar(request, spieltag_id=None, spielzeit_id=None):
 	text=request.POST["text"]
 	user=request.user
 	spieltag_id=request.POST["spieltag_id"]
@@ -367,7 +374,7 @@ def post_kommentar(request):
 		spieltag_id = komm.spieltag_id
 	kommentar.datum=datetime.now()
 	kommentar.save()
-	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
+	return HttpResponseRedirect(reverse("spieltag", args=(spielzeit_id, spieltag_id)))
 
 def index(request, spielzeit_id=-1):
 	# show Punkte, letzter Spieltag, naechster Spieltag

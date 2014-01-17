@@ -1,6 +1,6 @@
 <!-- benoetigt: spieltag_id oder reply_to -->
 
-<form action="{% url BuLiTippApp.views.post_kommentar %}" method="post">
+<form action="{% url BuLiTippApp.views.post_kommentar spielzeit.id spieltag.id %}" method="post">
 	{% csrf_token  %}
 	<input type="hidden" name="spieltag_id" value="{{spieltag_id}}" />
 	<input type="hidden" name="reply_to" value="{{reply_to}}" />

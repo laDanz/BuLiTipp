@@ -86,6 +86,10 @@ class SpieltagTO(object):
 		if vorheriger != None:
 				self.vorheriger = SpieltagTO(vorheriger)
 		self.bestenliste = bestenliste
+		self.tippbare_spiele = 0
+		for spiel in spieleTOs:
+			if spiel.tippbar:
+				self.tippbare_spiele += 1
 	def __unicode__(self):
 		return "Spieltag %s(%s)" % (str(self.nummer), self.bezeichner)
 	def __str__(self):
