@@ -13,10 +13,17 @@
 <div class="tab-content">
 	<div class="tab-pane active" id="home">
 		<div class="row ">
-			{% if spielzeit.istPokal %}
-			<div class="col-lg-3 hidden-md hidden-sm hidden-xs  ">
-				<h4> Neuigkeiten</h4>
-				{% include "messages/ms_details.html" %}
+			{% if user.is_authenticated %}
+				<div class="col-lg-3 hidden-md hidden-sm hidden-xs  ">
+			{% else %}
+				<div class="col-lg-6 col-md-4 col-sm-4 hidden-xs  ">
+			{% endif %}
+				{% if spielzeit.istPokal %}
+					<h4> Neuigkeiten</h4>
+					{% include "messages/ms_details.html" %}
+				{% else %}
+					{% include "tabelle/tabelle.html" %}
+				{% endif %}
 			</div>
 			<div class="col-xs-12 col-sm-8 hidden-md hidden-lg ">
 				{% include "spieltag/st_detail_xs.html" %}
@@ -24,28 +31,13 @@
 			<div class="col-md-8 col-lg-6 hidden-sm hidden-xs ">
 				{% include "spieltag/st_detail.html" %}
 			</div>
-			<div class="col-sm-4 col-lg-3 ">
-				{% with first="bl2" %}
-					{% include "bestenliste/bl_detail.html" %}
-				{% endwith %}
-			</div>
-			{% else %}
-			<div class="col-lg-3 col-md-3 hidden-sm hidden-xs  ">
-				{% include "tabelle/tabelle.html" %}
-			</div>
-			<div class="col-xs-12 col-sm-8 col-md-6 hidden-lg ">
-				{% include "spieltag/st_detail_xs.html" %}
-			</div>
-			<div class="hidden-md col-lg-6 hidden-sm hidden-xs ">
-				{% include "spieltag/st_detail.html" %}
-			</div>
-			<div class="col-sm-4 col-md-3 col-lg-3 ">
-				{% with first="bl2" %}
-					{% include "bestenliste/bl_detail.html" %}
-				{% endwith %}
-			</div>
+			{% if user.is_authenticated %}
+				<div class="col-sm-4 col-lg-3 ">
+					{% with first="bl2" %}
+						{% include "bestenliste/bl_detail.html" %}
+					{% endwith %}
+				</div>
 			{% endif %}
-			
 		</div>
 	</div>
 </div>
