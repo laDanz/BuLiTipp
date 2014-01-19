@@ -48,4 +48,53 @@ for s in Spiel.objects.filter(spieltag__spielzeit_id=sz.id).filter(datum__lte = 
 		tore= tore + int(s.ergebniss.split(":")[0]) + int(s.ergebniss.split(":")[1])
 print "soviel Tore waren es in echt: %s" % str(tore)
 
+UNENTSCHIEDEN=("0:0", "1:1", "2:2", "3:3", "4:4", "5:5", )
+print "+++ User: Unentschieden  +++"
+user_unent={}
+user_unent_recht={}
+for user in User.objects.all():
+	unent=0
+	recht = 0
+	for tipp in Tipp.objects.filter(user_id=user.id):
+		if tipp.ergebniss in UNENTSCHIEDEN:
+			unent += 1
+			if tipp.spiel.ergebniss in UNENTSCHIEDEN:
+				recht += 1
+	user_unent[user.username]=unent
+	user_unent_recht[user.username]=recht
+user_unent=sorted(user_unent.iteritems(), key=itemgetter(1), reverse=True)
+print user_unent
+user_unent_recht=sorted(user_unent_recht.iteritems(), key=itemgetter(1), reverse=True)
+print "Recht gehabt:"
+print user_unent_recht
+unent=0
+for s in Spiel.objects.filter(spieltag__spielzeit_id=sz.id).filter(datum__lte = timezone.now()):
+	if s.ergebniss in UNENTSCHIEDEN:
+		unent += 1
+print "soviel Unentschieden waren es in echt: %s" % str(unent)
 
+print "getippte tabelle:"
+v_punkte={}
+for s in Spiel.objects.filter(spieltag__spielzeit_id=sz.id).filter(datum__lte = timezone.now()):
+	tipps=Tipp.objects.filter(spiel_id=s.id)
+	hteam = s.heimmannschaft
+	ateam = s.auswaertsmannschaft
+	hpkt=v_punkte[hteam] if hteam in v_punkte.keys() else 0
+	apkt=v_punkte[ateam] if ateam in v_punkte.keys() else 0
+	for tipp in tipps:
+		try:
+			h = int(tipp.ergebniss.split(":")[0])
+			v = int(tipp.ergebniss.split(":")[1])
+			if h > v:
+				hpkt += 3
+			elif h < v:
+				apkt += 3
+			else:
+				hpkt += 1
+				apkt += 1
+		except:
+			pass
+	v_punkte[hteam]=hpkt
+	v_punkte[ateam]=apkt
+v_punkte=sorted(v_punkte.iteritems(), key=itemgetter(1), reverse=True)
+print v_punkt
