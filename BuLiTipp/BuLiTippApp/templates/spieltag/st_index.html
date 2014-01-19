@@ -54,11 +54,15 @@
 					</div>
 					<div class="hidden-lg col-md-6 col-sm-8">
 						{% include "spieltag/st_detail_xs.html" %}
-						{% include "kommentar/detail.html" %}
+						{% with id=1 %}
+							{% include "kommentar/detail.html" %}
+						{% endwith %}
 					</div>
 					<div class="col-lg-6 hidden-md hidden-sm hidden-xs ">
 						{% include "spieltag/st_detail.html" %}
-						{% include "kommentar/detail.html" %}
+						{% with id=2 %}
+							{% include "kommentar/detail.html" %}
+						{% endwith %}
 					</div>
 					<div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
 						{% include "bestenliste/bl_detail.html" %}
