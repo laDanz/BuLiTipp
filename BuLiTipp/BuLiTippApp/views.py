@@ -82,6 +82,7 @@ class HomePageView(TemplateView):
 		context["spielzeiten"]=get_spielzeiten_by_request(request)
 		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id)
 		context["spieltag"]=get_spieltag_by_request(request, spielzeit_id, spieltag_id)
+		context["kommentare"]=get_kommentare_by_request(request, spielzeit_id, context["spieltag"].id)
 		context["referer"]=self.referer #request.META["HTTP_REFERER"]
 		return self.render_to_response(context)
 	def post(self, request, *args, **kwargs):
@@ -116,6 +117,9 @@ class BestenlisteView(TemplateView):
 		context["referer"]=self.referer
 		return self.render_to_response(context)
 
+def get_kommentare_by_request(request, spielzeit_id, spieltag_id):
+	return Kommentar.objects.filter(spieltag__id = spieltag_id).order_by("datum").reverse()
+
 def get_news_by_request(request):
 	news = News.objects.all().order_by("datum").reverse()
 	newsto = NewsTO(news)
@@ -131,13 +135,13 @@ def get_news_by_request(request):
 
 def get_spielzeiten_by_request(request):
 	szTOs=[]
-	for sz in Spielzeit.objects.all().order_by("id"):
+	for sz in Spielzeit.objects.all().order_by("id").reverse():
 		szTOs.append(SpielzeitBezeichnerTO(sz))
 	return szTOs
 
 def get_spielzeit_by_request(request, spielzeit_id):
 	if spielzeit_id == None:
-		sz = Spielzeit.objects.all().order_by("id")[0]
+		sz = Spielzeit.objects.all().order_by("id").reverse()[0]
 	else:
 		sz = Spielzeit.objects.get(pk=spielzeit_id)
 	st = sz.next_spieltag()
@@ -159,7 +163,7 @@ def get_spieltag_by_request(request, spielzeit_id, spieltag_id):
 			# wenn spieltag, aber nicht spielzeit übergeben ist, dann bestimme spielzeit aus spieltag
 			sz = Spieltag.objects.get(pk=spieltag_id).spielzeit
 		else:
-			sz = Spielzeit.objects.all().order_by("id")[0]
+			sz = Spielzeit.objects.all().order_by("id").reverse()[0]
 	else:
 		sz = Spielzeit.objects.get(pk=spielzeit_id)
 	if spieltag_id == None:
@@ -206,11 +210,71 @@ class LoginFormView(FormView):
 	template_name = 'registration/login.html'
 	form_class = LoginForm
 
+def delete_kommentar(request, spieltag_id=None, spielzeit_id=None):
+	kommentar_id=request.POST["kommentar_id"]
+	spieltag_id=request.POST["spieltag_id"]
+	Kommentar.objects.get(pk=kommentar_id).delete()
+	return HttpResponseRedirect(reverse("spieltag", args=(spielzeit_id, spieltag_id)))
+	
+def post_kommentar(request, spieltag_id=None, spielzeit_id=None):
+	text=request.POST["text"]
+	user=request.user
+	spieltag_id=request.POST["spieltag_id"]
+	reply_to=request.POST["reply_to"]
+	kommentar=Kommentar()
+	kommentar.text=text
+	kommentar.user=user
+	if spieltag_id != "":
+		kommentar.spieltag_id = spieltag_id
+	else:
+		kommentar.reply_to_id = reply_to
+		#for redirect FIXME:hack
+		komm = Kommentar.objects.get(pk=reply_to)
+		while komm.spieltag_id == None:
+			komm = Kommentar.objects.get(pk=komm.reply_to)
+		spieltag_id = komm.spieltag_id
+	kommentar.datum=datetime.now()
+	kommentar.save()
+	return HttpResponseRedirect(reverse("spieltag", args=(spielzeit_id, spieltag_id)))
+
+@login_required
+def tippen(request, spielzeit_id, spieltag_id):
+	''' request.POST.items() enthaelt die Tipps in der Form: [("tipp_"spielID : tipp), ]
+	'''
+	import string
+	tipped = 0
+	tipps = filter(lambda key: key.startswith("tipp_"), request.POST.keys())
+	#fuer jeden tipp im POST
+	for tipp_ in tipps:
+		tipp, spiel_id = string.split(tipp_, "_")
+		#suche ob es fuer diesen (user, spiel) schon ein tipp gibt
+		# FIXME: better validation?
+		if ":" in request.POST[tipp_]:
+			try:
+				tipp = Tipp.objects.get(spiel_id=spiel_id, user_id=request.user.id)
+			except:
+				#wenn nein: lege einen an
+				tipp = Tipp()
+				tipp.spiel_id = spiel_id
+				tipp.user = request.user
+			tipp.ergebniss = request.POST[tipp_]
+			#tipp speichern
+			tipp.save()
+			tipped += 1
+	spiele_count = Spiel.objects.filter(spieltag__id = spieltag_id).count()
+	if tipped == spiele_count:
+		messages.success(request, 'Erfolgreich getippt!')
+	else:
+		messages.warning(request, 'Achtung! Es wurden nicht alle Spiele getippt!')
+	if "referer" in request.POST.keys():
+		if request.POST["referer"] == "spieltag":
+			return HttpResponseRedirect(reverse("spieltag", args=(spielzeit_id, spieltag_id)))
+	return HomePageView.as_view()(request, spieltag_id=spieltag_id, spielzeit_id=spielzeit_id)
+
 ### old:
 
 def home(request):
 	return redirect("BuLiTippApp.views.index")
-
 
 @login_required
 def user_site(request, spielzeit_id=None):
@@ -348,34 +412,7 @@ def best(request, full=True):
 			else:
 				del userpunkteplatz[j]
 	return render_to_response("bestenliste/detail.html",{"userpunkteplatz":userpunkteplatz}, context_instance=RequestContext(request))
-# sicherheitsabfrage!?	
-def delete_kommentar(request):
-	kommentar_id=request.POST["kommentar_id"]
-	spieltag_id=request.POST["spieltag_id"]
-	Kommentar.objects.get(pk=kommentar_id).delete()
-	return HttpResponseRedirect(reverse("BuLiTippApp.views.detail", args=(spieltag_id,)))
 	
-def post_kommentar(request, spieltag_id=None, spielzeit_id=None):
-	text=request.POST["text"]
-	user=request.user
-	spieltag_id=request.POST["spieltag_id"]
-	reply_to=request.POST["reply_to"]
-	kommentar=Kommentar()
-	kommentar.text=text
-	kommentar.user=user
-	if spieltag_id != "":
-		kommentar.spieltag_id = spieltag_id
-	else:
-		kommentar.reply_to_id = reply_to
-		#for redirect FIXME:hack
-		komm = Kommentar.objects.get(pk=reply_to)
-		while komm.spieltag_id == None:
-			komm = Kommentar.objects.get(pk=komm.reply_to)
-		spieltag_id = komm.spieltag_id
-	kommentar.datum=datetime.now()
-	kommentar.save()
-	return HttpResponseRedirect(reverse("spieltag", args=(spielzeit_id, spieltag_id)))
-
 def index(request, spielzeit_id=-1):
 	# show Punkte, letzter Spieltag, naechster Spieltag
 	spielzeiten=[]
@@ -463,39 +500,7 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 	if info is not None:
 		args["message"]=info
 	return render_to_response("spieltag/detail.html", args, context_instance=RequestContext(request))
-@login_required
-def tippen(request, spielzeit_id, spieltag_id):
-	''' request.POST.items() enthaelt die Tipps in der Form: [("tipp_"spielID : tipp), ]
-	'''
-	import string
-	tipped = 0
-	tipps = filter(lambda key: key.startswith("tipp_"), request.POST.keys())
-	#fuer jeden tipp im POST
-	for tipp_ in tipps:
-		tipp, spiel_id = string.split(tipp_, "_")
-		#suche ob es fuer diesen (user, spiel) schon ein tipp gibt
-		# FIXME: better validation?
-		if ":" in request.POST[tipp_]:
-			try:
-				tipp = Tipp.objects.get(spiel_id=spiel_id, user_id=request.user.id)
-			except:
-				#wenn nein: lege einen an
-				tipp = Tipp()
-				tipp.spiel_id = spiel_id
-				tipp.user = request.user
-			tipp.ergebniss = request.POST[tipp_]
-			#tipp speichern
-			tipp.save()
-			tipped += 1
-	spiele_count = Spiel.objects.filter(spieltag__id = spieltag_id).count()
-	if tipped == spiele_count:
-		messages.success(request, 'Erfolgreich getippt!')
-	else:
-		messages.warning(request, 'Achtung! Es wurden nicht alle Spiele getippt!')
-	if "referer" in request.POST.keys():
-		if request.POST["referer"] == "spieltag":
-			return SpieltagView.as_view()(request, spieltag_id=spieltag_id, spielzeit_id=spielzeit_id)
-	return HomePageView.as_view()(request, spieltag_id=spieltag_id, spielzeit_id=spielzeit_id)
+
 
 @login_required
 def saisontipp(request, spielzeit_id=None, message=None):

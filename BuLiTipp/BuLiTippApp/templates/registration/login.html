@@ -6,11 +6,10 @@
 	{% if request.user.is_authenticated %}
 		Hello {{ request.user.username	}}!
 	{% else %}
-		Please sign in!
 		<form class="form-horizontal" role="form" method="POST" action="{% url django.contrib.auth.views.login %}">
 		{% csrf_token %}
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="uname">Username:</label>
+				<label class="col-sm-2 control-label" for="uname">Benutzername:</label>
 				<div class="col-sm-4">
 					<input class="form-control" type="text" id="uname" name="username" />
 				</div>
@@ -19,15 +18,6 @@
 				<label class="col-sm-2 control-label" for="pword">Passwort:</label>
 				<div class="col-sm-4">
 					<input type="password" class="form-control" id="pword" name="password" />
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox"> Remember me
-						</label>
-					</div>
 				</div>
 			</div>
 			<div class="form-group">
