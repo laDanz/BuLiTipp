@@ -1,26 +1,39 @@
 <!-- benoetigt kommentare, spieltag -->
-<h3>Kommentare</h3>
-Schreib ein Kommentar zu diesem Spieltag:
+<div class="panel-group" id="kommentar_accordion" style="padding-top:10px;">
 
-{% if user.is_authenticated %}
-{% with editable="true" spieltag=spieltag %}
-{% include "kommentar/inline.html" %}
-{% endwith %}
-{% endif %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#kommentar_accordion" href="#kommentar_panel">
+			<h4 class="panel-title">
+				Kommentare <span class="badge">{{kommentare|length}}</span>
+			</h4>
+		</a>
+	</div>
+	<div id="kommentar_panel" class="panel-collapse collapse" style="margin:5px;">
 
-{% if kommentare|length > 0 %}
-	{% for kommentar in kommentare %}
-		<div style="border:1px solid rgb(205,205,205); padding:5px; margin:5px;">
-		{% include "kommentar/inline.html" %}
-			<div style="padding-left:25px">
-			{% for kommentar in kommentar.kommentar_set.all%}
+		
+		
+		{% if kommentare|length > 0 %}
+			{% for kommentar in kommentare %}
+				<div style="border:1px solid rgb(205,205,205); padding:5px; margin:5px;">
 				{% include "kommentar/inline.html" %}
+					<div style="padding-left:25px">
+					{% for kommentar in kommentar.kommentar_set.all%}
+						{% include "kommentar/inline.html" %}
+					{% endfor %}
+					</div>
+				</div>
 			{% endfor %}
-			</div>
+		{% else %}
+		<div>
+		Noch keine Kommentare, schreibe den Ersten!
 		</div>
-	{% endfor %}
-{% else %}
-<div>
-Noch keine Kommentare, schreibe den Ersten!
+		{% endif %}
+	</div>
+	{% if user.is_authenticated %}
+		{% with editable="true" spieltag=spieltag big="true" %}
+		{% include "kommentar/inline.html" %}
+		{% endwith %}
+		{% endif %}
 </div>
-{% endif %}
+</div>

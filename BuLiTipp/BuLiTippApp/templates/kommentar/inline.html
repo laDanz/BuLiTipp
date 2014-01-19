@@ -5,16 +5,16 @@
 
 {% if kommentar.id %}
 <div>
-von {{ kommentar.user.username }} am {{kommentar.datum}}
+von {% firstof kommentar.user.first_name kommentar.user.username %} am {{kommentar.datum}}
 
 <br>
-<textarea disabled cols="50" rows="5">{{ kommentar.text }}</textarea>
+<textarea class="well form-control" disabled rows="3">{{ kommentar.text }}</textarea>
 	{% if kommentar.user.id == user.id or user.is_staff%}
-		<form action="{% url BuLiTippApp.views.delete_kommentar%}" method="post">
+		<form action="{% url BuLiTippApp.views.delete_kommentar spielzeit.id spieltag.id %}" method="post">
 		{% csrf_token %}
 		<input type="hidden" name="kommentar_id" value="{{kommentar.id}}" />
 		<input type="hidden" name="spieltag_id" value="{{spieltag.id}}" />
-		<input type="submit" value="Kommentar l&ouml;schen" />
+		<input type="submit" class="btn btn-warning" value="Kommentar l&ouml;schen" />
 		</form>
 	{% endif %}
 	<!-- Kommentar auf Kommentar nur in der ersten ebene-->
