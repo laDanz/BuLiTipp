@@ -14,7 +14,7 @@ url(r'^$', 'BuLiTippApp.views.home', name='home'),
 url(r'^admin/', include(admin.site.urls)),
 url(r'^login/', "django.contrib.auth.views.login"),
 url(r'^register/', "BuLiTippApp.views.register"),
-url(r'^logout/', "BuLiTippApp.views.logout"),
+url(r'^logout/', "BuLiTippApp.views.logout", name="logout"),
 
 # Account management
 url(r'^account/$', "BuLiTippApp.views.account"),

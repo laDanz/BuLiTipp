@@ -20,7 +20,7 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li {% if referer = 'news' %}class="active"{% endif %}>
-						<a href="{% url news %}">Neuigkeiten <span class="badge">{{ news.anzahl_ungelesen }}</span></a></li>
+						<a href="{% url news %}">Neuigkeiten <span class="badge">{% if news.anzahl_ungelesen > 0 %}{{ news.anzahl_ungelesen }}{% endif %}</span></a></li>
 					{% if user.is_authenticated %}
 					<li {% if referer = 'spieltag' %}class="active"{% endif %}>
 						<a href="{% url spieltag spielzeit_id=spielzeit.id spieltag_id=spieltag.id %}">Spieltag</a></li>
@@ -31,7 +31,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					{% if user.is_authenticated %}
 						<li><a href="{% url user%}">{% firstof user.first_name user.username  %}</a></li>
-						<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
+						<li><a href="{% url logout %}"><span class="glyphicon glyphicon-log-out"></span></a></li>
 					{% else %}
 						<li><a href="{% url login %}"><span class="glyphicon glyphicon-log-in"></span></a></li>
 					{% endif %}
