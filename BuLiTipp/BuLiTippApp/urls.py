@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.conf.urls import patterns, url
 
 from views import NewsPageView, HomePageView, SpieltagView
-from views import BestenlisteView, UserFormView, ImpressumView, LoginFormView
+from views import BestenlisteView, ImpressumView, LoginFormView
 
 urlpatterns = patterns('',
 	url(r'^$', HomePageView.as_view(), name='home'),

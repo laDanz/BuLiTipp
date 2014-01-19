@@ -22,7 +22,7 @@ from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichner
 from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
 from sets import Set
-from forms import UserForm, LoginForm, UserModelForm
+from forms import UserModelForm, LoginForm
 
 import operator
 from django.forms.forms import Form
@@ -201,10 +201,6 @@ class ImpressumView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super(ImpressumView, self).get_context_data(**kwargs)
 		return context
-
-class UserFormView(FormView):
-	template_name = 'user/user.html'
-	form_class = UserForm
 
 class LoginFormView(FormView):
 	template_name = 'registration/login.html'
