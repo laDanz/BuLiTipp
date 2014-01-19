@@ -5,20 +5,6 @@
 {% block bootstrap3_content	%}
 	<div class="container">
 		<h1>TippBuLi <small>{% block title %}(no title){% endblock %}</small></h1>
-		<div class="text-center">
-			<div class="visible-xs">
-				This is xs
-			</div>
-			<div class="visible-sm">
-				This is sm
-			</div>
-			<div class="visible-md">
-				This is md
-			</div>
-			<div class="visible-lg">
-				This is lg
-			</div>
-		</div>
 		<nav class="navbar navbar-default " role="navigation">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -26,7 +12,7 @@
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
-					 <span class="icon-bar"></span>
+					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="{% url home %}" {% if referer = 'home' %}class="active"{% endif %}>Home</a>
 			</div>
@@ -43,37 +29,19 @@
 					{% endif %}
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-                    {% if user.is_authenticated %}
+					{% if user.is_authenticated %}
 						<li><a href="{% url user%}">{% firstof user.first_name user.username  %}</a></li>
 						<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
 					{% else %}
 						<li><a href="{% url login %}"><span class="glyphicon glyphicon-log-in"></span></a></li>
 					{% endif %}
 					<!--li ><a href="/BuLiTipp/impressum">Impressum</a></li-->
-
 				</ul>
-
 			</div>
 		 </nav>
-{% comment %}
-{% endcomment %}
 		{% bootstrap_messages %}
 		{% block content %}(no content){% endblock %}
 	</div>
-<script>
-/* When a theme-change item is selected, update theme */
-jQuery(function($) {
-    $('body').on('click', '.change-style-menu-item', function() {
-      var theme_name = $(this).attr('rel');
-//      var theme = "//netdna.bootstrapcdn.com/bootswatch/3.0.0/" + theme_name + "/bootstrap.min.css";
-      var theme = "/static/" + theme_name + "/css/bootstrap.css";
-      set_theme(theme);
-    });
-});
-function set_theme(theme) {
-  $('link[title="main"]').attr('href', theme);
-}
-</script>
 {% endblock	%}
 
 

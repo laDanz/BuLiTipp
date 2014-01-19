@@ -1,8 +1,11 @@
 {% load url from future %}
 {% load filters %}
+
 <!--st_detail-->
 
-<div class="text-center"><div id="dude"></div></div>
+<div class="text-center" style="padding-top: 10;">
+	<div id="dude"></div>
+</div>
 <script>
 var jahr={{spieltag.datum.year}}, monat={{spieltag.datum.month}}, tag={{spieltag.datum.day}}, stunde={{spieltag.datum.hour}}, minute={{spieltag.datum.minute}}, sekunde={{spieltag.datum.second}};
 var zielDatum=new Date(jahr,monat-1,tag,stunde,minute,sekunde);
