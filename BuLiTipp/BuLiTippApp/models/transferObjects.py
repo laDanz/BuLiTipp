@@ -80,6 +80,7 @@ class SpieltagTO(object):
 		self.nummer = spieltag.nummer
 		self.datum = spieltag.datum
 		self.spiele = spieleTOs
+		self.tippbar = spieltag.is_tippable()
 		self.vollstaendig_getippt = vollstaendigGetippt
 		if naechster != None:
 				self.naechster = SpieltagTO(naechster)

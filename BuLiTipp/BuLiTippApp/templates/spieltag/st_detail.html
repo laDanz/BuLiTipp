@@ -71,9 +71,6 @@ p.id = "";
 				{% if user.is_authenticated %}
 				<td>
 					{% if spiel.tippbar  %}
-						<script>
-						spiele_tippbar+=1
-						</script>
 						<input type="text" 
 							name="tipp_{{ spiel.id  }}" 
 							style="width:50px" 

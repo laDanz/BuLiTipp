@@ -23,7 +23,9 @@
 					</div>
 				</div>
 				<div class="tab-pane active" id="st_solo">
-					<div class="text-right" style="height:0px;overflow:visible;"><a href="#st_andere" data-toggle="tab" style="position: relative;top: -20;left: -15;"> <span class="glyphicon glyphicon-fullscreen"></span></a></div>
+					{% if not spieltag.tippbar %}
+						<div class="text-right" style="height:0px;overflow:visible;"><a href="#st_andere" data-toggle="tab" style="position: relative;top: -20;left: -15;"> <span class="glyphicon glyphicon-fullscreen"></span></a></div>
+					{% endif %}
 					<div class="hidden-lg hidden-md col-sm-8">
 						{% include "spieltag/st_detail_xs.html" %}
 					</div>
@@ -44,7 +46,9 @@
 					</div>
 				</div>
 				<div class="tab-pane active" id="st_solo">
-					<div class="text-right" style="height:0px;overflow:visible;"><a href="#st_andere" data-toggle="tab" style="position: relative;top: -20;left: -15;"> <span class="glyphicon glyphicon-fullscreen"></span></a></div>
+					{% if not spieltag.tippbar %}
+						<div class="text-right" style="height:0px;overflow:visible;"><a href="#st_andere" data-toggle="tab" style="position: relative;top: -20;left: -15;"> <span class="glyphicon glyphicon-fullscreen"></span></a></div>
+					{% endif %}
 					<div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
 						{% include "tabelle/tabelle.html" %}
 					</div>

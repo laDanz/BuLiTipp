@@ -50,6 +50,7 @@ function countdown(element, zieldatum) {
 		}else{
 			monate=""
 		}
+		var tage_ = tage;
 		(tage!=1)?tage=tage+" Tage,  ":tage=tage+" Tag,  ";
 		(stunden!=1)?stunden=stunden+" Stunden,  ":stunden=stunden+" Stunde,  ";
 		(minuten!=1)?minuten=minuten+" Minuten  und  ":minuten=minuten+" Minute  und  ";
@@ -59,6 +60,12 @@ function countdown(element, zieldatum) {
 		element.innerHTML=
 			"noch " + jahre + monate + tage + stunden + minuten + sekunden + " verbleibend!";
 		element.className = "label label-primary";
+		
+		if (tage_ < 3){
+			element.className = "label label-danger";
+		}else if (tage_ < 7){
+			element.className = "label label-warning";
+		}
 		setTimeout(function() { countdown(element);},1000);
 	}
 	// Bei abgelaufenen Spieltagen: nichts anzeigen
