@@ -4,7 +4,7 @@
 
 {% block content %}
 <!--hm_index-->
-<ul class="nav nav-tabs">
+<ul class="nav nav-pills">
 {% for sz in spielzeiten%}
 	<li {% if sz.id == spielzeit.id %} class="active"{% endif %}><a href="{% url home sz.id %}">{{sz.bezeichner}}</a></li>
 {% endfor %}
