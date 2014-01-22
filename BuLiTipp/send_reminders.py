@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: latin-1 -*-
 import os, sys
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "BuLiTipp.settings")
+import BuLiTipp.settings
+
 
 from BuLiTippApp.models import Spielzeit, Tipp
 from django.contrib.auth.models import User
@@ -9,8 +12,8 @@ from django.utils import timezone
 import BuLiTippApp.mail as mail
 
 ERINNERUNG_SUBJECT = "Jetzt den nächsten Spieltag tippen!"
-ERINNERUNG_MSG = 'Hallo %s,\n\nEs wird höchste Zeit, dass du den nächsten Spieltag tippst!\nGehe gleich auf http://TippBuLi.de/BuLiTipp/sp%s/ um deinen Tipp abzugeben!\n\nViele Grüße,\ndie BuLiTippApp\n\n*psst* unter uns: Du kannst auch gleich mehrere Spieltage "voraus" tippen ;)'
-ERINNERUNG_MSG_HTML = '<html>Hallo %s,<br><br>Es wird h&ouml;chste Zeit, dass du den n&auml;chsten Spieltag tippst!<br>Gehe gleich auf <a href="http://TippBuLi.de/BuLiTipp/sp%s/">http://TippBuLi.de/</a> um deinen Tipp abzugeben!<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp<br><br><b>*psst*: Nur unter uns:</b> Du kannst auch gleich mehrere Spieltage "voraus" tippen ;)'
+ERINNERUNG_MSG = 'Hallo %s,\n\nEs wird höchste Zeit, dass du den nächsten Spieltag tippst!\nGehe gleich auf http://TippBuLi.de/BuLiTipp/BuLiTipp/spieltag/%s/%s/ um deinen Tipp abzugeben!\n\nViele Grüße,\ndie BuLiTippApp\n\n*psst* unter uns: Du kannst auch gleich mehrere Spieltage "voraus" tippen ;)'
+ERINNERUNG_MSG_HTML = '<html>Hallo %s,<br><br>Es wird h&ouml;chste Zeit, dass du den n&auml;chsten Spieltag tippst!<br>Gehe gleich auf <a href="http://TippBuLi.de/BuLiTipp/BuLiTipp/spieltag/%s/%s/">http://TippBuLi.de/</a> um deinen Tipp abzugeben!<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp<br><br><b>*psst*: Nur unter uns:</b> Du kannst auch gleich mehrere Spieltage "voraus" tippen ;)'
 
 def run(test=False):
 	global ERINNERUNG_SUBJECT
@@ -42,8 +45,8 @@ def run(test=False):
 						print "User %s has not tipped(%s/%s), lets send him an riminder to %s" % (user.username, tipps_anz, spiele_anz, email)
 					else:
 						ERINNERUNG_SUBJECT_ = ERINNERUNG_SUBJECT+"(%s)" % str(latest_spielzeit.bezeichner)
-						ERINNERUNG_MSG_ = ERINNERUNG_MSG % (str(user.username), next_spieltag.id)
-						ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % (str(user.username), next_spieltag.id)
+						ERINNERUNG_MSG_ = ERINNERUNG_MSG % (str(user.username), next_spieltag.sp.id, next_spieltag.id)
+						ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % (str(user.username), next_spieltag.sp.id, next_spieltag.id)
 						if send:
 							mail.send(ERINNERUNG_SUBJECT_, user.email, ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)
 def install():
@@ -77,8 +80,8 @@ def test():
 	all_spielzeiten=Spielzeit.objects.all()
         latest_spielzeit=all_spielzeiten[len(all_spielzeiten)-1]
         next_spieltag=latest_spielzeit.next_spieltag()
-	ERINNERUNG_MSG_ = ERINNERUNG_MSG % ("admin", next_spieltag.id)
-	ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % ("admin", next_spieltag.id)
+	ERINNERUNG_MSG_ = ERINNERUNG_MSG % ("admin", latest_spielzeit.id, next_spieltag.id)
+	ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % ("admin", latest_spielzeit.id, next_spieltag.id)
 	mail.send("This is just a Test!" +"(%s)" % latest_spielzeit.bezeichner,"cdanzmann@gmail.com","If you can read this, the mailservice is working\n" + ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)
 
 if __name__ == "__main__":
