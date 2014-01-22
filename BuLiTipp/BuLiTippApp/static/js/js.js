@@ -70,7 +70,7 @@ function countdown(element, zieldatum) {
 	}
 	// Bei abgelaufenen Spieltagen: nichts anzeigen
 		else {
-			element.innerHTML = "abgelaufen am " + zieldatum.getDay()+"."+zieldatum.getMonth()+"."+zieldatum.getFullYear()+"!";
+			element.innerHTML = "abgelaufen am " + zieldatum.getDate()+"."+(zieldatum.getMonth()+1)+"."+zieldatum.getFullYear()+"!";
 			element.className = "label label-default";
 		}
 }
