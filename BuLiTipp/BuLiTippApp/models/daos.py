@@ -22,7 +22,8 @@ class BestenlisteDAO():
         from models_statistics import Punkte
         blp=[]
         #fuer jeden user
-        for user in User.objects.all():
+        # FIXME based on TippGemeinschaften
+        for user in User.objects.filter(is_active = True).filter(groups = 1):
             punkte = Punkte.objects.filter(user=user)
             if spieltag_id is not None:
                 punkte = punkte.filter(spieltag__id=spieltag_id)

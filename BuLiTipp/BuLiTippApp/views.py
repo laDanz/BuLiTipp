@@ -22,10 +22,11 @@ from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichner
 from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
 from sets import Set
-from forms import UserModelForm
+from forms import UserModelForm, UserCreateForm
 
 import operator
 from django.forms.forms import Form
+import mail
 
 ### new:
 def userform(request):
@@ -41,6 +42,30 @@ def userform(request):
 		form = UserModelForm(instance=user)
 	context["form"] = form
 	return render(request, 'user/user.html', context)
+
+def register(request):
+	context = {}
+	context["news"] = get_news_by_request(request)
+	user = User()
+	if request.method == 'POST':
+		form = UserCreateForm(request.POST, instance = user)
+		if form.is_valid():
+			pw = user.password
+			user.set_password(user.password)
+			user.is_active = False
+			form.save()
+			group = Group.objects.filter(name="BuLiTipp")[0]
+			#user.groups.add(group)
+			user = authenticate(username=user.username, password=pw)
+			#djlogin(request, user)
+			mail.send("BuLiTipp: User registriert", "cdanzmann@gmail.com", "Bitte administriere den neuen User " + user.username+ " !")
+			messages.success(request, "Benutzer erfolgreich angelegt! Du kannst dich einloggen sobald der Administrator dich freigeschaltet hat.")
+			#return HttpResponseRedirect(reverse("user"))
+			return HttpResponseRedirect(reverse("home"))
+	else:
+		form = UserCreateForm(instance=user)
+	context["form"] = form
+	return render(request, 'registration/register.html', context)
 
 class NewsPageView(TemplateView):
 	template_name = 'messages/ms_index.html'
@@ -450,30 +475,6 @@ def logout(request):
 	djlogout(request)
 	return redirect(reverse("BuLiTippApp.views.index"), context_instance=RequestContext(request))
 
-def register(request):
-	''' if POST: register User, if username is free, then login user and redirect to "/"
-		else: show "register.html"
-	'''
-	if "username" in request.POST.keys():
-		u = request.POST['username']
-		p = request.POST['password']
-		e = request.POST["email"]
-		f = request.POST["first_name"]
-		#assert username unique
-		try:
-			#FIXME new User object
-			user = User.objects.create_user(u, e, p)
-			user.first_name = f
-			user = authenticate(username=u, password=p)
-			djlogin(request, user)
-		except IntegrityError:
-			return HttpResponse("Username bereits belegt!")
-		group = Group.objects.filter(name="BuLiTipp")[0]
-		user.groups.add(group)
-		user.save()
-		return redirect(reverse("BuLiTippApp.views.index"), context_instance=RequestContext(request))
-	return render_to_response("register.html", context_instance=RequestContext(request))
-	
 
 @login_required
 def detail(request, spieltag_id, spielzeit_id=-1, info=""):
