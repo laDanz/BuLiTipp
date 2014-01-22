@@ -48,7 +48,7 @@ def run(test=False):
 							mail.send(ERINNERUNG_SUBJECT_, user.email, ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)
 def install():
 	#um 7:15 an jedem DIe+Do gucken
-	INSTALL_STRING = "15  7	* * 2,4	ladanz  cd "+ os.getcwd()  +" && ./send_reminders.py\n"
+	INSTALL_STRING = "15  7    * * 2,4   ladanz  cd "+ os.getcwd()  +" && ./send_reminders.py\n"
 	# is 0 if installed, otherwise not installed
 	CHECK_INSTALL  = "send_reminders"
 	crontab_file = open("/etc/crontab", "r")
@@ -75,8 +75,8 @@ def test():
 	print "send testmail"
 	global ERINNERUNG_MSG
 	all_spielzeiten=Spielzeit.objects.all()
-	latest_spielzeit=all_spielzeiten[len(all_spielzeiten)-1]
-	next_spieltag=latest_spielzeit.next_spieltag()
+        latest_spielzeit=all_spielzeiten[len(all_spielzeiten)-1]
+        next_spieltag=latest_spielzeit.next_spieltag()
 	ERINNERUNG_MSG_ = ERINNERUNG_MSG % ("admin", next_spieltag.id)
 	ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % ("admin", next_spieltag.id)
 	mail.send("This is just a Test!" +"(%s)" % latest_spielzeit.bezeichner,"cdanzmann@gmail.com","If you can read this, the mailservice is working\n" + ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)
