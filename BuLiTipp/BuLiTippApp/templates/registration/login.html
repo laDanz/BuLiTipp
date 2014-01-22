@@ -3,10 +3,17 @@
 {% block title %}BuLiTipp Spieltag 2000{% endblock %}
 
 {% block content %}
+	{% if form.non_field_errors %}
+		<div class='alert alert-danger'>
+			{% for error in form.non_field_errors %}
+				<p>{{ error }}</p>
+			{% endfor %}
+		</div>
+	{% endif %}
 	{% if request.user.is_authenticated %}
 		Hello {{ request.user.username	}}!
 	{% else %}
-		<form class="form-horizontal" role="form" method="POST" action="{% url django.contrib.auth.views.login %}">
+		<form class="form-horizontal" role="form" method="POST" action="{% url login %}">
 		{% csrf_token %}
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="uname">Benutzername:</label>

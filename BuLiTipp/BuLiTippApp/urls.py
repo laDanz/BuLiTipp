@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.conf.urls import patterns, url
 
 from views import NewsPageView, HomePageView, SpieltagView
-from views import BestenlisteView, ImpressumView, LoginFormView
+from views import BestenlisteView, ImpressumView
 
 urlpatterns = patterns('',
 	url(r'^$', HomePageView.as_view(), name='home'),
@@ -21,7 +21,7 @@ urlpatterns = patterns('',
 	url(r'^bestenliste/$', BestenlisteView.as_view(), name='bestenliste'),
 	url(r'^user$', 'BuLiTippApp.views.userform', name='user'),
 	url(r'^impressum$', ImpressumView.as_view(), name='impressum'),
-	url(r'^login$', LoginFormView.as_view(), name='login'),
+	url(r'^login$', "django.contrib.auth.views.login", name='login'),
 	url(r'^spieltag/(?P<spielzeit_id>\d+)/(?P<spieltag_id>\d+)/tipp/$', 'BuLiTippApp.views.tippen', name='tipp'),
 	url(r'^spieltag/(?P<spielzeit_id>\d+)/(?P<spieltag_id>\d+)/postk/$', 'BuLiTippApp.views.post_kommentar', name='postk'),
 	url(r'^spieltag/(?P<spielzeit_id>\d+)/(?P<spieltag_id>\d+)/delk/$', 'BuLiTippApp.views.delete_kommentar', name='delk'),

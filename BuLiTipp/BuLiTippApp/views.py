@@ -22,7 +22,7 @@ from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichner
 from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
 from sets import Set
-from forms import UserModelForm, LoginForm
+from forms import UserModelForm
 
 import operator
 from django.forms.forms import Form
@@ -201,10 +201,6 @@ class ImpressumView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super(ImpressumView, self).get_context_data(**kwargs)
 		return context
-
-class LoginFormView(FormView):
-	template_name = 'registration/login.html'
-	form_class = LoginForm
 
 def delete_kommentar(request, spieltag_id=None, spielzeit_id=None):
 	kommentar_id=request.POST["kommentar_id"]
