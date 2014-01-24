@@ -6,9 +6,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="expires" content="0">
 		{% bootstrap_css %}
+		{% if user.theme.location %}
 		<link href="/static/themes/{{ user.theme.location }}/css/bootstrap.min.css" rel="stylesheet" title="main">
+		{% endif %}
 		<link rel="stylesheet" media="screen" href="/static/css/custom.css">		
+		{% if user.theme.location %}
 		<link rel="stylesheet" media="screen" href="/static/themes/{{ user.theme.location }}/custom.css">
+		{% endif %}
 		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 		
 		{% bootstrap_javascript jquery=1 %}
