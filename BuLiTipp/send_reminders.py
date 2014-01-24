@@ -34,7 +34,7 @@ def run(test=False):
 		send = (next_spieltag.datum - timezone.now()).days<10
 		if not send and test:
 			print "not sending any emails fpr this saison, since it's to far away"
-		for user in User.objects.all():
+		for user in User.objects.filter(is_active = True).filter(groups = 1):
 			email = user.email
 			tipps_anz = len(Tipp.objects.filter(spiel_id__spieltag_id=next_spieltag.id).filter(user_id=user.id).exclude(ergebniss=""))
 		#	print "%s: %s/%s" % (user.username, tipps_anz, spiele_anz)
