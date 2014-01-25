@@ -264,6 +264,9 @@ def tippen(request, spielzeit_id, spieltag_id):
 	#fuer jeden tipp im POST
 	for tipp_ in tipps:
 		tipp, spiel_id = string.split(tipp_, "_")
+		spiel = Spiel.objects.get(pk=spiel_id)
+		if not spiel.is_tippable():
+			continue
 		#suche ob es fuer diesen (user, spiel) schon ein tipp gibt
 		# FIXME: better validation?
 		if ":" in request.POST[tipp_]:
