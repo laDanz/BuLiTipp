@@ -105,7 +105,7 @@ class HomePageView(TemplateView):
 		context = self.get_context_data(**kwargs)
 		context["news"]=get_news_by_request(request)
 		context["spielzeiten"]=get_spielzeiten_by_request(request)
-		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id)
+		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id, before_spieltag_id=spieltag_id)
 		context["spieltag"]=get_spieltag_by_request(request, spielzeit_id, spieltag_id)
 		context["kommentare"]=get_kommentare_by_request(request, spielzeit_id, context["spieltag"].id)
 		context["referer"]=self.referer #request.META["HTTP_REFERER"]
@@ -164,11 +164,16 @@ def get_spielzeiten_by_request(request):
 		szTOs.append(SpielzeitBezeichnerTO(sz))
 	return szTOs
 
-def get_spielzeit_by_request(request, spielzeit_id):
+def get_spielzeit_by_request(request, spielzeit_id, before_spieltag_id=None):
 	if spielzeit_id == None:
 		sz = Spielzeit.objects.all().order_by("id").reverse()[0]
 	else:
 		sz = Spielzeit.objects.get(pk=spielzeit_id)
+	if not before_spieltag_id is None:
+		try:
+			before_spieltag_id = Spieltag.objects.get(pk=before_spieltag_id).next().id
+		except:
+			pass
 	st = sz.next_spieltag()
 	if st.is_tippable():
 			st_prev = st.previous()
@@ -176,7 +181,7 @@ def get_spielzeit_by_request(request, spielzeit_id):
 				st = st_prev
 	aktueller_spieltagTO = SpieltagTO(st)
 	tabelle = TabelleDAO.spielzeit(sz.id)
-	bestenliste = BestenlisteDAO.spielzeit(sz.id)
+	bestenliste = BestenlisteDAO.spielzeit(sz.id, before_spieltag_id=before_spieltag_id)
 	spieltage = []
 	for st in sz.spieltag_set.all().order_by("nummer"):
 		spieltage.append(SpieltagTO(st))
