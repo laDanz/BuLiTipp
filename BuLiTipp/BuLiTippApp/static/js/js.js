@@ -1,6 +1,6 @@
 function countdown(element, zieldatum) {
 	startDatum=new Date(); // Aktuelles Datum
-	
+	startDatum.setHours(startDatum.getUTCHours())
 	// Countdown berechnen und anzeigen, bis Ziel-Datum erreicht ist
 	if(startDatum<zielDatum)  {
 	
@@ -39,6 +39,8 @@ function countdown(element, zieldatum) {
 		// Sekunden
 		sekunden=Math.floor((zielDatum-startDatum)/1000);
 		
+		var tage_ = tage;
+		var monate_ = monate;
 		// Anzeige formatieren
 		if(jahre>0){
 			(jahre!=1)?jahre=jahre+" Jahre,  ":jahre=jahre+" Jahr,  ";
@@ -50,20 +52,22 @@ function countdown(element, zieldatum) {
 		}else{
 			monate=""
 		}
-		var tage_ = tage;
 		(tage!=1)?tage=tage+" Tage,  ":tage=tage+" Tag,  ";
 		(stunden!=1)?stunden=stunden+" Stunden,  ":stunden=stunden+" Stunde,  ";
 		(minuten!=1)?minuten=minuten+" Minuten  und  ":minuten=minuten+" Minute  und  ";
 		if(sekunden<10) sekunden="0"+sekunden;
 		(sekunden!=1)?sekunden=sekunden+" Sekunden":sekunden=sekunden+" Sekunden";
 		
-		element.innerHTML=
-			"noch " + jahre + monate + tage + stunden + minuten + sekunden + " verbleibend!";
+		if (monate_ > 0 || tage_ > 14){
+			element.innerHTML = "findet statt am " + zieldatum.getDate()+"."+(zieldatum.getMonth()+1)+"."+zieldatum.getFullYear()+"!";
+		}else{
+			element.innerHTML= "noch " + jahre + monate + tage + stunden + minuten + sekunden + " verbleibend!";
+		}
 		element.className = "label label-primary";
 		
-		if (tage_ < 3){
+		if (tage_ < 3 && monate_ == 0){
 			element.className = "label label-danger";
-		}else if (tage_ < 7){
+		}else if (tage_ < 7 && monate_ == 0){
 			element.className = "label label-warning";
 		}
 		setTimeout(function() { countdown(element);},1000);
