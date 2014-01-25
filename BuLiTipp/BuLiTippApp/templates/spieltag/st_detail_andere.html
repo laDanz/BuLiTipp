@@ -8,11 +8,13 @@
 {% block additional_column %}		
 	{% for tipp in spiel.andereTipps %}
 	<td class="text_center tipp{{tipp.punkte}}" style="max-width: 50px;">
-		<nobr>{{ tipp.ergebnis }}
-		{% if tipp.punkte >= 0 %}
-			({{ tipp.punkte }})
+		{% if not spiel.tippbar %}
+			<nobr>{{ tipp.ergebnis }}
+			{% if tipp.punkte >= 0 %}
+				({{ tipp.punkte }})
+			{% endif %}
+			</nobr>
 		{% endif %}
-		</nobr>
 	</td>
 	{% endfor %}
 {% endblock %}
