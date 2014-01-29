@@ -166,6 +166,7 @@ class Verein(models.Model):
 		from models_statistics import Serie
 		return{s.spielzeit.id:s for s in Serie.objects.filter(mannschaft__id=self.id)}
 
+last_save_time = None
 class Spiel(models.Model):
 	class Meta:
 		app_label = 'BuLiTippApp'
@@ -184,6 +185,17 @@ class Spiel(models.Model):
 		if (self.spieltag is not None):
 			return self.spieltag.is_tippable()
 		return False
+	def save(self):
+		global last_save_time
+		old_spiel = Spiel.objects.get(pk=self.id)		
+		if old_spiel.ergebniss != self.ergebniss:
+			if last_save_time == None or timezone.now()>last_save_time+timedelta(minutes = 1):
+				from models_statistics import Tabelle, Serie, Punkte
+				Tabelle().refresh()
+				Serie().refresh()
+				Punkte().refresh()
+				last_save_time = timezone.now()
+		super(Spiel, self).save()
 
 
 class Tipp(models.Model):
