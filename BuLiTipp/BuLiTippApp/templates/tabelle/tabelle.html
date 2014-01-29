@@ -1,4 +1,6 @@
 ﻿{% load url from future %}
+{% load filters %}
+
 <!--tabelle_buli-->
 <div class="table-responsive">
 	<table class="table table-bordered" name="tabelle_verein">
@@ -9,7 +11,7 @@
 		</thead>
 		<tbody>
 		{% for tp in spielzeit.tabelle.tabellenPlatz %}
-			<tr name="tabelle_verein_{{tp.verein.id}}">
+			<tr name="tabelle_verein_{{tp.verein.id}}" title="{{tp.verein.serie|get:spielzeit.id}}">
 				<td>{{tp.position}}</td><td>{{tp.verein}}</td><td>{{tp.punkte}}</td>
 			</tr>
 		{% endfor %}

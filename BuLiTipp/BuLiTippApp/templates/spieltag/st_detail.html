@@ -38,13 +38,13 @@ p.id = "";
 				{% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id szid=spieltag.spielzeit.id%}
 				<tr onmouseover="clear_marked_verein(); mark_verein({{spiel.heimTeam.id}}); mark_verein({{spiel.auswTeam.id}});">
 				{% block spiel_column %}
-					<td class="text-right">
+					<td class="text-right" title="{{spiel.heimTeam.serie|get:spielzeit.id}}">
 						<b>{{ spiel.heimTeam }}</b>  
 					</td>
 					<td class="text-center">
 						vs 
 					</td>
-					<td class="text-left">
+					<td class="text-left" title="{{spiel.auswTeam.serie|get:spielzeit.id}}">
 						<b>{{ spiel.auswTeam }}</b> 
 					</td>
 				{% endblock %}
@@ -82,7 +82,8 @@ p.id = "";
 							{% endif %}
 							pattern="[0-9]{1,2}:[0-9]{1,2}"
 							placeholder="tippen"
-							title="Bitte Ergebnis im Format x:y angeben!">
+							title="Bitte Ergebnis im Format x:y angeben!"
+							onkeyup="clear_marked_verein(); mark_verein({{spiel.heimTeam.id}}); mark_verein({{spiel.auswTeam.id}});">
 					{% elif spiel.eigenerTipp and spiel.eigenerTipp.ergebnis %}
 						<center class="tipp{{spiel.eigenerTipp.punkte}}">
 							{{ spiel.eigenerTipp.ergebnis }}

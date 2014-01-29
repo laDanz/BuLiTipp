@@ -1,10 +1,12 @@
 {% extends 'spieltag/st_detail.html' %}
+{% load filters %}
+
 {% block spiel_header%}
 	<th class="text-center">Spiel</th >
 {% endblock %}
 {% block spiel_column %}
 	<td class="text-right">
-		<b>{{ spiel.heimTeam }}</b> <br/>
-		<b>{{ spiel.auswTeam }}</b> 
+		<b title="{{spiel.heimTeam.serie|get:spielzeit.id}}">{{ spiel.heimTeam }}</b> <br/>
+		<b title="{{spiel.auswTeam.serie|get:spielzeit.id}}">{{ spiel.auswTeam }}</b> 
 	</td>
 {% endblock %}
