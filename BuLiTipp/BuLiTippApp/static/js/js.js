@@ -4,23 +4,7 @@ function countdown(element, zieldatum) {
 	// Countdown berechnen und anzeigen, bis Ziel-Datum erreicht ist
 	if(startDatum<zielDatum)  {
 	
-		var jahre=0, monate=0, tage=0, stunden=0, minuten=0, sekunden=0;
-		
-		// Jahre
-		while(startDatum<zielDatum) {
-			jahre++;
-			startDatum.setFullYear(startDatum.getFullYear()+1);
-		}
-		startDatum.setFullYear(startDatum.getFullYear()-1);
-		jahre--;
-		
-		// Monate
-		while(startDatum<zielDatum) {
-			monate++;
-			startDatum.setMonth(startDatum.getMonth()+1);
-		}
-		startDatum.setMonth(startDatum.getMonth()-1);
-		monate--;
+		var tage=0, stunden=0, minuten=0, sekunden=0;
 		
 		// Tage
 		while(startDatum.getTime()+(24*60*60*1000)<zielDatum) {
@@ -40,34 +24,23 @@ function countdown(element, zieldatum) {
 		sekunden=Math.floor((zielDatum-startDatum)/1000);
 		
 		var tage_ = tage;
-		var monate_ = monate;
 		// Anzeige formatieren
-		if(jahre>0){
-			(jahre!=1)?jahre=jahre+" Jahre,  ":jahre=jahre+" Jahr,  ";
-		}else{
-			jahre=""
-		}          
-		if(monate>0){
-			(monate!=1)?monate=monate+" Monate,  ":monate=monate+" Monat,  ";
-		}else{
-			monate=""
-		}
 		(tage!=1)?tage=tage+" Tage,  ":tage=tage+" Tag,  ";
 		(stunden!=1)?stunden=stunden+" Stunden,  ":stunden=stunden+" Stunde,  ";
 		(minuten!=1)?minuten=minuten+" Minuten  und  ":minuten=minuten+" Minute  und  ";
 		if(sekunden<10) sekunden="0"+sekunden;
 		(sekunden!=1)?sekunden=sekunden+" Sekunden":sekunden=sekunden+" Sekunden";
 		
-		if (monate_ > 0 || tage_ > 14){
+		if (tage_ > 14){
 			element.innerHTML = "findet statt am " + zieldatum.getDate()+"."+(zieldatum.getMonth()+1)+"."+zieldatum.getFullYear()+"!";
 		}else{
-			element.innerHTML= "noch " + jahre + monate + tage + stunden + minuten + sekunden + " verbleibend!";
+			element.innerHTML= "noch " + tage + stunden + minuten + sekunden + " verbleibend!";
 		}
 		element.className = "label label-primary";
 		
-		if (tage_ < 3 && monate_ == 0){
+		if (tage_ < 3){
 			element.className = "label label-danger";
-		}else if (tage_ < 7 && monate_ == 0){
+		}else if (tage_ < 7){
 			element.className = "label label-warning";
 		}
 		setTimeout(function() { countdown(element);},1000);
