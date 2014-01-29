@@ -51,7 +51,7 @@ p.id = "";
 				<td>
 					<center>
 						{% if spiel.tippbar %}
-							tippen!
+							{{spiel.datum|date:"d.m. G:i"}} Uhr
 						{% else %}
 							{% comment %}striptags is used to convert ergebnis to string, bc somehow it seems not to be a real string sometimes{% endcomment %}
 							{% if spiel.ergebnis and "DNF" not in spiel.ergebnis|striptags %}
@@ -73,7 +73,8 @@ p.id = "";
 					{% if spiel.tippbar  %}
 						<input type="text" 
 							name="tipp_{{ spiel.id  }}" 
-							style="width:50px" 
+							style="width:50px"
+							class="text-center"
 							id="tipp{{ spiel.id  }}"
 							{% if spiel.eigenerTipp and spiel.eigenerTipp.ergebnis and "DNF" not in spiel.eigenerTipp.ergebnis|striptags %}
 							value="{{ spiel.eigenerTipp.ergebnis }}"
