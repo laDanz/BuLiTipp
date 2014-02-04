@@ -67,3 +67,25 @@ function clear_marked_verein(){
 		}
 	}
 }
+// used for input with selects
+function update_hidden_input(id, h, v){
+	var erg=document.getElementsByName('tipp_'+id)[0].value;
+	if (h != null){
+		erg=h+":"+erg.split(":")[1]
+	}
+	if (v != null){
+		erg=erg.split(":")[0]+":"+v
+	}
+	var inputs = document.getElementsByName("tipp_"+id);
+	for (var i = 0; i < inputs.length; ++i){
+		inputs[i].value=erg
+	}
+	var selects = document.getElementsByName("h"+id);
+	for (var i = 0; i < selects.length; ++i){
+		selects[i].value=erg.split(":")[0]
+	}
+	var selects = document.getElementsByName("v"+id);
+	for (var i = 0; i < selects.length; ++i){
+		selects[i].value=erg.split(":")[1]
+	}
+}

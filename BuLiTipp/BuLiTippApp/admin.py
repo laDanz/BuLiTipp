@@ -2,16 +2,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from models	import Verein, Spielzeit, Spieltag,	Spiel, News, BootstrapThemes
+from models	import Verein, Spielzeit, Spieltag,	Spiel, News, BootstrapThemes, InputTypes
 from django.contrib	import admin
 
 admin.site.register(Verein)
 admin.site.register(News)
 admin.site.register(BootstrapThemes)
+admin.site.register(InputTypes)
 
 class SpielInline(admin.TabularInline):
 	model =	Spiel
-	extra =	8
+	extra =	0
 
 class SpieltagAdmin(admin.ModelAdmin):
 	list_filter	= ["spielzeit"]

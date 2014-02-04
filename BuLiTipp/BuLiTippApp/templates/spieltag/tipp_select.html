@@ -1,0 +1,45 @@
+<input type="hidden"
+name="tipp_{{ spiel.id  }}" 
+{% if spiel.eigenerTipp and spiel.eigenerTipp.ergebnis and "DNF" not in spiel.eigenerTipp.ergebnis|striptags %}
+value="{{ spiel.eigenerTipp.ergebnis }}"
+{% else %}
+value=""
+{% endif %}>
+	<nobr>
+	<select name="h{{spiel.id}}" class="form-control" style="width: 35px;margin: 0px;padding: 0px;display: inline;height: 30px;" onchange="update_hidden_input({{spiel.id}}, this.value, null);" onkeyup="clear_marked_verein(); mark_verein({{spiel.heimTeam.id}}); mark_verein({{spiel.auswTeam.id}});">
+		<option>0</option>
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		<option>5</option>
+		<option>6</option>
+		<option>7</option>
+		<option>8</option>
+		<option>9</option>
+	</select>:
+	<select name="v{{spiel.id}}" class="form-control" style="width: 35px;margin: 0px;padding: 0px;display: inline;height: 30px;" onchange="update_hidden_input({{spiel.id}},null , this.value);" onkeyup="clear_marked_verein(); mark_verein({{spiel.heimTeam.id}}); mark_verein({{spiel.auswTeam.id}});">
+		<option>0</option>
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		<option>5</option>
+		<option>6</option>
+		<option>7</option>
+		<option>8</option>
+		<option>9</option>
+	</select>
+</nobr>
+<script>
+	var id={{spiel.id}}
+	var erg=document.getElementsByName('tipp_'+id)[0].value;
+	var selects = document.getElementsByName("h"+id);
+	for (var i = 0; i < selects.length; ++i){
+		selects[i].value=erg.split(":")[0]
+	}
+	var selects = document.getElementsByName("v"+id);
+	for (var i = 0; i < selects.length; ++i){
+		selects[i].value=erg.split(":")[1]
+	}
+</script>

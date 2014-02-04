@@ -69,22 +69,15 @@ p.id = "";
 					</center>
 				</td>
 				{% if user.is_authenticated %}
-				<td>
+				<td class="text-center">
 					{% if spiel.tippbar  %}
-						<input type="text" 
-							name="tipp_{{ spiel.id  }}" 
-							style="width:50px"
-							class="text-center"
-							id="tipp{{ spiel.id  }}"
-							{% if spiel.eigenerTipp and spiel.eigenerTipp.ergebnis and "DNF" not in spiel.eigenerTipp.ergebnis|striptags %}
-							value="{{ spiel.eigenerTipp.ergebnis }}"
-							{% else %}
-							value=""
-							{% endif %}
-							pattern="[0-9]{1,2}:[0-9]{1,2}"
-							placeholder="tippen"
-							title="Bitte Ergebnis im Format x:y angeben!"
-							onkeyup="clear_marked_verein(); mark_verein({{spiel.heimTeam.id}}); mark_verein({{spiel.auswTeam.id}});">
+					
+						{% if user.input_type %}
+							{% include user.input_type.template %}
+						{% else %}
+							{% include "spieltag/tipp_select.html" %}
+						{% endif %}
+					
 					{% elif spiel.eigenerTipp and spiel.eigenerTipp.ergebnis %}
 						<center class="tipp{{spiel.eigenerTipp.punkte}}">
 							{{ spiel.eigenerTipp.ergebnis }}
