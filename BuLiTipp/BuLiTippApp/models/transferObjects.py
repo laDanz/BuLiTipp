@@ -74,7 +74,7 @@ class SpielTO(object):
 		return unicode(self)
 
 class SpieltagTO(object):
-	def __init__(self, spieltag=None, spieleTOs=[], vollstaendigGetippt=False, naechster=None, vorheriger=None, bestenliste=None):
+	def __init__(self, spieltag=None, spieleTOs=[], vollstaendigGetippt={}, naechster=None, vorheriger=None, bestenliste=None):
 		self.id = spieltag.id
 		self.bezeichner = spieltag.bezeichner
 		self.nummer = spieltag.nummer

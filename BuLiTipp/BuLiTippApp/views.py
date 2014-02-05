@@ -209,6 +209,7 @@ def get_spieltag_by_request(request, spielzeit_id, spieltag_id):
 def get_spieltagTO_by_request(request, st):
 	count_spiele = 0
 	count_eigene_tipps = 0
+	count_andere_tipps = {}
 	spieleTOs = []
 	for spiel in st.spiel_set.all().order_by("datum"):
 		count_spiele += 1
@@ -219,11 +220,20 @@ def get_spieltagTO_by_request(request, st):
 		except:
 			eigenerTipp = None
 		andereTipps = tipps.exclude(user_id = request.user.id)
+		for tipp in andereTipps:
+			try:
+				count_andere_tipps[tipp.user] = count_andere_tipps[tipp.user] + 1
+			except:
+				count_andere_tipps[tipp.user] = 1
 		spieleTOs.append(SpielTO(spiel, eigenerTipp, andereTipps))
 	naechster = st.next()
 	vorheriger = st.previous()
 	bestenliste = BestenlisteDAO.spieltag(st.id)
-	return SpieltagTO(st, spieleTOs, count_spiele == count_eigene_tipps, naechster, vorheriger, bestenliste)
+	voll_getippt = {}
+	voll_getippt[request.user.id] = count_spiele == count_eigene_tipps
+	for user, tipps in count_andere_tipps.iteritems():
+		voll_getippt[user.id] = count_spiele == tipps
+	return SpieltagTO(st, spieleTOs, voll_getippt, naechster, vorheriger, bestenliste)
 
 class ImpressumView(TemplateView):
 	template_name = 'home/hm_impress.html'

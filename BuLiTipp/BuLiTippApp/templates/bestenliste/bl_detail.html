@@ -14,7 +14,14 @@
 				<tbody>
 				{% for blp in spieltag.bestenliste.bestenlistenPlatz %}
 					<tr {% if user = blp.user %}class="active"{% endif %}>
-						<td>{{blp.position}}</td><td>{% firstof blp.user.first_name blp.user.username %}</td><td>{{blp.punkte}}</td>
+						<td>{{blp.position}}</td>
+						<td>
+							{% if not spieltag.vollstaendig_getippt|get:blp.user.id and spieltag.tippbare_spiele > 0 %}
+								<span class="glyphicon glyphicon-warning-sign pull-right" style="color:orange;" title="{% firstof firstof blp.user.first_name blp.user.username %} hat noch nicht getippt!"></span>
+							{% endif %}
+							{% firstof blp.user.first_name blp.user.username %}
+						</td>
+						<td>{{blp.punkte}}</td>
 					</tr>
 				{% endfor %}
 				</tbody>
