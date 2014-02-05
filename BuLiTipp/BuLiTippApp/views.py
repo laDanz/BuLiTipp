@@ -294,6 +294,8 @@ def tippen(request, spielzeit_id, spieltag_id):
 	if "referer" in request.POST.keys():
 		if request.POST["referer"] == "spieltag":
 			return HttpResponseRedirect(reverse("spieltag", args=(spielzeit_id, spieltag_id)))
+		elif request.POST["referer"] == "home":
+			return HttpResponseRedirect(reverse("spieltag", args=(spielzeit_id, spieltag_id)))
 	return HomePageView.as_view()(request, spieltag_id=spieltag_id, spielzeit_id=spielzeit_id)
 
 ### old:

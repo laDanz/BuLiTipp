@@ -1,5 +1,6 @@
 ﻿{% load url from future %}
 <!--st_nav-->
+{% with referer="spieltag" %}
 <div class="text-center">
 	{% if spieltag.vorheriger %}
 		<a class="btn btn-primary pull-left" href="{% url referer spielzeit.id spieltag.vorheriger.id %}">Voriger</a>
@@ -26,3 +27,4 @@
 		<a class="btn btn-disabled pull-right right" href="#" disabled>Nächster</a>
 	{% endif %}
 </div>
+{% endwith %}
