@@ -11,3 +11,10 @@ def get(d, key):
 		return d.get(key, '')
 	except:
 		return ""
+
+@register.filter
+def mult(x, y):
+	try:
+		return x*y
+	except:
+		return ""

@@ -1,4 +1,5 @@
 ﻿{% load url from future %}
+{% load filters %}
 <!--bl_buli-->
 
 <div class="tab-content">
@@ -34,9 +35,9 @@
 						<td style="border-right:0px;" class="text-center">{{blp.position}}</td>
 						<td style="border-left:0px;">
 							{% if blp.delta > 0 %}
-								<span style="width:0px;position: relative;left: -10px;color:green;" class="glyphicon glyphicon-circle-arrow-up"></span>
+								<span title="um {{blp.delta}} Position{% if blp.delta > 1 %}en{% endif %} verbessert" style="width:0px;position: relative;left: -10px;color:green;" class="glyphicon glyphicon-circle-arrow-up"></span>
 							{% elif blp.delta < 0 %}
-								<span style="width:0px;position: relative;left: -10px;color:red;" class="glyphicon glyphicon-circle-arrow-down"></span>
+								<span title="um {{blp.delta|mult:-1}} Position{% if blp.delta < -1 %}en{% endif %} verschlechtert" style="width:0px;position: relative;left: -10px;color:red;" class="glyphicon glyphicon-circle-arrow-down"></span>
 							{% else %}
 								<span style="width:0px;position: relative;left: -10px;color:grey;" class="glyphicon glyphicon-circle-arrow-right"></span>
 							{% endif %}
