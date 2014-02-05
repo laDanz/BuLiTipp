@@ -21,8 +21,8 @@
 		</ul>
 	</div>
 	{% if spieltag.naechster %}
-		<a class="btn btn-primary pull-right" href="{% url referer spielzeit.id spieltag.naechster.id %}" class="right">Nächster</a>
+		<a class="btn btn-primary pull-right right" href="{% url referer spielzeit.id spieltag.naechster.id %}">Nächster</a>
 	{% else %}
-		<a class="btn btn-disabled pull-right" href="#" class="right" disabled>Nächster</a>
+		<a class="btn btn-disabled pull-right right" href="#" disabled>Nächster</a>
 	{% endif %}
 </div>

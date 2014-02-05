@@ -16,7 +16,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="{% url home %}" {% if referer = 'home' %}class="active"{% endif %}>Home</a>
+				<a class="navbar-brand {% if referer = 'home' %}active{% endif %}" href="{% url home %}">Home</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
