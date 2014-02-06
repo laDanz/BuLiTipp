@@ -122,6 +122,9 @@ class SpieltagView(HomePageView):
 			return self.render_to_response(context)
 		return super(SpieltagView, self).get(request, *args, **kwargs)
 
+class SpieltagPrintView(SpieltagView):
+	template_name = 'spieltag/print/st_index.html'
+
 class BestenlisteView(TemplateView):
 	template_name = 'bestenliste/bl_index.html'
 	referer = "bestenliste"

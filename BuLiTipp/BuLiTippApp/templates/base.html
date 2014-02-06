@@ -7,6 +7,7 @@
 {% block bootstrap3_content	%}
 	<div class="container">
 		<h1>TippBuLi <small>{% block title %}(no title){% endblock %}</small></h1>
+		{% block nav_block %}
 		<nav class="navbar navbar-default " role="navigation">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -41,6 +42,7 @@
 				</ul>
 			</div>
 		 </nav>
+		{% endblock %}
 		{% bootstrap_messages %}
 		{% block content %}(no content){% endblock %}
 	</div>

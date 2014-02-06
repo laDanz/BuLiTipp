@@ -1,0 +1,12 @@
+{% extends 'spieltag/print/st_detail.html' %}
+{% load filters %}
+
+{% block spiel_header%}
+	<th class="text-center">Spiel</th >
+{% endblock %}
+{% block spiel_column %}
+	<td class="text-right">
+		<!--nobr><b>{{ spiel.heimTeam }}</b> vs <b>{{ spiel.auswTeam }}</b></nobr--> 
+		<nobr><b>{{ spiel.heimTeam }}</b></nobr> <br> <nobr><b>{{ spiel.auswTeam }}</b></nobr> 
+	</td>
+{% endblock %}

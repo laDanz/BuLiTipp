@@ -1,0 +1,74 @@
+﻿{% load url from future %}
+{% load filters %}
+<!--bl_buli-->
+
+<div class="tab-content">
+	<div class="tab-pane {% if not first or first = "bl1" %}active{% endif %}" id="bl1">
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th colSpan=3 class="text-center"><h4 style="margin:0px;">Bestenliste<small>Spieltag</small> <a id="abl2" href="#bl2" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a></h4></th >
+					</tr>
+				</thead>
+				<tbody>
+				{% for blp in spieltag.bestenliste.bestenlistenPlatz %}
+					<tr {% if user = blp.user %}class="active"{% endif %}>
+						<td>{{blp.position}}</td>
+						<td>
+							{% if not spieltag.vollstaendig_getippt|get:blp.user.id and spieltag.tippbare_spiele > 0 %}
+								<span class="glyphicon glyphicon-warning-sign pull-right" style="color:orange;" title="{% firstof firstof blp.user.first_name blp.user.username %} hat noch nicht getippt!"></span>
+							{% endif %}
+							{% firstof blp.user.first_name blp.user.username %}
+						</td>
+						<td>{{blp.punkte}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="tab-pane {% if first = "bl2" %}active{% endif %}" id="bl2">
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th colSpan=4 class="text-center"><h4 style="margin:0px;">Bestenliste<small>Spielzeit</small> <a id="abl1" href="#bl1" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a></h4></th >
+					</tr>
+				</thead>
+				<tbody>
+				{% for blp in spielzeit.bestenliste.bestenlistenPlatz %}
+					<tr {% if user = blp.user %}class="active"{% endif %}>
+						<td style="border-right:0px;" class="text-center">{{blp.position}}</td>
+						<td style="border-left:0px;">
+							{% if blp.delta > 0 %}
+								<span title="um {{blp.delta}} Position{% if blp.delta > 1 %}en{% endif %} verbessert" style="width:0px;position: relative;left: -10px;color:green;" class="glyphicon glyphicon-circle-arrow-up"></span>
+							{% elif blp.delta < 0 %}
+								<span title="um {{blp.delta|mult:-1}} Position{% if blp.delta < -1 %}en{% endif %} verschlechtert" style="width:0px;position: relative;left: -10px;color:red;" class="glyphicon glyphicon-circle-arrow-down"></span>
+							{% else %}
+								<span style="width:0px;position: relative;left: -10px;color:grey;" class="glyphicon glyphicon-circle-arrow-right"></span>
+							{% endif %}
+						</td>
+						<td>{% firstof blp.user.first_name blp.user.username %}</td>
+						<td>{{blp.punkte}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script>
+<!-- ids must be different, because several bestenlisten may be on one page, otherwise tabs wouldn't work -->
+var id1=Math.random()*100000000000000000;
+var id2=Math.random()*100000000000000000;
+
+document.getElementById("bl1").id="bl1" + id1
+document.getElementById("abl1").href="#bl1" + id1
+document.getElementById("abl1").id="abl1" + id1
+
+document.getElementById("bl2").id="bl2" + id2
+document.getElementById("abl2").href="#bl2" + id2
+document.getElementById("abl2").id="abl2" + id2
+</script>

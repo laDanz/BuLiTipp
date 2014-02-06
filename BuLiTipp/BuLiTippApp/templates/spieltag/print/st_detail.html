@@ -1,0 +1,92 @@
+{% load url from future %}
+{% load filters %}
+
+<!--st_detail-->
+
+{% if spieltag.spiele %}
+	<form method="post" action="{% url "tipp" spielzeit.id spieltag.id %}">
+	{% csrf_token  %}
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr >
+					{% block spiel_header%}
+						<th colspan=3 class="text-center">Spiel</th >
+					{% endblock %}
+					<th class="text-center">Ergebnis</th > 
+					{% if user.is_authenticated %}
+						<th style="max-width: 50px;-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-o-transform: rotate(-90deg);writing-mode: tb-rl;">{% firstof user.first_name user.username %}</th>
+					{% endif %}
+					{% block additional_header %}
+					{% endblock %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for spiel in spieltag.spiele  %}
+				{% with h=spiel.heimmannschaft.id a=spiel.auswaertsmannschaft.id szid=spieltag.spielzeit.id%}
+				<tr onmouseover="clear_marked_verein(); mark_verein({{spiel.heimTeam.id}}); mark_verein({{spiel.auswTeam.id}});">
+				{% block spiel_column %}
+					<td class="text-right" title="{{spiel.heimTeam.serie|get:spielzeit.id}}">
+						<b>{{ spiel.heimTeam }}</b>  
+					</td>
+					<td class="text-center">
+						vs 
+					</td>
+					<td class="text-left" title="{{spiel.auswTeam.serie|get:spielzeit.id}}">
+						<b>{{ spiel.auswTeam }}</b> 
+					</td>
+				{% endblock %}
+				<td>
+					<center>
+						{% if spiel.tippbar %}
+							{{spiel.datum|date:"d.m. G:i"}} Uhr
+						{% else %}
+							{% comment %}striptags is used to convert ergebnis to string, bc somehow it seems not to be a real string sometimes{% endcomment %}
+							{% if spiel.ergebnis and "DNF" not in spiel.ergebnis|striptags %}
+								{{ spiel.ergebnis }}
+							{% else %}
+								{% if user.is_staff %}
+								<a href ="{% url "admin:BuLiTippApp_spieltag_change" spieltag.id %}">
+								{% endif %}
+								eintragen!
+								{% if user.is_staff %}
+								</a>
+								{% endif %}
+							{% endif %}
+					{% endif %}
+					</center>
+				</td>
+				{% if user.is_authenticated %}
+				<td class="text-center">
+					{% if spiel.tippbar  %}
+					
+						{% if user.input_type %}
+							{% include user.input_type.template %}
+						{% else %}
+							{% include "spieltag/tipp_select.html" %}
+						{% endif %}
+					
+					{% elif spiel.eigenerTipp and spiel.eigenerTipp.ergebnis %}
+						<center class="tipp{{spiel.eigenerTipp.punkte}}">
+							{{ spiel.eigenerTipp.ergebnis }}
+							{% if spiel.eigenerTipp.punkte >= 0 %}
+								({{ spiel.eigenerTipp.punkte }})
+							{% endif %}
+						</center>
+					{% endif %}
+				</td>
+				{% endif %}
+				{% block additional_column %}
+				{% endblock %}
+			</tr>
+			{% endwith %}
+			{% endfor %}
+		</table>
+		{% include "spieltag/print/bl_detail.html" %}
+	</div>
+	<input type="hidden" name="referer" value="{{referer}}">
+	</form>
+{% else %}
+	<p>Keine Spiele an diesem Spieltag.</p>
+{% endif %}
+
