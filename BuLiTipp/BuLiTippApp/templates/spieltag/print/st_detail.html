@@ -6,8 +6,8 @@
 {% if spieltag.spiele %}
 	<form method="post" action="{% url "tipp" spielzeit.id spieltag.id %}">
 	{% csrf_token  %}
-	<div class="table-responsive">
-		<table class="table">
+	<div class="table-responsive" style="width:1200px;height:530px;">
+		<table class="table"  style="float:left; width:880px;">
 			<thead>
 				<tr >
 					{% block spiel_header%}
@@ -15,7 +15,7 @@
 					{% endblock %}
 					<th class="text-center">Ergebnis</th > 
 					{% if user.is_authenticated %}
-						<th style="max-width: 50px;-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-o-transform: rotate(-90deg);writing-mode: tb-rl;">{% firstof user.first_name user.username %}</th>
+						<th style="max-width: 50px;-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-o-transform: rotate(-90deg);writing-mode: tb-rl;position: relative;top: -30px;">{% firstof user.first_name user.username %}</th>
 					{% endif %}
 					{% block additional_header %}
 					{% endblock %}
@@ -57,7 +57,7 @@
 					</center>
 				</td>
 				{% if user.is_authenticated %}
-				<td class="text-center">
+				<td class="text-center" style="max-width: 50px;">
 					{% if spiel.tippbar  %}
 					
 						{% if user.input_type %}
@@ -67,12 +67,12 @@
 						{% endif %}
 					
 					{% elif spiel.eigenerTipp and spiel.eigenerTipp.ergebnis %}
-						<center class="tipp{{spiel.eigenerTipp.punkte}}">
+						<center class="tipp{{spiel.eigenerTipp.punkte}}"><nobr>
 							{{ spiel.eigenerTipp.ergebnis }}
 							{% if spiel.eigenerTipp.punkte >= 0 %}
 								({{ spiel.eigenerTipp.punkte }})
 							{% endif %}
-						</center>
+						</nobr></center>
 					{% endif %}
 				</td>
 				{% endif %}
