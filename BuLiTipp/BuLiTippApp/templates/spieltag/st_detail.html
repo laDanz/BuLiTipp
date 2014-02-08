@@ -2,7 +2,7 @@
 {% load filters %}
 
 <!--st_detail-->
-
+{% block countdown_block %}
 <div class="text-center" style="padding-top: 10px;">
 	<div id="dude"></div>
 </div>
@@ -14,7 +14,7 @@ var p = document.getElementById('dude');
 countdown(p, zielDatum);
 p.id = "";
 </script>
-
+{% endblock %}
 {% if spieltag.spiele %}
 	<form method="post" action="{% url "tipp" spielzeit.id spieltag.id %}">
 	{% csrf_token  %}
