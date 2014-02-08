@@ -6,7 +6,7 @@ Created on 19.12.2013
 from django.contrib.auth.models import User
 from transferObjects import BestenlistenPlatzTO, BestenlisteTO, TabellenPlatzTO, TabelleTO
 from models_statistics import Tabelle
-from models import Spielzeit, Spieltag
+from models import Spielzeit, Spieltag, Verein
 
 class BestenlisteDAO():
     @staticmethod
@@ -68,3 +68,11 @@ class TabelleDAO():
             tp.append(TabellenPlatzTO(t.platz, t.mannschaft, t.punkte, 0, 0))
         # TODO: muss noch gefuellt werden?
         return TabelleTO(tp, None, None)
+
+class VereinDAO():
+    @staticmethod
+    def spielzeit(spielzeit_id):
+        averein = list(Verein.objects.filter(auswaertsmannschaft__spieltag__nummer = 1, auswaertsmannschaft__spieltag__spielzeit_id=spielzeit_id))
+        hverein = list(Verein.objects.filter(heimmannschaft__spieltag__nummer = 1, heimmannschaft__spieltag__spielzeit_id=spielzeit_id))
+        return sorted(averein + hverein, key=lambda verein: verein.name)
+

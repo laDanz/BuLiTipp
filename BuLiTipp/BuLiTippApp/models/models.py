@@ -272,10 +272,12 @@ class Absteiger(models.Model):
 		return unicode(s)
 	def save(self):
 		count = 0
+		return super(Absteiger, self).save()
 		try:
 			count = len(Absteiger.objects.filter(user_id=self.user.id, spielzeit_id=self.spielzeit.id))
 		except:
 			pass
-		if count>=self.ABSTEIGER_ANZAHL:
+		if count>self.ABSTEIGER_ANZAHL:
+			self.delete()
 			raise Exception("no more than " + str(self.ABSTEIGER_ANZAHL)  + " Absteiger allowed")
-		return super(Absteiger, self).save()
+		
