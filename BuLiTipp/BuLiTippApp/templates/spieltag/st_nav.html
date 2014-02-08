@@ -9,7 +9,7 @@
 	{% endif %}
 	<div class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-			Spieltag {{spieltag.nummer}} <span class="caret"></span>
+			{% if spieltag.bezeichner %}{{spieltag.bezeichner}}{% else %}Spieltag {{spieltag.nummer}}{% endif %} <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu" >
 		{% for st in spielzeit.spieltage %}
@@ -17,7 +17,7 @@
 				{% if st.nummer == spieltag.nummer %}
 					class="active"
 				{% endif %}
-			><a role="menuitem" tabindex="-1" href="{% url referer spielzeit.id st.id %}">Spieltag {{st.nummer}}</a></li>
+			><a role="menuitem" tabindex="-1" href="{% url referer spielzeit.id st.id %}">{% if st.bezeichner %}{{st.bezeichner}}{% else %}Spieltag {{st.nummer}}{% endif %}</a></li>
 		{% endfor %}
 		</ul>
 	</div>
