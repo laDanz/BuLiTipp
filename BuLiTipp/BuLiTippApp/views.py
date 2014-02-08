@@ -118,8 +118,10 @@ class SpieltagView(HomePageView):
 	referer = "spieltag"
 	def get(self, request, *args, **kwargs):
 		if not request.user.is_authenticated():
-			context = self.get_context_data(**kwargs)
-			return self.render_to_response(context)
+			try:
+				return HttpResponseRedirect(reverse("home", kwargs={"spieltag_id":kwargs["spieltag_id"],"spielzeit_id":kwargs["spielzeit_id"]}))
+			except:
+				return HttpResponseRedirect(reverse("home"))
 		return super(SpieltagView, self).get(request, *args, **kwargs)
 
 class SpieltagPrintView(SpieltagView):
