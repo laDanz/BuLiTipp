@@ -3,7 +3,7 @@ name="tipp_{{ spiel.id  }}"
 {% if spiel.eigenerTipp and spiel.eigenerTipp.ergebnis and "DNF" not in spiel.eigenerTipp.ergebnis|striptags %}
 value="{{ spiel.eigenerTipp.ergebnis }}"
 {% else %}
-value=""
+value="0:0"
 {% endif %}>
 	<nobr>
 	<select name="h{{spiel.id}}" class="form-control" style="width: 35px;margin: 0px;padding: 0px;display: inline;height: 30px;" onchange="update_hidden_input({{spiel.id}}, this.value, null);" onkeyup="clear_marked_verein(); mark_verein({{spiel.heimTeam.id}}); mark_verein({{spiel.auswTeam.id}});">
