@@ -71,10 +71,18 @@ function clear_marked_verein(){
 function update_hidden_input(id, h, v){
 	var erg=document.getElementsByName('tipp_'+id)[0].value;
 	if (h != null){
-		erg=h+":"+erg.split(":")[1]
+		v = erg.split(":")[1];
+		if(!v){
+			v=0;
+		}
+		erg=h+":"+v;
 	}
 	if (v != null){
-		erg=erg.split(":")[0]+":"+v
+		h = erg.split(":")[0];
+		if(!h){
+			h=0;
+		}
+		erg=h+":"+v;
 	}
 	var inputs = document.getElementsByName("tipp_"+id);
 	for (var i = 0; i < inputs.length; ++i){
