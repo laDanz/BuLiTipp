@@ -27,8 +27,7 @@ class News(models.Model):
 	author = models.ForeignKey(User)
 	datum = models.DateTimeField()
 	title = models.CharField(max_length=100)
-	text = models.CharField(max_length=1000)
-	
+	text = models.TextField()
 
 class Spielzeit(models.Model):
 	class Meta:
