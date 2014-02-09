@@ -45,13 +45,7 @@
 							{% if spiel.ergebnis and "DNF" not in spiel.ergebnis|striptags %}
 								{{ spiel.ergebnis }}
 							{% else %}
-								{% if user.is_staff %}
-								<a href ="{% url "admin:BuLiTippApp_spieltag_change" spieltag.id %}">
-								{% endif %}
-								eintragen!
-								{% if user.is_staff %}
-								</a>
-								{% endif %}
+								:
 							{% endif %}
 					{% endif %}
 					</center>
@@ -59,13 +53,6 @@
 				{% if user.is_authenticated %}
 				<td class="text-center" style="max-width: 50px;">
 					{% if spiel.tippbar  %}
-					
-						{% if user.input_type %}
-							{% include user.input_type.template %}
-						{% else %}
-							{% include "spieltag/tipp_select.html" %}
-						{% endif %}
-					
 					{% elif spiel.eigenerTipp and spiel.eigenerTipp.ergebnis %}
 						<center class="tipp{{spiel.eigenerTipp.punkte}}"><nobr>
 							{{ spiel.eigenerTipp.ergebnis }}
