@@ -316,10 +316,126 @@ def tippen(request, spielzeit_id, spieltag_id):
 			return HttpResponseRedirect(reverse("spieltag", args=(spielzeit_id, spieltag_id)))
 	return HomePageView.as_view()(request, spieltag_id=spieltag_id, spielzeit_id=spielzeit_id)
 
-### old:
+@login_required
+def saisontipp(request, spielzeit_id=None, message=None):
+	spielzeiten = Spielzeit.objects.all()
+	if spielzeit_id is None:
+		spielzeit_id = spielzeiten[0].id
+		return HttpResponseRedirect(reverse("BuLiTippApp.views.saisontipp", args=(spielzeit_id,)))
+	spielzeit = Spielzeit.objects.get(pk=spielzeit_id)
+	is_pokal = spielzeit.isPokal
+	mannschaften=Verein.objects.all()
+	try:
+		meistertipp=Meistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
+	except:
+		meistertipp=None
+	try:
+		herbstmeistertipp=Herbstmeistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
+	except:
+		herbstmeistertipp=None
+	try:
+		absteiger1=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[0]
+	except:
+		absteiger1=None
+	try:
+		absteiger2=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[1]
+	except:
+		absteiger2=None
+	try:
+		absteiger3=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[2]
+	except:
+		absteiger3=None
+	if "absteigertipp1_id" in request.POST.keys():
+		absteigertipp1_id = request.POST["absteigertipp1_id"]
+		if absteiger1 is not None:
+			absteiger1.delete()
+		absteiger1=None
+		if absteiger1 is None:
+			absteiger1=Absteiger()
+		absteiger1.user=request.user
+		absteiger1.spielzeit_id=spielzeit_id
+		absteiger1.mannschaft_id=absteigertipp1_id
+		absteiger1.save()
+	if "absteigertipp2_id" in request.POST.keys():
+		absteigertipp2_id = request.POST["absteigertipp2_id"]
+		if absteiger2 is not None:
+			absteiger2.delete()
+		absteiger2=None
+		if absteiger2 is None:
+			absteiger2=Absteiger()
+		absteiger2.user=request.user
+		absteiger2.spielzeit_id=spielzeit_id
+		absteiger2.mannschaft_id=absteigertipp2_id
+		absteiger2.save()
+	if "absteigertipp3_id" in request.POST.keys():
+		absteigertipp3_id = request.POST["absteigertipp3_id"]
+		if absteiger3 is not None:
+			absteiger3.delete()
+		absteiger3=None
+		if absteiger3 is None:
+			absteiger3=Absteiger()
+		absteiger3.user=request.user
+		absteiger3.spielzeit_id=spielzeit_id
+		absteiger3.mannschaft_id=absteigertipp3_id
+		absteiger3.save()
+	if "herbstmeistertipp_id" in request.POST.keys():
+		herbstmeistertipp_id = request.POST["herbstmeistertipp_id"]
+		if herbstmeistertipp is None:
+			herbstmeistertipp=Herbstmeistertipp()
+		herbstmeistertipp.user=request.user
+		herbstmeistertipp.spielzeit_id=spielzeit_id
+		herbstmeistertipp.mannschaft_id=herbstmeistertipp_id
+		herbstmeistertipp.save()
+	if "meistertipp_id" in request.POST.keys():
+		meistertipp_id = request.POST["meistertipp_id"]
+		if meistertipp is None:
+			meistertipp=Meistertipp()
+		meistertipp.user=request.user
+		meistertipp.spielzeit_id=spielzeit_id
+		meistertipp.mannschaft_id=meistertipp_id
+		meistertipp.save()
+		return saisontipp(request, spielzeit_id, "Erfolgreich gespeichert!")
+	return render_to_response( \
+		"saisontipp.html", \
+		{  \
+		"mannschaften":mannschaften, \
+		"spielzeiten" :spielzeiten,  \
+		"meistertipp" :meistertipp,  \
+		"absteiger1"  :absteiger1,	\
+		"absteiger2"  :absteiger2,	\
+		"absteiger3"  :absteiger3,	\
+		"herbstmeistertipp" :herbstmeistertipp,  \
+		"spielzeit_id" :spielzeit_id,  \
+		"spielzeit" :spielzeit,  \
+		"is_pokal"	:is_pokal,	\
+		"message"	:message,		\
+		}, \
+		context_instance=RequestContext(request))
+
+@login_required
+@csrf_protect
+@sensitive_post_parameters()
+def change_pw(request):
+	context = {}
+	form = UserModelForm(instance=request.user)
+	context["form"] = form
+	context["referer"] = "pwchange"
+	if request.method == "POST":
+		form = PasswordChangeForm(user=request.user, data=request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Passwort geändert!")
+		context["pwchange_form"] = form
+	return render(request, 'user/user.html', context)
 
 def home(request):
-	return redirect("BuLiTippApp.views.index")
+	return redirect("home")
+
+def logout(request):
+	djlogout(request)
+	return redirect(reverse("home"), context_instance=RequestContext(request))
+
+### old:
 
 @login_required
 def user_site(request, spielzeit_id=None):
@@ -499,11 +615,6 @@ def index(request, spielzeit_id=-1):
 		context_instance=RequestContext(request))
 #	return HttpResponse("This is the Index view.")
 
-def logout(request):
-	djlogout(request)
-	return redirect(reverse("BuLiTippApp.views.index"), context_instance=RequestContext(request))
-
-
 @login_required
 def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 	spieltag = get_object_or_404(Spieltag, pk=spieltag_id)
@@ -522,149 +633,17 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 		args["message"]=info
 	return render_to_response("spieltag/detail.html", args, context_instance=RequestContext(request))
 
-
-@login_required
-def saisontipp(request, spielzeit_id=None, message=None):
-	spielzeiten = Spielzeit.objects.all()
-	if spielzeit_id is None:
-		spielzeit_id = spielzeiten[0].id
-		return HttpResponseRedirect(reverse("BuLiTippApp.views.saisontipp", args=(spielzeit_id,)))
-	spielzeit = Spielzeit.objects.get(pk=spielzeit_id)
-	is_pokal = spielzeit.isPokal
-	mannschaften=Verein.objects.all()
-	try:
-		meistertipp=Meistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
-	except:
-		meistertipp=None
-	try:
-		herbstmeistertipp=Herbstmeistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
-	except:
-		herbstmeistertipp=None
-	try:
-		absteiger1=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[0]
-	except:
-		absteiger1=None
-	try:
-		absteiger2=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[1]
-	except:
-		absteiger2=None
-	try:
-		absteiger3=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[2]
-	except:
-		absteiger3=None
-	if "absteigertipp1_id" in request.POST.keys():
-		absteigertipp1_id = request.POST["absteigertipp1_id"]
-		if absteiger1 is not None:
-			absteiger1.delete()
-		absteiger1=None
-		if absteiger1 is None:
-			absteiger1=Absteiger()
-		absteiger1.user=request.user
-		absteiger1.spielzeit_id=spielzeit_id
-		absteiger1.mannschaft_id=absteigertipp1_id
-		absteiger1.save()
-	if "absteigertipp2_id" in request.POST.keys():
-		absteigertipp2_id = request.POST["absteigertipp2_id"]
-		if absteiger2 is not None:
-			absteiger2.delete()
-		absteiger2=None
-		if absteiger2 is None:
-			absteiger2=Absteiger()
-		absteiger2.user=request.user
-		absteiger2.spielzeit_id=spielzeit_id
-		absteiger2.mannschaft_id=absteigertipp2_id
-		absteiger2.save()
-	if "absteigertipp3_id" in request.POST.keys():
-		absteigertipp3_id = request.POST["absteigertipp3_id"]
-		if absteiger3 is not None:
-			absteiger3.delete()
-		absteiger3=None
-		if absteiger3 is None:
-			absteiger3=Absteiger()
-		absteiger3.user=request.user
-		absteiger3.spielzeit_id=spielzeit_id
-		absteiger3.mannschaft_id=absteigertipp3_id
-		absteiger3.save()
-	if "herbstmeistertipp_id" in request.POST.keys():
-		herbstmeistertipp_id = request.POST["herbstmeistertipp_id"]
-		if herbstmeistertipp is None:
-			herbstmeistertipp=Herbstmeistertipp()
-		herbstmeistertipp.user=request.user
-		herbstmeistertipp.spielzeit_id=spielzeit_id
-		herbstmeistertipp.mannschaft_id=herbstmeistertipp_id
-		herbstmeistertipp.save()
-	if "meistertipp_id" in request.POST.keys():
-		meistertipp_id = request.POST["meistertipp_id"]
-		if meistertipp is None:
-			meistertipp=Meistertipp()
-		meistertipp.user=request.user
-		meistertipp.spielzeit_id=spielzeit_id
-		meistertipp.mannschaft_id=meistertipp_id
-		meistertipp.save()
-		return saisontipp(request, spielzeit_id, "Erfolgreich gespeichert!")
-	return render_to_response( \
-		"saisontipp.html", \
-		{  \
-		"mannschaften":mannschaften, \
-		"spielzeiten" :spielzeiten,  \
-		"meistertipp" :meistertipp,  \
-		"absteiger1"  :absteiger1,	\
-		"absteiger2"  :absteiger2,	\
-		"absteiger3"  :absteiger3,	\
-		"herbstmeistertipp" :herbstmeistertipp,  \
-		"spielzeit_id" :spielzeit_id,  \
-		"spielzeit" :spielzeit,  \
-		"is_pokal"	:is_pokal,	\
-		"message"	:message,		\
-		}, \
-		context_instance=RequestContext(request))
-
-@login_required
-def account(request, info=""):
-	# redirect on cancel to index page
-	if "cancel" in request.POST.keys() :
-		return redirect(reverse("BuLiTippApp.views.index"), context_instance=RequestContext(request))
-	if "delete" in request.POST.keys() :
-		return delete_account(request)
-	args = {}
-	user = request.user
-	# if POST, then update submitted user values
-	if "submit" in request.POST.keys() :
-		user.first_name = request.POST["first_name"]
-		user.last_name = request.POST["last_name"]
-		user.email = request.POST["email"]
-		user.save()
-		info = "Speichern erfolgreich!"
-	if info is not None:
-		args["message"]=info
-	return render_to_response("user/account.html", args, context_instance=RequestContext(request))
-
 @login_required
 def delete_account(request, info=""):
 	# redirect on cancel to account page
 	if "cancel" in request.POST.keys() :
-		return redirect(reverse("BuLiTippApp.views.account"), context_instance=RequestContext(request))
+		return redirect(reverse("user"), context_instance=RequestContext(request))
 	# on submit: delete user, redirect to index page
 	if "submit" in request.POST.keys() :
 		user = request.user
 		user.delete()
 		djlogout(request)
-		return redirect(reverse("BuLiTippApp.views.index"), context_instance=RequestContext(request))
+		return redirect(reverse("home"), context_instance=RequestContext(request))
 	return render_to_response("user/delete_account.html", {}, context_instance=RequestContext(request))
 
-@login_required
-@csrf_protect
-@sensitive_post_parameters()
-def change_pw(request):
-	context = {}
-	form = UserModelForm(instance=request.user)
-	context["form"] = form
-	context["referer"] = "pwchange"
-	if request.method == "POST":
-		form = PasswordChangeForm(user=request.user, data=request.POST)
-		if form.is_valid():
-			form.save()
-			messages.success(request, "Passwort geändert!")
-		context["pwchange_form"] = form
-	return render(request, 'user/user.html', context)
-	
+
