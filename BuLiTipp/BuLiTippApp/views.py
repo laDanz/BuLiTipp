@@ -435,6 +435,19 @@ def logout(request):
 	djlogout(request)
 	return redirect(reverse("home"), context_instance=RequestContext(request))
 
+@login_required
+def delete_account(request):
+	# redirect on cancel to account page
+	if "cancel" in request.POST.keys() :
+		return redirect(reverse("user"), context_instance=RequestContext(request))
+	# on submit: delete user, redirect to index page
+	if "submit" in request.POST.keys() :
+		user = request.user
+		user.delete()
+		djlogout(request)
+		return redirect(reverse("home"), context_instance=RequestContext(request))
+	return render_to_response("user/delete_account.html", {}, context_instance=RequestContext(request))
+
 ### old:
 
 @login_required
@@ -632,18 +645,4 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 	if info is not None:
 		args["message"]=info
 	return render_to_response("spieltag/detail.html", args, context_instance=RequestContext(request))
-
-@login_required
-def delete_account(request, info=""):
-	# redirect on cancel to account page
-	if "cancel" in request.POST.keys() :
-		return redirect(reverse("user"), context_instance=RequestContext(request))
-	# on submit: delete user, redirect to index page
-	if "submit" in request.POST.keys() :
-		user = request.user
-		user.delete()
-		djlogout(request)
-		return redirect(reverse("home"), context_instance=RequestContext(request))
-	return render_to_response("user/delete_account.html", {}, context_instance=RequestContext(request))
-
 

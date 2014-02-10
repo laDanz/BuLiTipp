@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load url from future %}
+
+{% block title %}Einstellungen{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Benutzer löschen</h3>
+			</div>
+			<div class="panel-body">
+				<form method="POST" action="{% url 'BuLiTippApp.views.delete_account' %}">
+				{% csrf_token %}
+				<label>Account wirklich löschen?</label><br>
+				Das wird alle deine Tipps und Punkte löschen!
+				<p>
+					<input type="submit" name="submit" class="btn btn-danger" onclick='return confirm("Wirklich löschen?");' value="Löschen">
+					<input type="submit" name="cancel" value="abbrechen" class="btn btn-default">
+				</p>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

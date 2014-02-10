@@ -1,6 +1,6 @@
 ﻿{% extends 'base.html' %}
-
 {% load bootstrap3 %}
+{% load url from future %}
 
 {% block title %}Einstellungen{% endblock %}
 
@@ -26,6 +26,18 @@
 				</div>
 			</div>
 			{% include "user/password.html" %}
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a data-toggle="collapse" data-parent="#accordion" href="#user_delete">
+						<h3 class="panel-title">Benutzer löschen</h3>
+					</a>
+				</div>
+				<div id="user_delete" class="panel-collapse collapse">
+					<div class="panel-body">
+						<a href="{% url "user_delete" %}" class="btn btn-warning">Account löschen</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
