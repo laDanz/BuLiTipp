@@ -26,6 +26,7 @@ from forms import UserModelForm, UserCreateForm
 
 import operator
 from django.forms.forms import Form
+from django.contrib.auth.forms import PasswordChangeForm
 import mail
 
 ### new:
@@ -33,6 +34,8 @@ def userform(request):
 	context = {}
 	context["news"] = get_news_by_request(request)
 	user = User.objects.get(pk = request.user.id)
+	pwchange_form = PasswordChangeForm(user=request.user)
+	context["pwchange_form"] = pwchange_form
 	if request.method == 'POST':
 		form = UserModelForm(request.POST, instance = user)
 		if form.is_valid():
@@ -653,28 +656,15 @@ def delete_account(request, info=""):
 @csrf_protect
 @sensitive_post_parameters()
 def change_pw(request):
-	from django.contrib.auth.forms import PasswordChangeForm
-	post_change_redirect = reverse('BuLiTippApp.views.change_pw_done')
-	template_name = "user/pwchange.html"
-	password_change_form=PasswordChangeForm
-	
+	context = {}
+	form = UserModelForm(instance=request.user)
+	context["form"] = form
+	context["referer"] = "pwchange"
 	if request.method == "POST":
-		if "cancel" in request.POST.keys() :
-			return redirect(reverse("BuLiTippApp.views.account"), context_instance=RequestContext(request))
-		form = password_change_form(user=request.user, data=request.POST)
+		form = PasswordChangeForm(user=request.user, data=request.POST)
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect(post_change_redirect)
-	else:
-		form = password_change_form(user=request.user)
-	context = {
-		'form': form,
-	}
-	return TemplateResponse(request, template_name, context, current_app="BuLiTippApp")
-
-@login_required
-def change_pw_done(request):
-	template_name='user/pwchangedone.html'
-	context = {}
-
-	return TemplateResponse(request, template_name, context, current_app=None)
+			messages.success(request, "Passwort geändert!")
+		context["pwchange_form"] = form
+	return render(request, 'user/user.html', context)
+	
