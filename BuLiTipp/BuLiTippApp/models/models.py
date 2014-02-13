@@ -186,10 +186,13 @@ class Spiel(models.Model):
 			return self.spieltag.is_tippable()
 		return False
 	def save(self):
-		old_spiel = Spiel.objects.get(pk=self.id)		
+		try:
+			old_spiel = Spiel.objects.get(pk=self.id)
+		except:
+			old_spiel = None
 		super(Spiel, self).save()
 		global last_save_time
-		if old_spiel.ergebniss != self.ergebniss:
+		if old_spiel != None and old_spiel.ergebniss != self.ergebniss:
 			if last_save_time == None or timezone.now()>last_save_time+timedelta(minutes = 1):
 				from models_statistics import Tabelle, Serie, Punkte
 				Tabelle().refresh()
