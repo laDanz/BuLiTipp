@@ -445,7 +445,7 @@ def change_pw(request):
 	return render(request, 'user/user.html', context)
 
 def home(request):
-	return redirect("home")
+	return redirect(reverse("home"))
 
 def logout(request):
 	djlogout(request)
