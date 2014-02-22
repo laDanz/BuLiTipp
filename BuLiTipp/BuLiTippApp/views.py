@@ -219,6 +219,12 @@ def get_spieltagTO_by_request(request, st):
 	count_eigene_tipps = 0
 	count_andere_tipps = {}
 	spieleTOs = []
+	tipps = Tipp.objects.filter(spiel__spieltag_id=st.id)
+	user_tipped = Set([tipp.user.id for tipp in tipps])
+	try:
+		user_tipped.remove(request.user.id)
+	except:
+		pass
 	for spiel in st.spiel_set.all().order_by("datum"):
 		count_spiele += 1
 		tipps = spiel.tipp_set.all()
@@ -228,7 +234,17 @@ def get_spieltagTO_by_request(request, st):
 		except:
 			eigenerTipp = None
 		andereTipps = tipps.exclude(user_id = request.user.id)
+		andereTipps_ = []
+		for id in user_tipped:
+			atipp = andereTipps.filter(user_id=id)
+			if len(atipp)>0:
+				andereTipps_.append(atipp[0])
+			else:
+				andereTipps_.append(None)
+		andereTipps = andereTipps_
 		for tipp in andereTipps:
+			if tipp == None:
+				continue
 			try:
 				count_andere_tipps[tipp.user] = count_andere_tipps[tipp.user] + 1
 			except:
