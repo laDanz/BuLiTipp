@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 # Examples:
-url(r'^$', 'BuLiTippApp.views.home', name='home'),
+url(r'^$', 'BuLiTippApp.views.home'),
 url(r'^admin/', include(admin.site.urls)),
 url(r'^logout/', "BuLiTippApp.views.logout", name="logout"),
 
