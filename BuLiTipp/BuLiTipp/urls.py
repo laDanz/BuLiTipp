@@ -11,5 +11,5 @@ url(r'^admin/', include(admin.site.urls)),
 url(r'^logout/', "BuLiTippApp.views.logout", name="logout"),
 
 url(r'^BuLiTipp/', include('BuLiTippApp.urls')),
-url(r'^BuLiTipp/home/', "BuLiTippApp.views.home"),
+url(r'^home/', "BuLiTippApp.views.home"),
 )
