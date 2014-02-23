@@ -233,6 +233,28 @@ class Kommentar(models.Model):
 	spieltag = models.ForeignKey(Spieltag, null=True)
 
 ############################################################################
+###	Tippgemeinschaft	###
+############################################################################
+
+class Tippgemeinschaft(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
+	bezeichner = models.CharField(max_length=30)
+	beschreibung = models.TextField()
+	spielzeit = models.ForeignKey(Spielzeit)
+	gruendungsdatum = models.DateTimeField(auto_now=True)
+	chef = models.ForeignKey(User, related_name="tg_chef")
+	users = models.ManyToManyField(User, related_name="tg_user")
+
+class TG_Einladung(models.Model):
+	class Meta:
+                app_label = 'BuLiTippApp'
+	von = models.ForeignKey(User, related_name="tge_von")
+	fuer = models.ForeignKey(User, related_name="tge_fuer")
+	key = models.CharField(max_length=36)
+	tg = models.ForeignKey(Tippgemeinschaft)
+
+############################################################################
 ###	saisonale Tipps	###
 ############################################################################
 

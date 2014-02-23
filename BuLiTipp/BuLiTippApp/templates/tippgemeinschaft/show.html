@@ -1,0 +1,49 @@
+﻿{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load url from future %}
+
+{% block title %}Tippgemeinschaft{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Tippgemeinschaft Details</h3>
+			</div>
+				<div class="panel-body">
+					<form role="form" class="form-horizontal" method="post">
+						{% csrf_token %}
+						{% bootstrap_form form layout="horizontal" %}
+						{% if user.id == tg.chef.id %}
+							{% buttons submit='OK' reset='Abbrechen' layout='horizontal' %}{% endbuttons %}
+						{% endif %}
+					<div class="form-group">
+						<label class="col-md-2 control-label">Chef</label>
+						<div class="col-md-4">
+							<div style="padding-top:7px;">{% firstof tg.chef.first_name tg.user.username %}</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">Erstellt am</label>
+						<div class="col-md-4">
+							<div style="padding-top:7px;">{{ tg.gruendungsdatum|date:"d.m." }}</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">Tipper</label>
+						<div class="col-md-4">
+						<ul>
+							{% for user_ in tg.users.all %}
+							<li>{% firstof user_.first_name user_.username %}</li>
+							{% endfor %}
+						</ul>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

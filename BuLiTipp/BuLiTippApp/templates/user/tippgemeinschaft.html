@@ -1,0 +1,20 @@
+﻿{% load url from future %}{% load bootstrap3 %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#user_tg">
+			<h3 class="panel-title">Tippgemeinschaften verwalten</h3>
+		</a>
+	</div>
+	<div id="user_tg" class="panel-collapse collapse{% if referer = "tgchange" %} in{% endif %}">
+		<div class="panel-body">
+			Selbst erstellte Tippgemeinschaften:
+			<ul>
+			{% for tg in tg_created %}
+			<li>
+				<a href="{% url "show_tippgemeinschaft" tg.id %}">{{ tg.bezeichner }}</a>
+			</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>

@@ -17,12 +17,13 @@ from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
 
 from django.db import IntegrityError
-from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte, User, Spiel
+from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte, User, Spiel, Tippgemeinschaft
 from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichnerTO
 from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
 from sets import Set
 from forms import UserModelForm, UserCreateForm
+from forms import TG_createForm, TG_showForm
 
 import operator
 from django.forms.forms import Form
@@ -30,12 +31,45 @@ from django.contrib.auth.forms import PasswordChangeForm
 import mail
 
 ### new:
+def tg_show_form(request, tg_id):
+	context = {}
+	context["news"] = get_news_by_request(request)
+	tg = Tippgemeinschaft.objects.get(pk = tg_id)
+	if request.method == 'POST':
+		form = TG_showForm(request.POST, instance = tg, user=request.user)
+		if form.is_valid() and tg.chef.id == request.user.id:
+			form.save()
+			messages.success(request, "Erfolgreich geändert!")
+	else:
+		form = TG_showForm(instance = tg, user=request.user)
+	context["form"] = form
+	context["tg"] = tg
+	return render(request, 'tippgemeinschaft/show.html', context)
+
+def tg_new_form(request):
+	context = {}
+	context["news"] = get_news_by_request(request)
+	if request.method == 'POST':
+		tg = Tippgemeinschaft()
+		form = TG_createForm(request.POST, instance = tg)
+		if form.is_valid():
+			tg.chef = request.user
+			form.save()
+			tg.users.add(request.user)
+			tg.save()
+			messages.success(request, "Erfolgreich angelegt!")
+	else:
+		form = TG_createForm()
+	context["form"] = form
+	return render(request, 'tippgemeinschaft/create.html', context)
+
 def userform(request):
 	context = {}
 	context["news"] = get_news_by_request(request)
 	user = User.objects.get(pk = request.user.id)
 	pwchange_form = PasswordChangeForm(user=request.user)
 	context["pwchange_form"] = pwchange_form
+	context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=user.id)
 	if request.method == 'POST':
 		form = UserModelForm(request.POST, instance = user)
 		if form.is_valid():

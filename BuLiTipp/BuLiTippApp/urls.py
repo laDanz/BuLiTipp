@@ -29,4 +29,6 @@ urlpatterns = patterns('',
 	url(r'^spieltag/(?P<spielzeit_id>\d+)/(?P<spieltag_id>\d+)/postk/$', 'BuLiTippApp.views.post_kommentar', name='postk'),
 	url(r'^spieltag/(?P<spielzeit_id>\d+)/(?P<spieltag_id>\d+)/delk/$', 'BuLiTippApp.views.delete_kommentar', name='delk'),
 	url(r'^register/', "BuLiTippApp.views.register", name="register"),
+	url(r'^tg/new$', 'BuLiTippApp.views.tg_new_form', name='new_tippgemeinschaft'),
+	url(r'^tg/(?P<tg_id>\d+)/$', 'BuLiTippApp.views.tg_show_form', name='show_tippgemeinschaft'),
 )
