@@ -248,7 +248,8 @@ class Tippgemeinschaft(models.Model):
 
 class TG_Einladung(models.Model):
 	class Meta:
-                app_label = 'BuLiTippApp'
+		app_label = 'BuLiTippApp'
+		unique_together = ("fuer", "tg")
 	von = models.ForeignKey(User, related_name="tge_von")
 	fuer = models.ForeignKey(User, related_name="tge_fuer")
 	key = models.CharField(max_length=36)

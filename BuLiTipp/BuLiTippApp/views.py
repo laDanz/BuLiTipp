@@ -17,20 +17,48 @@ from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
 
 from django.db import IntegrityError
-from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte, User, Spiel, Tippgemeinschaft
+from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte, User, Spiel, Tippgemeinschaft, TG_Einladung
 from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichnerTO
 from models import BestenlisteDAO, TabelleDAO
 from datetime import datetime
 from sets import Set
 from forms import UserModelForm, UserCreateForm
-from forms import TG_createForm, TG_showForm
+from forms import TG_createForm, TG_showForm, TG_Einladung_createForm
 
 import operator
 from django.forms.forms import Form
 from django.contrib.auth.forms import PasswordChangeForm
 import mail
+import uuid
 
 ### new:
+def tg_einladung_new_form(request, tg_id):
+	context = {}
+	context["news"] = get_news_by_request(request)
+	tg = Tippgemeinschaft.objects.get(pk = tg_id)
+	if request.method == 'POST':
+		tg_e = TG_Einladung()
+		form = TG_Einladung_createForm(request.POST, instance = tg_e, tg=tg, user=request.user)
+		if form.is_valid():
+			tg_e.key = uuid.uuid4()
+			tg_e.tg = tg
+			tg_e.von = request.user
+			form.save()
+			messages.success(request, "Erfolgreich eingeladen!")
+			context = {}
+			# FIXME userform standard auslagern
+			form = UserModelForm(instance=request.user)
+			context["form"] = form
+			context["referer"] = "tgchange"
+			context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=request.user.id)
+			pwchange_form = PasswordChangeForm(user=request.user)
+			context["pwchange_form"] = pwchange_form
+			return render(request, 'user/user.html', context)
+	else:
+		form = TG_Einladung_createForm(tg=tg, user=request.user)
+	context["form"] = form
+	return render(request, 'tippgemeinschaft/einladung_create.html', context)
+
 def tg_show_form(request, tg_id):
 	context = {}
 	context["news"] = get_news_by_request(request)
@@ -58,6 +86,7 @@ def tg_new_form(request):
 			tg.users.add(request.user)
 			tg.save()
 			messages.success(request, "Erfolgreich angelegt!")
+			return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
 	else:
 		form = TG_createForm()
 	context["form"] = form

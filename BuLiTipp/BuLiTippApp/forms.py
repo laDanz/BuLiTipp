@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django import forms
-from models import User, Tippgemeinschaft
+from models import User, Tippgemeinschaft, TG_Einladung
 
 class UserModelForm(forms.ModelForm):
 	class Meta:
@@ -36,8 +36,28 @@ class TG_showForm(forms.ModelForm):
 			pass
 		else:
 			for f in self.fields:
-                                self.fields[f].widget.attrs['readonly'] = True
-                                self.fields[f].widget.attrs['disabled'] = True
+				self.fields[f].widget.attrs['readonly'] = True
+				self.fields[f].widget.attrs['disabled'] = True
 	class Meta:
 		model = Tippgemeinschaft
 		fields = ['bezeichner', 'beschreibung',]
+
+class TG_Einladung_createForm(forms.ModelForm):
+	class Meta:
+		model = TG_Einladung
+		fields = ['fuer', ]
+	#fuer = forms.ModelChoiceField(queryset=User.objects.filter(is_active = True), label="Einladung für", empty_label="auswählen")
+	def __init__(self, *args, **kwargs):
+		user = kwargs['user']
+		del kwargs['user']
+		tg = kwargs['tg']
+		del kwargs['tg']
+		super(TG_Einladung_createForm, self).__init__(*args, **kwargs)
+		users=[]
+		users.append(user.id)
+		for u in tg.users.all():
+			users.append(u.id)
+		for tge in TG_Einladung.objects.filter(tg_id=tg.id):
+			users.append(tge.fuer.id)
+		self.fields["fuer"] = forms.ModelChoiceField(queryset=User.objects.filter(is_active = True).exclude(id__in=users),
+								label="Einladung für", empty_label="auswählen")

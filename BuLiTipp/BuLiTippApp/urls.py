@@ -31,4 +31,5 @@ urlpatterns = patterns('',
 	url(r'^register/', "BuLiTippApp.views.register", name="register"),
 	url(r'^tg/new$', 'BuLiTippApp.views.tg_new_form', name='new_tippgemeinschaft'),
 	url(r'^tg/(?P<tg_id>\d+)/$', 'BuLiTippApp.views.tg_show_form', name='show_tippgemeinschaft'),
+	url(r'^tg/(?P<tg_id>\d+)/invite/new$', 'BuLiTippApp.views.tg_einladung_new_form', name='new_tg_einladung'),
 )
