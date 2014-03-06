@@ -245,6 +245,8 @@ class Tippgemeinschaft(models.Model):
 	gruendungsdatum = models.DateTimeField(auto_now=True)
 	chef = models.ForeignKey(User, related_name="tg_chef")
 	users = models.ManyToManyField(User, related_name="tg_user")
+	def __unicode__(self):
+		return self.bezeichner
 
 class TG_Einladung(models.Model):
 	class Meta:
@@ -252,6 +254,7 @@ class TG_Einladung(models.Model):
 		unique_together = ("fuer", "tg")
 	von = models.ForeignKey(User, related_name="tge_von")
 	fuer = models.ForeignKey(User, related_name="tge_fuer")
+	datum = models.DateTimeField(auto_now=True)
 	key = models.CharField(max_length=36)
 	tg = models.ForeignKey(Tippgemeinschaft)
 

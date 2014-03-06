@@ -45,7 +45,22 @@
 							{% for user_ in tg.users.all %}
 							<li>{% firstof user_.first_name user_.username %}</li>
 							{% endfor %}
-							<li><b><a href="{% url "new_tg_einladung" tg.id %}">Weiteren Tipper einladen!</a></b></li>
+						</ul>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">Einladungen</label>
+						<div class="col-md-4">
+						<ul>
+							{% for tge in tg.tg_einladung_set.all %}
+							<li>
+								{% firstof tge.fuer.first_name tge.fuer.username %} (vom {{ tge.datum|date:"d.m." }})
+								<a href="{% url "del_tg_einladung" tge.key %}" style="color:orange;" title="Einladung zurückziehen"><span class="glyphicon glyphicon-remove"></span></a>
+							</li>
+							{% endfor %}
+							{% if user.id == tg.chef.id %}
+								<li><b><a href="{% url "new_tg_einladung" tg.id %}">Weiteren Tipper einladen!</a></b></li>
+							{% endif %}
 						</ul>
 						</div>
 					</div>

@@ -32,9 +32,36 @@ import mail
 import uuid
 
 ### new:
+def tg_einladung_acc(request, tge_key):
+	try:
+		tge = TG_Einladung.objects.get(key=tge_key)
+		tge.delete()
+		tge.tg.users.add(tge.fuer)
+		tge.tg.save()
+		messages.success(request, "Einladung erfolgreich angenommen!")
+		return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tge.tg.id]))
+	except:
+		messages.warning(request, "Einladung besteht nicht mehr!")
+		return HttpResponseRedirect(reverse("home"))
+
+def tg_einladung_del(request, tge_key):
+	try:
+		tge = TG_Einladung.objects.get(key=tge_key)
+		tge.delete()
+		messages.success(request, "Einladung erfolgreich zurückgezogen!")
+		return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tge.tg.id]))
+	except:
+		messages.warning(request, "Einladung besteht nicht mehr!")
+		return HttpResponseRedirect(reverse("home"))
+
+TGE_SUBJECT = 'TippBuLi: Einladung zur Tippgemeinschaft "%s" !'
+TGE_MSG = 'Hallo %s,\n\nDu hast eine Einladung von %s fuer die Tippgemeinschaft "%s" erhalten!\n\nDie Beschreibung der Tippgemeinschaft ist:\n\n%s\n\nWenn du hier klickst: http://TippBuLi.de/BuLiTipp/BuLiTipp/tg/invite/%s/accept dann nimmst du die Einladung an!\nWenn du die Einladung nicht annehmen moechtest, dann klicke hier: http://TippBuLi.de/BuLiTipp/BuLiTipp/tg/invite/%s/del oder ignoriere diese Email.\n\nViele Gruesze,\ndie BuLiTippApp'
+TGE_MSG_HTML = '<html>Hallo %s,<br><br>Du hast eine Einladung von %s f&uuml;r die Tippgemeinschaft "<b>%s</b>" erhalten!<br><br>Die Beschreibung der Tippgemeinschaft ist:<br><br><i>%s</i><br><br>Wenn du <a href="http://TippBuLi.de/BuLiTipp/BuLiTipp/tg/invite/%s/accept">hier</a> klickst dann <b>nimmst du die Einladung an</b>!<br>Wenn du die Einladung <b>nicht annehmen</b> m&ouml;chtest, dann klicke <a href="http://TippBuLi.de/BuLiTipp/BuLiTipp/tg/invite/%s/del">hier</a> oder ignoriere diese Email.<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
+
 def tg_einladung_new_form(request, tg_id):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse("home"))
 	context = {}
-	context["news"] = get_news_by_request(request)
 	tg = Tippgemeinschaft.objects.get(pk = tg_id)
 	if request.method == 'POST':
 		tg_e = TG_Einladung()
@@ -44,38 +71,38 @@ def tg_einladung_new_form(request, tg_id):
 			tg_e.tg = tg
 			tg_e.von = request.user
 			form.save()
+			#mail schicken
+			if tg_e.von.first_name:
+				von = tg_e.von.first_name
+			else:
+				von = tg_e.von.username
+			if tg_e.fuer.first_name:
+				fuer = tg_e.fuer.first_name
+			else:
+				fuer = tg_e.fuer.username
+			args = (str(fuer), str(von), str(tg.bezeichner), str(tg.beschreibung), tg_e.key, tg_e.key, )
+			mail.send(TGE_SUBJECT % str(tg.bezeichner), 
+					tg_e.fuer.email, 
+					TGE_MSG % args, 
+					TGE_MSG_HTML % args)
 			messages.success(request, "Erfolgreich eingeladen!")
-			context = {}
-			# FIXME userform standard auslagern
-			form = UserModelForm(instance=request.user)
-			context["form"] = form
-			context["referer"] = "tgchange"
-			context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=request.user.id)
-			pwchange_form = PasswordChangeForm(user=request.user)
-			context["pwchange_form"] = pwchange_form
-			return render(request, 'user/user.html', context)
+			return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
 	else:
 		form = TG_Einladung_createForm(tg=tg, user=request.user)
+	context["news"] = get_news_by_request(request)
 	context["form"] = form
 	return render(request, 'tippgemeinschaft/einladung_create.html', context)
 
 def tg_show_form(request, tg_id):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse("home"))
 	context = {}
-	context["news"] = get_news_by_request(request)
 	tg = Tippgemeinschaft.objects.get(pk = tg_id)
 	if request.method == 'POST':
 		if "delete" in request.POST.keys():
 			tg.delete()
 			messages.success(request, "Tippgemeinschaft erfolgreich gelöscht!")
-			context = {}
-			# FIXME userform standard auslagern
-			form = UserModelForm(instance=request.user)
-			context["form"] = form
-			context["referer"] = "tgchange"
-			context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=request.user.id)
-			pwchange_form = PasswordChangeForm(user=request.user)
-			context["pwchange_form"] = pwchange_form
-			return render(request, 'user/user.html', context)
+			return HttpResponseRedirect(reverse("user", args=["tgchange"]))
 		else:
 			form = TG_showForm(request.POST, instance = tg, user=request.user)
 			if form.is_valid() and tg.chef.id == request.user.id:
@@ -83,13 +110,15 @@ def tg_show_form(request, tg_id):
 				messages.success(request, "Erfolgreich geändert!")
 	else:
 		form = TG_showForm(instance = tg, user=request.user)
+	context["news"] = get_news_by_request(request)
 	context["form"] = form
 	context["tg"] = tg
 	return render(request, 'tippgemeinschaft/show.html', context)
 
 def tg_new_form(request):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse("home"))
 	context = {}
-	context["news"] = get_news_by_request(request)
 	if request.method == 'POST':
 		tg = Tippgemeinschaft()
 		form = TG_createForm(request.POST, instance = tg)
@@ -102,10 +131,13 @@ def tg_new_form(request):
 			return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
 	else:
 		form = TG_createForm()
+	context["news"] = get_news_by_request(request)
 	context["form"] = form
 	return render(request, 'tippgemeinschaft/create.html', context)
 
-def userform(request):
+def userform(request, referer=None):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse("home"))
 	context = {}
 	context["news"] = get_news_by_request(request)
 	user = User.objects.get(pk = request.user.id)
@@ -120,6 +152,8 @@ def userform(request):
 	else:
 		form = UserModelForm(instance=user)
 	context["form"] = form
+	if(referer):
+		context["referer"] = referer
 	return render(request, 'user/user.html', context)
 
 def register(request):
