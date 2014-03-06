@@ -17,7 +17,14 @@
 						{% csrf_token %}
 						{% bootstrap_form form layout="horizontal" %}
 						{% if user.id == tg.chef.id %}
-							{% buttons submit='OK' reset='Abbrechen' layout='horizontal' %}{% endbuttons %}
+							<div class="form-group">
+								<label class="col-md-2 control-label">&nbsp;</label>
+								<div class="col-md-4">
+									<button type="submit" class="btn btn-primary">Speichern</button>
+									<button type="submit" name="delete" onclick='return confirm("Wirklich löschen?\nDamit wird die Tippgemeinschaft aufgelöst, aber alle Tipps bleiben erhalten.");' class="btn btn-warning">Löschen</button>
+									<button type="reset" class="btn btn-default">Abbrechen</button>
+								</div>
+							</div>
 						{% endif %}
 					<div class="form-group">
 						<label class="col-md-2 control-label">Chef</label>

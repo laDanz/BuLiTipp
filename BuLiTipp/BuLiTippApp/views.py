@@ -64,10 +64,23 @@ def tg_show_form(request, tg_id):
 	context["news"] = get_news_by_request(request)
 	tg = Tippgemeinschaft.objects.get(pk = tg_id)
 	if request.method == 'POST':
-		form = TG_showForm(request.POST, instance = tg, user=request.user)
-		if form.is_valid() and tg.chef.id == request.user.id:
-			form.save()
-			messages.success(request, "Erfolgreich geändert!")
+		if "delete" in request.POST.keys():
+			tg.delete()
+			messages.success(request, "Tippgemeinschaft erfolgreich gelöscht!")
+			context = {}
+			# FIXME userform standard auslagern
+			form = UserModelForm(instance=request.user)
+			context["form"] = form
+			context["referer"] = "tgchange"
+			context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=request.user.id)
+			pwchange_form = PasswordChangeForm(user=request.user)
+			context["pwchange_form"] = pwchange_form
+			return render(request, 'user/user.html', context)
+		else:
+			form = TG_showForm(request.POST, instance = tg, user=request.user)
+			if form.is_valid() and tg.chef.id == request.user.id:
+				form.save()
+				messages.success(request, "Erfolgreich geändert!")
 	else:
 		form = TG_showForm(instance = tg, user=request.user)
 	context["form"] = form
