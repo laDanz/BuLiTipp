@@ -130,8 +130,18 @@ def tg_show_form(request, tg_id):
 	tg = Tippgemeinschaft.objects.get(pk = tg_id)
 	if request.method == 'POST':
 		if "delete" in request.POST.keys():
+			users = tg.users.all()
+			#hack for the loading of the data before teletion of tg
+			len(users)
 			tg.delete()
 			messages.success(request, "Tippgemeinschaft erfolgreich gelöscht!")
+			von = tg.chef.first_name if tg.chef.first_name else tg.chef.username
+			for user in users:
+				fuer = user.first_name if user.first_name else user.username
+				args = (str(fuer), str(von), str(tg.bezeichner), )
+				mail.send(TG_KICK_SUBJECT % str(tg.bezeichner), user.email, 
+						TG_KICK_MSG % args, 
+						TG_KICK_MSG_HTML % args)
 			return HttpResponseRedirect(reverse("user", args=["tgchange"]))
 		else:
 			form = TG_showForm(request.POST, instance = tg, user=request.user)
