@@ -91,8 +91,8 @@ def tg_einladung_del(request, tge_key):
 		return HttpResponseRedirect(reverse("home"))
 
 TGE_SUBJECT = 'TippBuLi: Einladung zur Tippgemeinschaft "%s" !'
-TGE_MSG = 'Hallo %s,\n\nDu hast eine Einladung von %s fuer die Tippgemeinschaft "%s" erhalten!\n\nDie Beschreibung der Tippgemeinschaft ist:\n\n%s\n\nWenn du hier klickst: http://TippBuLi.de/BuLiTipp/BuLiTipp/tg/invite/%s/accept dann nimmst du die Einladung an!\nWenn du die Einladung nicht annehmen moechtest, dann klicke hier: http://TippBuLi.de/BuLiTipp/BuLiTipp/tg/invite/%s/del oder ignoriere diese Email.\n\nViele Gruesze,\ndie BuLiTippApp'
-TGE_MSG_HTML = '<html>Hallo %s,<br><br>Du hast eine Einladung von %s f&uuml;r die Tippgemeinschaft "<b>%s</b>" erhalten!<br><br>Die Beschreibung der Tippgemeinschaft ist:<br><br><i>%s</i><br><br>Wenn du <a href="http://TippBuLi.de/BuLiTipp/BuLiTipp/tg/invite/%s/accept">hier</a> klickst dann <b>nimmst du die Einladung an</b>!<br>Wenn du die Einladung <b>nicht annehmen</b> m&ouml;chtest, dann klicke <a href="http://TippBuLi.de/BuLiTipp/BuLiTipp/tg/invite/%s/del">hier</a> oder ignoriere diese Email.<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
+TGE_MSG = 'Hallo %s,\n\nDu hast eine Einladung von %s fuer die Tippgemeinschaft "%s" erhalten!\n\nDie Beschreibung der Tippgemeinschaft ist:\n\n%s\n\nWenn du hier klickst: %s dann nimmst du die Einladung an!\nWenn du die Einladung nicht annehmen moechtest, dann klicke hier: %s oder ignoriere diese Email.\n\nViele Gruesze,\ndie BuLiTippApp'
+TGE_MSG_HTML = '<html>Hallo %s,<br><br>Du hast eine Einladung von %s f&uuml;r die Tippgemeinschaft "<b>%s</b>" erhalten!<br><br>Die Beschreibung der Tippgemeinschaft ist:<br><br><i>%s</i><br><br>Wenn du <a href="%s">hier</a> klickst dann <b>nimmst du die Einladung an</b>!<br>Wenn du die Einladung <b>nicht annehmen</b> m&ouml;chtest, dann klicke <a href="%s">hier</a> oder ignoriere diese Email.<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
 
 def tg_einladung_new_form(request, tg_id):
 	if not request.user.is_authenticated():
@@ -110,7 +110,7 @@ def tg_einladung_new_form(request, tg_id):
 			#mail schicken
 			von = tg_e.von.first_name if tg_e.von.first_name else tg_e.von.username
 			fuer = tg_e.fuer.first_name if tg_e.fuer.first_name else tg_e.fuer.username
-			args = (str(fuer), str(von), str(tg.bezeichner), str(tg.beschreibung), tg_e.key, tg_e.key, )
+			args = (str(fuer), str(von), str(tg.bezeichner), str(tg.beschreibung), "http://"+request.get_host()+reverse("acc_tg_einladung", args=[tg_e.key]), "http://"+request.get_host()+reverse("del_tg_einladung", args=[tg_e.key]), )
 			mail.send(TGE_SUBJECT % str(tg.bezeichner), 
 					tg_e.fuer.email, 
 					TGE_MSG % args, 
