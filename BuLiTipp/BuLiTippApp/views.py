@@ -27,7 +27,7 @@ from forms import UserModelForm, UserCreateForm
 import operator
 from django.forms.forms import Form
 from django.contrib.auth.forms import PasswordChangeForm
-import mail
+import ngmail as mail
 
 ### new:
 def userform(request):

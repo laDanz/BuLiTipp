@@ -9,7 +9,7 @@ import BuLiTipp.settings
 from BuLiTippApp.models import Spielzeit, Tipp
 from django.contrib.auth.models import User
 from django.utils import timezone
-import BuLiTippApp.mail as mail
+import BuLiTippApp.ngmail as mail
 
 ERINNERUNG_SUBJECT = "Jetzt den nächsten Spieltag tippen!"
 ERINNERUNG_MSG = 'Hallo %s,\n\nEs wird höchste Zeit, dass du den nächsten Spieltag tippst!\nGehe gleich auf http://TippBuLi.de/BuLiTipp/BuLiTipp/spieltag/%s/%s/ um deinen Tipp abzugeben!\n\nViele Grüße,\ndie BuLiTippApp\n\n*psst* unter uns: Du kannst auch gleich mehrere Spieltage "voraus" tippen ;)'
