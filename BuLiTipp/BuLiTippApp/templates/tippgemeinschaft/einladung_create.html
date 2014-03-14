@@ -15,6 +15,8 @@
 				<div class="panel-body">
 					<form role="form" class="form-horizontal" method="post">
 						{% csrf_token %}
+						Lieber nicht aus allen Usern wählen?<br>
+						Auch möglichkeit der email eingabe
 						{% bootstrap_form form layout="horizontal" %}
 						{% buttons submit='Einladen' reset='Abbrechen' layout='horizontal' %}{% endbuttons %}
 					</form>
