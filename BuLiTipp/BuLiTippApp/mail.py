@@ -16,8 +16,8 @@ def send(subject, toaddrs, message, message_html=None):
 	username = mail_settings.USERNAME
 	password = mail_settings.PASSWORD
 	msg = MIMEMultipart('alternative')#MIMEText(message)
-	part1 = MIMEText(message, 'plain')
-	part2 = MIMEText(message_html, 'html')
+	part1 = MIMEText(str(message), 'plain')
+	part2 = MIMEText(str(message_html), 'html')
 	msg.attach(part1)
 	if message_html is not None:
 		msg.attach(part2)

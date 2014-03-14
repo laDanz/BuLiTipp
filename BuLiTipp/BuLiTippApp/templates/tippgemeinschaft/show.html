@@ -1,4 +1,4 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load bootstrap3 %}
 {% load url from future %}
 
@@ -43,7 +43,12 @@
 						<div class="col-md-4">
 						<ul>
 							{% for user_ in tg.users.all %}
-							<li>{% firstof user_.first_name user_.username %}</li>
+							<li>
+								{% firstof user_.first_name user_.username %}
+								{% if user.id == tg.chef.id and user.id != user_.id %}
+									<a href="{% url "del_tg_user" tg.id user_.id %}" style="color:red;" title="Spieler rauswerfen" onclick='return confirm("Tipper wirklich aus dieser Tippgemeinschaft rauswerfen?");'><span class="glyphicon glyphicon-remove"></span></a>
+								{% endif %}
+							</li>
 							{% endfor %}
 						</ul>
 						</div>
@@ -55,13 +60,23 @@
 							{% for tge in tg.tg_einladung_set.all %}
 							<li>
 								{% firstof tge.fuer.first_name tge.fuer.username %} (vom {{ tge.datum|date:"d.m." }})
-								<a href="{% url "del_tg_einladung" tge.key %}" style="color:orange;" title="Einladung zurückziehen"><span class="glyphicon glyphicon-remove"></span></a>
+								{% if user.id == tg.chef.id or user.id == user_.id %}
+									<a href="{% url "del_tg_einladung" tge.key %}" style="color:orange;" title="Einladung zurück ziehen" onclick='return confirm("Einladung wirklich zurück ziehen?");'><span class="glyphicon glyphicon-remove"></span></a>
+								{% endif %}
 							</li>
 							{% endfor %}
 							{% if user.id == tg.chef.id %}
 								<li><b><a href="{% url "new_tg_einladung" tg.id %}">Weiteren Tipper einladen!</a></b></li>
 							{% endif %}
 						</ul>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">&nbsp;</label>
+						<div class="col-md-4">
+							{% if user.id != tg.chef.id and user in tg.users.all %}
+								<a href="{% url "del_tg_user" tg.id user.id %}" class="btn btn-warning" title="austreten" onclick='return confirm("Wirklich aus dieser Tippgemeinschaft austreten?");'>Austreten!</a>
+							{% endif %}
 						</div>
 					</div>
 				</form>

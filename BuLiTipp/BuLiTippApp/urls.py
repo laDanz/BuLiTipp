@@ -35,4 +35,5 @@ urlpatterns = patterns('',
 	url(r'^tg/(?P<tg_id>\d+)/invite/new$', 'BuLiTippApp.views.tg_einladung_new_form', name='new_tg_einladung'),
 	url(r'^tg/invite/(?P<tge_key>\S+)/del$', 'BuLiTippApp.views.tg_einladung_del', name='del_tg_einladung'),
 	url(r'^tg/invite/(?P<tge_key>\S+)/accept$', 'BuLiTippApp.views.tg_einladung_acc', name='acc_tg_einladung'),
+	url(r'^tg/(?P<tg_id>\d+)/remove/(?P<user_id>\d+)$', 'BuLiTippApp.views.del_tg_user', name='del_tg_user'),
 )

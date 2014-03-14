@@ -31,7 +31,43 @@ from django.contrib.auth.forms import PasswordChangeForm
 import mail
 import uuid
 
+TG_KICK_SUBJECT = 'TippBuLi: Rauswurf aus Tippgemeinschaft "%s" !'
+TG_KICK_MSG = 'Hallo %s,\n\nDu wurdest von %s aus der Tippgemeinschaft "%s" rausgeworfen!\n\nViele Gruesze,\ndie BuLiTippApp'
+TG_KICK_MSG_HTML = '<html>Hallo %s,<br><br>Du wurdest von %s aus der Tippgemeinschaft "<b>%s</b>" rausgeworfen!<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
+
+TG_QUIT_SUBJECT = 'TippBuLi: Austritt aus Tippgemeinschaft "%s" !'
+TG_QUIT_MSG = 'Hallo %s,\n\n%s ist aus deiner Tippgemeinschaft "%s" ausgetreten!\n\nViele Gruesze,\ndie BuLiTippApp'
+TG_QUIT_MSG_HTML = '<html>Hallo %s,<br><br>%s ist aus deiner Tippgemeinschaft "<b>%s</b>" ausgetreten!<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
+
+
 ### new:
+def del_tg_user(request, tg_id, user_id):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse("home"))
+	# security checks
+	tg = Tippgemeinschaft.objects.get(pk=tg_id)
+	user = User.objects.get(pk=user_id) 
+	if not request.user.id in (tg.chef.id, user.id):
+		messages.warning(request, "Nicht berechtigt!")
+		return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
+	tg.users.remove(user)
+	tg.save()
+	von = tg.chef.first_name if tg.chef.first_name else tg.chef.username
+	fuer = user.first_name if user.first_name else user.username
+	if user.id == request.user.id:
+		messages.success(request, "Erfolgreich ausgetreten!")
+		args = (str(von), str(fuer), str(tg.bezeichner), )
+		mail.send(TG_QUIT_SUBJECT % str(tg.bezeichner), user.email, 
+				TG_QUIT_MSG % args, 
+				TG_QUIT_MSG_HTML % args)
+	else:
+		messages.success(request, "Tipper erfolgreich rausgeschmissen!")
+		args = (str(fuer), str(von), str(tg.bezeichner), )
+		mail.send(TG_KICK_SUBJECT % str(tg.bezeichner), user.email, 
+				TG_KICK_MSG % args, 
+				TG_KICK_MSG_HTML % args)
+	return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
+
 def tg_einladung_acc(request, tge_key):
 	try:
 		tge = TG_Einladung.objects.get(key=tge_key)
@@ -72,14 +108,8 @@ def tg_einladung_new_form(request, tg_id):
 			tg_e.von = request.user
 			form.save()
 			#mail schicken
-			if tg_e.von.first_name:
-				von = tg_e.von.first_name
-			else:
-				von = tg_e.von.username
-			if tg_e.fuer.first_name:
-				fuer = tg_e.fuer.first_name
-			else:
-				fuer = tg_e.fuer.username
+			von = tg_e.von.first_name if tg_e.von.first_name else tg_e.von.username
+			fuer = tg_e.fuer.first_name if tg_e.fuer.first_name else tg_e.fuer.username
 			args = (str(fuer), str(von), str(tg.bezeichner), str(tg.beschreibung), tg_e.key, tg_e.key, )
 			mail.send(TGE_SUBJECT % str(tg.bezeichner), 
 					tg_e.fuer.email, 
@@ -144,6 +174,7 @@ def userform(request, referer=None):
 	pwchange_form = PasswordChangeForm(user=request.user)
 	context["pwchange_form"] = pwchange_form
 	context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=user.id)
+	context["tg_member"] = Tippgemeinschaft.objects.filter(users=user.id).exclude(chef__id=user.id)
 	if request.method == 'POST':
 		form = UserModelForm(request.POST, instance = user)
 		if form.is_valid():

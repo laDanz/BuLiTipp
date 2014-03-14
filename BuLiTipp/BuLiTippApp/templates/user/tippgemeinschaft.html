@@ -1,4 +1,4 @@
-﻿{% load url from future %}{% load bootstrap3 %}
+{% load url from future %}{% load bootstrap3 %}
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<a data-toggle="collapse" data-parent="#accordion" href="#user_tg">
@@ -15,6 +15,14 @@
 			</li>
 			{% endfor %}
 			<li><b><a href="{% url "new_tippgemeinschaft" %}">Neue Tippgemeinschaft erstellen!</a></b></li>
+			</ul>
+			Mitglied in folgenden Tippgemeinschaften:
+			<ul>
+			{% for tg in tg_member %}
+			<li>
+				<a href="{% url "show_tippgemeinschaft" tg.id %}">{{ tg.bezeichner }}</a>
+			</li>
+			{% endfor %}
 			</ul>
 		</div>
 	</div>
