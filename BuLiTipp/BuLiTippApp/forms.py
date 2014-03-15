@@ -7,7 +7,7 @@ from models import User
 class UserModelForm(forms.ModelForm):
 	class Meta:
 		model = User
-		fields = ['username', 'first_name', 'email', 'theme', 'input_type', 'id',]
+		fields = ['username', 'first_name', 'email', 'theme', 'input_type', 'receive_newsletter', 'id',]
 		# django version >= 1.5
 		#labels = {'first_name': 'Anzeigename',
 		#		'input_type' : 'Eingabefeld'}

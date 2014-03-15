@@ -8,6 +8,7 @@ from django.contrib.auth.models import User as djUser
 from punkterechner import Punkterechner
 from datetime import timedelta
 from models_reference import BootstrapThemes, InputTypes
+import ngmail as mail
 # Create your models here.
 
 spiel_zeit_vorlauf=timedelta(hours = 1)
@@ -18,6 +19,7 @@ class User(djUser):
 	letzte_news_gelesen = models.DateTimeField(null=True)
 	theme = models.ForeignKey(BootstrapThemes, null=True)
 	input_type = models.ForeignKey(InputTypes, null=True)
+	receive_newsletter = models.BooleanField(default=True)
 # FIXME: not sure if hack(that means probably pretty big hack): everyone who requests auth.User gets my User object instead 
 djUser.objects = User.objects
 
@@ -28,6 +30,12 @@ class News(models.Model):
 	datum = models.DateTimeField()
 	title = models.CharField(max_length=100)
 	text = models.TextField()
+	newsletter = models.BooleanField()
+	def save(self):
+		if self.id is None and self.newsletter:
+			for user in User.objects.filter(receive_newsletter=True):
+				mail.send("TippBuLi Newsletter: "+self.title, user.email, str(self.text), str(self.text))
+		super(News, self).save()
 
 class Spielzeit(models.Model):
 	class Meta:
