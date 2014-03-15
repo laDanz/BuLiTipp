@@ -13,6 +13,7 @@ from .exceptions import BootstrapError
 from .html import add_css_class
 from .icons import render_icon
 
+from django.utils.translation import ugettext as _
 
 FORM_GROUP_CLASS = 'form-group'
 
@@ -123,7 +124,7 @@ def render_field(field, layout='', form_group_class=FORM_GROUP_CLASS,
 	# Wrap the rendered field in its label if necessary
 	if put_inside_label:
 		rendered_field = render_label('{field} {label}'.format(field=rendered_field,
-												label=field.label), label_title=field.help_text)
+												label=_(field.label)), label_title=field.help_text)
 	# Add any help text and/or errors
 	if layout != 'inline':
 		help_text_and_errors = []
@@ -160,7 +161,6 @@ def render_field(field, layout='', form_group_class=FORM_GROUP_CLASS,
 
 	return render_form_group(content, form_group_class)
 
-
 def render_label(content, label_for=None, label_class=None, label_title=''):
 	attrs = {}
 	if label_for:
@@ -170,7 +170,7 @@ def render_label(content, label_for=None, label_class=None, label_title=''):
 	if label_title:
 		attrs['title'] = label_title
 	return '<label{attrs}>{content}</label>'.format(attrs=flatatt(attrs),
-																	content=content)
+																	content=_(content))
 
 
 def render_button(content, button_type=None, icon=None):
@@ -190,7 +190,7 @@ def render_button(content, button_type=None, icon=None):
 	if icon:
 		icon_content = render_icon(icon) + ' '
 	return '<button{attrs}>{content}</button>'.format(attrs=flatatt(attrs),
-			content='{icon_content}{content}'.format(icon_content=icon_content, content=content))
+			content='{icon_content}{content}'.format(icon_content=icon_content, content=_(content)))
 
 
 def render_field_and_label(field, label, field_class='',
@@ -214,4 +214,4 @@ def render_field_and_label(field, label, field_class='',
 
 def render_form_group(content, css_class=FORM_GROUP_CLASS):
 	return '<div class="{_class}">{content}</div>'.format(_class=css_class,
-																			content=content)
+																			content=_(content))

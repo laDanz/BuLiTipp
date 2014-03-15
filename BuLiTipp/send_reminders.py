@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 import os, sys
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "BuLiTipp.settings")
