@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from models	import Verein, Spielzeit, Spieltag,	Spiel, News, BootstrapThemes, InputTypes
+from models	import Verein, Spielzeit, Spieltag,	Spiel, News, BootstrapThemes, InputTypes, ReminderOffsets
 from django.contrib	import admin
 
 admin.site.register(Verein)
 admin.site.register(News)
 admin.site.register(BootstrapThemes)
 admin.site.register(InputTypes)
+admin.site.register(ReminderOffsets)
 
 class SpielInline(admin.TabularInline):
 	model =	Spiel

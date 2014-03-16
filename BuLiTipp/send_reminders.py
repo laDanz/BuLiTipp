@@ -31,10 +31,17 @@ def run(test=False):
 		#print "Naechster Spieltag: " + str(next_spieltag)
 		spiele_anz = len(next_spieltag.spiel_set.all())
 		# only send if no more than 10 days away
-		send = (next_spieltag.datum - timezone.now()).days<10
+		day_difference = (next_spieltag.datum - timezone.now()).days
+		if test:
+			print "day_difference: " + str(day_difference)
+		send = day_difference < 10
 		if not send and test:
 			print "not sending any emails fpr this saison, since it's to far away"
 		for user in User.objects.filter(is_active = True).filter(groups = 1):
+			if not day_difference in map(lambda r:r.value, user.reminder_offset.all()):
+				if test:
+					print "User %s will not be reminded because of settings." % (str(user.username))
+				continue
 			email = user.email
 			tipps_anz = len(Tipp.objects.filter(spiel_id__spieltag_id=next_spieltag.id).filter(user_id=user.id).exclude(ergebniss=""))
 		#	print "%s: %s/%s" % (user.username, tipps_anz, spiele_anz)
@@ -50,8 +57,8 @@ def run(test=False):
 						if send:
 							mail.send(ERINNERUNG_SUBJECT_, user.email, ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)
 def install():
-	#um 7:15 an jedem DIe+Do gucken
-	INSTALL_STRING = "15  7    * * 2,4   ladanz  cd "+ os.getcwd()  +" && ./send_reminders.py\n"
+	#um 7:15 an jedem Tag gucken
+	INSTALL_STRING = "15  7    * * *   ladanz  cd "+ os.getcwd()  +" && ./send_reminders.py\n"
 	# is 0 if installed, otherwise not installed
 	CHECK_INSTALL  = "send_reminders"
 	crontab_file = open("/etc/crontab", "r")
@@ -78,8 +85,8 @@ def test():
 	print "send testmail"
 	global ERINNERUNG_MSG
 	all_spielzeiten=Spielzeit.objects.all()
-        latest_spielzeit=all_spielzeiten[len(all_spielzeiten)-1]
-        next_spieltag=latest_spielzeit.next_spieltag()
+	latest_spielzeit=all_spielzeiten[len(all_spielzeiten)-1]
+	next_spieltag=latest_spielzeit.next_spieltag()
 	ERINNERUNG_MSG_ = ERINNERUNG_MSG % ("admin", latest_spielzeit.id, next_spieltag.id)
 	ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % ("admin", latest_spielzeit.id, next_spieltag.id)
 	mail.send("This is just a Test!" +"(%s)" % latest_spielzeit.bezeichner,"cdanzmann@gmail.com","If you can read this, the mailservice is working\n" + ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)

@@ -8,8 +8,8 @@ from django.contrib.auth.models import User as djUser
 from threading import Timer
 from punkterechner import Punkterechner
 from datetime import timedelta
-from models_reference import BootstrapThemes, InputTypes
-import ngmail as mail
+from models_reference import BootstrapThemes, InputTypes, ReminderOffsets
+import BuLiTippApp.ngmail as mail
 # Create your models here.
 
 spiel_zeit_vorlauf=timedelta(hours = 1)
@@ -21,6 +21,7 @@ class User(djUser):
 	theme = models.ForeignKey(BootstrapThemes, null=True)
 	input_type = models.ForeignKey(InputTypes, null=True)
 	receive_newsletter = models.BooleanField(default=True)
+	reminder_offset = models.ManyToManyField(ReminderOffsets)
 # FIXME: not sure if hack(that means probably pretty big hack): everyone who requests auth.User gets my User object instead 
 djUser.objects = User.objects
 

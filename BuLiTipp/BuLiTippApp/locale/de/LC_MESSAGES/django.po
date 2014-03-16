@@ -26,3 +26,5 @@ msgstr "Eingabefeld"
 msgid "Receive newsletter"
 msgstr "Newsletter erhalten"
 
+msgid "Reminder offset"
+msgstr "Erinnerungsmail Versatz"
