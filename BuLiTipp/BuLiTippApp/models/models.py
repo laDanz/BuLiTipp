@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User as djUser
+from threading import Timer
 from punkterechner import Punkterechner
 from datetime import timedelta
 from models_reference import BootstrapThemes, InputTypes
@@ -202,10 +203,12 @@ class Spiel(models.Model):
 		global last_save_time
 		if old_spiel != None and old_spiel.ergebniss != self.ergebniss:
 			if last_save_time == None or timezone.now()>last_save_time+timedelta(minutes = 1):
-				from models_statistics import Tabelle, Serie, Punkte
-				Tabelle().refresh()
-				Serie().refresh()
-				Punkte().refresh()
+				def refresh():
+					from models_statistics import Tabelle, Serie, Punkte
+					Tabelle().refresh()
+					Serie().refresh()
+					Punkte().refresh()
+				Timer(30, refresh).start()
 				last_save_time = timezone.now()
 
 
