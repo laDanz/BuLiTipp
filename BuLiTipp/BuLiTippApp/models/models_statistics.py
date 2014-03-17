@@ -159,13 +159,18 @@ class Punkte(models.Model):
 		return self.punkte + x
 	def	__radd__(self, x):
 		return self.__add__(x)
-	def	refresh(self):
-		Punkte.objects.all().delete()
+	def	refresh(self, spieltag_id=None):
+		if spieltag_id:
+			Punkte.objects.filter(spieltag__id = spieltag_id).delete()
+		else:
+			Punkte.objects.all().delete()
 		#fuer jeden	user
 		for	user in	User.objects.all():
 			spieltag_punkte={}
 			#ermittle alle tipps
 			tipps =	Tipp.objects.filter(user_id=user.id)
+			if spieltag_id:
+				tipps = tipps.filter(spiel__spieltag__id = spieltag_id)
 			for	tipp in	tipps:
 				punkte = 0 if tipp.punkte()	is None	else tipp.punkte()
 				key	= tipp.spiel.spieltag.id

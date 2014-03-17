@@ -204,12 +204,12 @@ class Spiel(models.Model):
 		global last_save_time
 		if old_spiel != None and old_spiel.ergebniss != self.ergebniss:
 			if last_save_time == None or timezone.now()>last_save_time+timedelta(minutes = 1):
-				def refresh():
+				def refresh(spieltag_id):
 					from models_statistics import Tabelle, Serie, Punkte
 					Tabelle().refresh()
 					Serie().refresh()
-					Punkte().refresh()
-				Timer(30, refresh).start()
+					Punkte(spieltag_id).refresh()
+				Timer(30, refresh, args=[self.spieltag.id]).start()
 				last_save_time = timezone.now()
 
 
