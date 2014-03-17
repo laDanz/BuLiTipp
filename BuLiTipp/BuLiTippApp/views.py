@@ -403,7 +403,7 @@ def get_spieltagTO_by_request(request, st):
 		spieleTOs.append(SpielTO(spiel, eigenerTipp, andereTipps))
 	naechster = st.next()
 	vorheriger = st.previous()
-	bestenliste = BestenlisteDAO.spieltag(st.id)
+	bestenliste = BestenlisteDAO.spieltag(st.id, request.user.id)
 	voll_getippt = {}
 	voll_getippt[request.user.id] = count_spiele == count_eigene_tipps
 	for user, tipps in count_andere_tipps.iteritems():

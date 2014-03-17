@@ -11,7 +11,7 @@
 			<ul>
 			{% for tg in tg_created %}
 			<li>
-				<a href="{% url "show_tippgemeinschaft" tg.id %}">{{ tg.bezeichner }}</a>
+				<a href="{% url "show_tippgemeinschaft" tg.id %}">{{ tg.bezeichner }} ({{tg.spielzeit.bezeichner}})</a>
 			</li>
 			{% endfor %}
 			<li><b><a href="{% url "new_tippgemeinschaft" %}">Neue Tippgemeinschaft erstellen!</a></b></li>
@@ -20,7 +20,7 @@
 			<ul>
 			{% for tg in tg_member %}
 			<li>
-				<a href="{% url "show_tippgemeinschaft" tg.id %}">{{ tg.bezeichner }}</a>
+				<a href="{% url "show_tippgemeinschaft" tg.id %}">{{ tg.bezeichner }} ({{tg.spielzeit.bezeichner}})</a>
 			</li>
 			{% endfor %}
 			</ul>

@@ -1,7 +1,36 @@
 ﻿{% load url from future %}
 {% load filters %}
 <!--bl_buli-->
-
+<script type="text/javascript">
+<!--
+tgs = new Array(); 
+current = 0;
+function addTG(identifier){
+	for (tg in tgs){
+		if (tg == identifier){
+			return
+		}
+	}
+	tgs[tgs.length]=identifier
+}
+function showNext(){
+	current++;
+	if(current >= tgs.length){
+		current=0;
+	}
+	show(tgs[current]);
+}
+function show(identifier){
+	for (tg in tgs){
+		if (tgs[tg] == identifier){
+			$("[name='"+tgs[tg]+"']").css("display","");
+		}else{
+			$("[name='"+tgs[tg]+"']").css("display","none");
+		}
+	}
+}
+//-->
+</script>
 <div class="tab-content">
 	<div class="tab-pane {% if not first or first = "bl1" %}active{% endif %}" id="bl1">
 		<div class="table-responsive">
@@ -12,8 +41,11 @@
 					</tr>
 				</thead>
 				<tbody>
-				{% for blp in spieltag.bestenliste.bestenlistenPlatz %}
-					<tr {% if user = blp.user %}class="active"{% endif %}>
+				{% for tg, bl in spieltag.bestenliste.items %}
+				<script>addTG("bl_tg_{{tg.id}}");</script>
+				<tr name="bl_tg_{{tg.id}}" style="{% if forloop.counter > 1 %}display:none;{% endif %}"><td colSpan="3" class="text-center">{% if forloop.last %}<b>{% endif %}{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</td></tr>
+				{% for blp in bl.bestenlistenPlatz %}
+					<tr {% if user = blp.user %}class="active"{% endif %} name="bl_tg_{{tg.id}}"  style="{% if forloop.parentloop.counter > 1 %}display:none;{% endif %}">
 						<td>{{blp.position}}</td>
 						<td>
 							{% if not spieltag.vollstaendig_getippt|get:blp.user.id and spieltag.tippbare_spiele > 0 %}
@@ -23,6 +55,9 @@
 						</td>
 						<td>{{blp.punkte}}</td>
 					</tr>
+				{% endfor %}
+				{% empty %}
+				<tr><td colSpan=3><a href="{% url "user" "tgchange" %}">Jetzt einer Tippgemeinschaft beitreten!</a></td></tr>
 				{% endfor %}
 				</tbody>
 			</table>
