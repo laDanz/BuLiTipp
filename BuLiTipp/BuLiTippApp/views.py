@@ -154,7 +154,7 @@ def get_kommentare_by_request(request, spielzeit_id, spieltag_id):
 	return Kommentar.objects.filter(spieltag__id = spieltag_id).order_by("datum").reverse()
 
 def get_news_by_request(request):
-	news = News.objects.all().order_by("datum").reverse()
+	news = News.objects.all().order_by("datum").reverse().select_related('author')
 	newsto = NewsTO(news)
 	try:
 		user = User.objects.get(pk=request.user.id)
@@ -220,20 +220,20 @@ def get_spieltagTO_by_request(request, st):
 	count_andere_tipps = {}
 	spieleTOs = []
 	tipps = Tipp.objects.filter(spiel__spieltag_id=st.id)
-	user_tipped = Set([tipp.user.id for tipp in tipps])
+	user_tipped = Set([tipp.user_id for tipp in tipps])
 	try:
 		user_tipped.remove(request.user.id)
 	except:
 		pass
-	for spiel in st.spiel_set.all().order_by("datum"):
+	for spiel in st.spiel_set.all().select_related().order_by("datum"):
 		count_spiele += 1
 		tipps = spiel.tipp_set.all()
 		try:
-			eigenerTipp = tipps.filter(user_id = request.user.id)[0]
+			eigenerTipp = tipps.filter(user_id = request.user.id).select_related('user')[0]
 			count_eigene_tipps += 1
 		except:
 			eigenerTipp = None
-		andereTipps = tipps.exclude(user_id = request.user.id)
+		andereTipps = tipps.exclude(user_id = request.user.id).select_related('user')
 		andereTipps_ = []
 		for id in user_tipped:
 			atipp = andereTipps.filter(user_id=id)
@@ -246,17 +246,17 @@ def get_spieltagTO_by_request(request, st):
 			if tipp == None:
 				continue
 			try:
-				count_andere_tipps[tipp.user] = count_andere_tipps[tipp.user] + 1
+				count_andere_tipps[tipp.user_id] = count_andere_tipps[tipp.user_id] + 1
 			except:
-				count_andere_tipps[tipp.user] = 1
+				count_andere_tipps[tipp.user_id] = 1
 		spieleTOs.append(SpielTO(spiel, eigenerTipp, andereTipps))
 	naechster = st.next()
 	vorheriger = st.previous()
 	bestenliste = BestenlisteDAO.spieltag(st.id)
 	voll_getippt = {}
 	voll_getippt[request.user.id] = count_spiele == count_eigene_tipps
-	for user, tipps in count_andere_tipps.iteritems():
-		voll_getippt[user.id] = count_spiele == tipps
+	for user_id, tipps in count_andere_tipps.iteritems():
+		voll_getippt[user_id] = count_spiele == tipps
 	return SpieltagTO(st, spieleTOs, voll_getippt, naechster, vorheriger, bestenliste)
 
 class ImpressumView(TemplateView):

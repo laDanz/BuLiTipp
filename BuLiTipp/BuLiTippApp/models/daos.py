@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from transferObjects import BestenlistenPlatzTO, BestenlisteTO, TabellenPlatzTO, TabelleTO
 from models_statistics import Tabelle
 from models import Spielzeit, Spieltag
+from django.db.models.aggregates import Sum
 
 class BestenlisteDAO():
     @staticmethod
@@ -48,8 +49,8 @@ class BestenlisteDAO():
             if before_spieltag_id is not None:
                 punkte = punkte.filter(spieltag__id__lt=before_spieltag_id)
             #summiere die punkte der Tipps
-            punkte = sum(punkte)
-            blp.append(BestenlistenPlatzTO(None, user, punkte))
+            punkte = punkte.aggregate(Sum("punkte"))["punkte__sum"]
+            blp.append(BestenlistenPlatzTO(None, user, punkte if punkte else 0))
         blp.sort(key=lambda blp:blp.punkte, reverse=True)
         platz = 1
         for bl in blp:
@@ -62,7 +63,7 @@ class TabelleDAO():
     @staticmethod
     def spielzeit(spielzeit_id):
         tp = []
-        tabellenplatz = Tabelle.objects.filter(spielzeit_id = spielzeit_id).order_by("platz")
+        tabellenplatz = Tabelle.objects.filter(spielzeit_id = spielzeit_id).order_by("platz").select_related('mannschaft')
         for t in tabellenplatz:
             # TODO: implement tore, spiele
             tp.append(TabellenPlatzTO(t.platz, t.mannschaft, t.punkte, 0, 0))
