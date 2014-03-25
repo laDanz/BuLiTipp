@@ -15,7 +15,7 @@ if BOOTSTRAP3_FOLDER not in sys.path:
 from django.core.urlresolvers import reverse
 import local_settings
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
