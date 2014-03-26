@@ -1,10 +1,22 @@
-﻿{% load url from future %}
+{% load url from future %}
 {% load filters %}
 <!--bl_buli-->
 <script type="text/javascript">
 <!--
+
 tgs = new Array(); 
-current = 0;
+if(typeof(Storage)!=="undefined")
+{
+	local_storage=true;
+	current = localStorage.getItem("current_tg");
+	if( ! current || current == "NaN"){
+		current = 0;
+	}
+}
+else
+{
+	current = 0;
+}
 function addTG(identifier){
 	for (tg in tgs){
 		if (tg == identifier){
@@ -19,6 +31,9 @@ function showNext(){
 		current=0;
 	}
 	show(tgs[current]);
+	if(local_storage){
+		localStorage.setItem("current_tg", current);
+	}
 }
 function show(identifier){
 	for (tg in tgs){
@@ -43,7 +58,7 @@ function show(identifier){
 				<tbody>
 				{% for tg, bl in spieltag.bestenliste.items %}
 				<script>addTG("bl_tg_{{tg.id}}");</script>
-				<tr name="bl_tg_{{tg.id}}" style="{% if forloop.counter > 1 %}display:none;{% endif %}"><td colSpan="3" class="text-center">{% if forloop.last %}<b>{% endif %}{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</td></tr>
+				<tr name="bl_tg_{{tg.id}}" style="display:none;"><td colSpan="3" class="text-center">{% if forloop.first %}<b>{% endif %}{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</td></tr>
 				{% for blp in bl.bestenlistenPlatz %}
 					<tr {% if user = blp.user %}class="active"{% endif %} name="bl_tg_{{tg.id}}"  style="{% if forloop.parentloop.counter > 1 %}display:none;{% endif %}">
 						<td>{{blp.position}}</td>
@@ -68,12 +83,14 @@ function show(identifier){
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th colSpan=4 class="text-center"><h4 style="margin:0px;">Bestenliste<small>Spielzeit</small> <a id="abl1" href="#bl1" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a></h4></th >
+						<th colSpan=4 class="text-center"><h4 style="margin:0px;">Bestenliste<small>Spielzeit</small>{% if no_switch != "true" %} <a id="abl1" href="#bl1" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</h4></th >
 					</tr>
 				</thead>
 				<tbody>
-				{% for blp in spielzeit.bestenliste.bestenlistenPlatz %}
-					<tr {% if user = blp.user %}class="active"{% endif %}>
+				{% for tg, bl in spielzeit.bestenliste.items %}
+				<tr name="bl_tg_{{tg.id}}" style="display:none;"><td colSpan="4" class="text-center">{% if forloop.first %}<b>{% endif %}{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</td></tr>
+				{% for blp in bl.bestenlistenPlatz %}
+					<tr {% if user = blp.user %}class="active"{% endif %} name="bl_tg_{{tg.id}}"  style="{% if forloop.parentloop.counter > 1 %}display:none;{% endif %}">
 						<td style="border-right:0px;" class="text-center">{{blp.position}}</td>
 						<td style="border-left:0px;">
 							{% if blp.delta > 0 %}
@@ -88,12 +105,15 @@ function show(identifier){
 						<td>{{blp.punkte}}</td>
 					</tr>
 				{% endfor %}
+				{% empty %}
+				<tr><td colSpan=3><a href="{% url "user" "tgchange" %}">Jetzt einer Tippgemeinschaft beitreten!</a></td></tr>
+				{% endfor %}
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-
+<script>show(tgs[current]);</script>
 <script>
 <!-- ids must be different, because several bestenlisten may be on one page, otherwise tabs wouldn't work -->
 var id1=Math.random()*100000000000000000;

@@ -1,4 +1,4 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Bestenlisten{% endblock %}
 
@@ -9,7 +9,7 @@
 	{% for sz in spielzeiten %}
 		<div class="col-xs-12 col-sm-6 col-md-4">
 		<h2>{{sz.bezeichner}}</h2>
-			{% with spieltag=sz.aktuellerSpieltag spielzeit=sz first="bl2"%}
+			{% with spieltag=sz.aktuellerSpieltag spielzeit=sz first="bl2" no_switch="true" %}
 				{% include "bestenliste/bl_detail.html" %}
 			{% endwith %}
 		</div>

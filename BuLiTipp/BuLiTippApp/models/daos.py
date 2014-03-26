@@ -9,6 +9,7 @@ from itertools import chain
 from transferObjects import BestenlistenPlatzTO, BestenlisteTO, TabellenPlatzTO, TabelleTO
 from models_statistics import Tabelle
 from models import Spielzeit, Spieltag, Tippgemeinschaft
+import collections
 
 class BestenlisteDAO():
 	@staticmethod
@@ -30,11 +31,20 @@ class BestenlisteDAO():
 			before_spieltag_id = Spieltag.objects.get(pk=before_spieltag_id).previous().id
 		aktuell = BestenlisteDAO.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full, before_spieltag_id=aktuell_spieltag_id)
 		vorher = BestenlisteDAO.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full, before_spieltag_id=before_spieltag_id)
-		for blp in aktuell[0].bestenlistenPlatz:
-			for blp_old in vorher[0].bestenlistenPlatz:
-				if blp.user.id == blp_old.user.id:
-					blp.delta = blp_old.position - blp.position
-		return aktuell[0]
+		if hasattr(aktuell, "keys"):
+			for k in aktuell.keys():
+				for blp in aktuell[k].bestenlistenPlatz:
+					for blp_old in vorher[k].bestenlistenPlatz:
+						if blp.user == blp_old.user:
+							blp.delta = blp_old.position - blp.position
+							break
+		else:
+			for blp in aktuell[0].bestenlistenPlatz:
+				for blp_old in vorher[0].bestenlistenPlatz:
+					if blp.user == blp_old.user:
+						blp.delta = blp_old.position - blp.position
+						break
+		return aktuell
 	@staticmethod
 	def query(user_id=None, full=True, spieltag_id=None, spielzeit_id=None, before_spieltag_id=None):
 		from models_statistics import Punkte
@@ -71,18 +81,26 @@ class BestenlisteDAO():
 			if user_id:
 				result[tg] = BestenlisteTO(blp, None, None)
 			else:
-				return [BestenlisteTO(blp, None, None)]
+				return {"":BestenlisteTO(blp, None, None)}
 		if user_id:
-			tgs = Tippgemeinschaft.objects.filter(spielzeit__spieltag__id = spieltag_id)
+			if spieltag_id:
+				tgs = Tippgemeinschaft.objects.filter(spielzeit__spieltag__id = spieltag_id)
+			if spielzeit_id:
+				tgs = Tippgemeinschaft.objects.filter(spielzeit__id = spielzeit_id)
 			blp=[]
 			for tg in tgs:
 				users = tg.users.all()
 				punkte = Punkte.objects.filter(user__in=users)
 				if spieltag_id is not None:
 					punkte = punkte.filter(spieltag__id=spieltag_id)
+				if spielzeit_id is not None:
+					punkte = punkte.filter(spieltag__spielzeit_id=spielzeit_id)
+				if before_spieltag_id is not None:
+					punkte = punkte.filter(spieltag__id__lt=before_spieltag_id)
 				punkte = sum(punkte)*10/len(users)/10.
 				user = User()
 				user.username = tg.bezeichner
+				user.id = tg.bezeichner
 				blp.append(BestenlistenPlatzTO(None, user, punkte))
 			tg = Tippgemeinschaft()
 			tg.bezeichner = "Übersicht"
@@ -92,6 +110,7 @@ class BestenlisteDAO():
 				bl.position = platz
 				platz += 1
 			result[tg] = BestenlisteTO(blp, None, None)
+		result = collections.OrderedDict(sorted(result.items(),key=lambda t:t[0].id, reverse=False))
 		return result
 
 class TabelleDAO():
