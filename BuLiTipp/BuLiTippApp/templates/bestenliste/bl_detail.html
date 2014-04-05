@@ -52,13 +52,20 @@ function show(identifier){
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th colSpan=3 class="text-center"><h4 style="margin:0px;">Bestenliste<small>Spieltag</small> <a id="abl2" href="#bl2" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a></h4></th >
+						<th colSpan=3 class="text-center">
+							<h4 style="margin:0px;">Bestenliste<small>Spieltag</small> <a id="abl2" href="#bl2" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a>
+						{% for tg, bl in spieltag.bestenliste.items %}
+							<script>addTG("bl_tg_{{tg.id}}");</script>
+							<small>
+								<div name="bl_tg_{{tg.id}}" style="display:none; color:black;{% if tg.bezeichner == "Übersicht" %}font-weight:bold;{% endif %}">{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</div>
+							</small>
+						{% endfor %}
+						</h4>
+						</th >
 					</tr>
 				</thead>
 				<tbody>
 				{% for tg, bl in spieltag.bestenliste.items %}
-				<script>addTG("bl_tg_{{tg.id}}");</script>
-				<tr name="bl_tg_{{tg.id}}" style="display:none;"><td colSpan="3" class="text-center">{% if forloop.first %}<b>{% endif %}{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</td></tr>
 				{% for blp in bl.bestenlistenPlatz %}
 					<tr {% if user = blp.user %}class="active"{% endif %} name="bl_tg_{{tg.id}}"  style="{% if forloop.parentloop.counter > 1 %}display:none;{% endif %}">
 						<td>{{blp.position}}</td>
@@ -83,12 +90,20 @@ function show(identifier){
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th colSpan=4 class="text-center"><h4 style="margin:0px;">Bestenliste<small>Spielzeit</small>{% if no_switch != "true" %} <a id="abl1" href="#bl1" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</h4></th >
+						<th colSpan=4 class="text-center">
+							<h4 style="margin:0px;">Bestenliste<small>Spielzeit</small>{% if no_switch != "true" %} <a id="abl1" href="#bl1" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}
+						{% for tg, bl in spieltag.bestenliste.items %}
+							<script>addTG("bl_tg_{{tg.id}}");</script>
+							<small>
+								<div name="bl_tg_{{tg.id}}" style="display:none; color:black;{% if tg.bezeichner == "Übersicht" %}font-weight:bold;{% endif %}">{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</div>
+							</small>
+						{% endfor %}
+						</h4>
+						</th >
 					</tr>
 				</thead>
 				<tbody>
 				{% for tg, bl in spielzeit.bestenliste.items %}
-				<tr name="bl_tg_{{tg.id}}" style="display:none;"><td colSpan="4" class="text-center">{% if forloop.first %}<b>{% endif %}{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</td></tr>
 				{% for blp in bl.bestenlistenPlatz %}
 					<tr {% if user = blp.user %}class="active"{% endif %} name="bl_tg_{{tg.id}}"  style="{% if forloop.parentloop.counter > 1 %}display:none;{% endif %}">
 						<td style="border-right:0px;" class="text-center">{{blp.position}}</td>
