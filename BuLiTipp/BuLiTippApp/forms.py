@@ -24,7 +24,7 @@ class UserCreateForm(forms.ModelForm):
 class TG_createForm(forms.ModelForm):
 	class Meta:
 		model = Tippgemeinschaft
-		fields = ['bezeichner', 'beschreibung', 'spielzeit', ]
+		fields = ['bezeichner', 'beschreibung', 'spielzeit', 'open',]
 
 class TG_showForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
@@ -40,7 +40,7 @@ class TG_showForm(forms.ModelForm):
 				self.fields[f].widget.attrs['disabled'] = True
 	class Meta:
 		model = Tippgemeinschaft
-		fields = ['bezeichner', 'beschreibung',]
+		fields = ['bezeichner', 'beschreibung', 'open',]
 
 class TG_Einladung_createForm(forms.ModelForm):
 	class Meta:

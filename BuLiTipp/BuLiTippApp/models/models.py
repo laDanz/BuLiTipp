@@ -242,9 +242,10 @@ class Tippgemeinschaft(models.Model):
 	bezeichner = models.CharField(max_length=30)
 	beschreibung = models.TextField()
 	spielzeit = models.ForeignKey(Spielzeit)
-	gruendungsdatum = models.DateTimeField(auto_now=True)
+	gruendungsdatum = models.DateTimeField(auto_now_add=True)
 	chef = models.ForeignKey(User, related_name="tg_chef")
 	users = models.ManyToManyField(User, related_name="tg_user")
+	open = models.BooleanField(default=True)
 	def __unicode__(self):
 		return self.bezeichner
 

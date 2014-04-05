@@ -13,6 +13,8 @@
 			<li>
 				<a href="{% url "show_tippgemeinschaft" tg.id %}">{{ tg.bezeichner }} ({{tg.spielzeit.bezeichner}})</a>
 			</li>
+			{% empty %}
+			<li>Noch keine...</li>
 			{% endfor %}
 			<li><b><a href="{% url "new_tippgemeinschaft" %}">Neue Tippgemeinschaft erstellen!</a></b></li>
 			</ul>
@@ -22,6 +24,18 @@
 			<li>
 				<a href="{% url "show_tippgemeinschaft" tg.id %}">{{ tg.bezeichner }} ({{tg.spielzeit.bezeichner}})</a>
 			</li>
+			{% empty %}
+			<li>Du bist in keiner Tippgemeinschaft Mitglied</li>
+			{% endfor %}
+			</ul>
+			Offene Tippgemeinschaften, denen jeder beitreten darf:
+			<ul>
+			{% for tg in tg_open %}
+			<li>
+				<a href="{% url "show_tippgemeinschaft" tg.id %}">{{ tg.bezeichner }} ({{tg.spielzeit.bezeichner}})</a>
+			</li>
+			{% empty %}
+			<li>Es sind keine weiteren offenen Tippgemeinschaften verfügbar. <a href="{% url "new_tippgemeinschaft" %}">Erstell</a> doch eine!</li>
 			{% endfor %}
 			</ul>
 		</div>

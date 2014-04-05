@@ -35,6 +35,10 @@ TG_KICK_SUBJECT = 'TippBuLi: Rauswurf aus Tippgemeinschaft "%s" !'
 TG_KICK_MSG = 'Hallo %s,\n\nDu wurdest von %s aus der Tippgemeinschaft "%s" rausgeworfen!\n\nViele Gruesze,\ndie BuLiTippApp'
 TG_KICK_MSG_HTML = '<html>Hallo %s,<br><br>Du wurdest von %s aus der Tippgemeinschaft "<b>%s</b>" rausgeworfen!<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
 
+TG_JOIN_SUBJECT = 'TippBuLi: Eintritt in die Tippgemeinschaft "%s" !'
+TG_JOIN_MSG = 'Hallo %s,\n\n%s ist in deine Tippgemeinschaft "%s" eingetreten!\nSo lange deine Tippgemeinschaft "offen" ist, kann jeder beitreten der moechte.\n\nViele Gruesze,\ndie BuLiTippApp'
+TG_JOIN_MSG_HTML = '<html>Hallo %s,<br><br>%s ist in deine Tippgemeinschaft "<b>%s</b>" eingetreten!<br>So lange deine Tippgemeinschaft "offen" ist, kann jeder beitreten der m&ouml;chte.<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
+
 TG_QUIT_SUBJECT = 'TippBuLi: Austritt aus Tippgemeinschaft "%s" !'
 TG_QUIT_MSG = 'Hallo %s,\n\n%s ist aus deiner Tippgemeinschaft "%s" ausgetreten!\n\nViele Gruesze,\ndie BuLiTippApp'
 TG_QUIT_MSG_HTML = '<html>Hallo %s,<br><br>%s ist aus deiner Tippgemeinschaft "<b>%s</b>" ausgetreten!<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
@@ -129,7 +133,7 @@ def tg_show_form(request, tg_id):
 	context = {}
 	tg = Tippgemeinschaft.objects.get(pk = tg_id)
 	if request.method == 'POST':
-		if "delete" in request.POST.keys():
+		if "delete" in request.POST.keys() and (request.user.is_staff or tg.chef_id == request.user.id):
 			users = tg.users.all()
 			#hack for the loading of the data before teletion of tg
 			len(users)
@@ -143,6 +147,17 @@ def tg_show_form(request, tg_id):
 						TG_KICK_MSG % args, 
 						TG_KICK_MSG_HTML % args)
 			return HttpResponseRedirect(reverse("user", args=["tgchange"]))
+		elif "join" in request.POST.keys() and tg.open:
+			tg.users.add(request.user)
+			tg.save()
+			messages.success(request, "Erfolgreich beigetreten!")
+			fuer = tg.chef.first_name if tg.chef.first_name else tg.chef.username
+			wer = request.user.first_name if request.user.first_name else request.user.username 
+			args = (str(fuer), str(wer), str(tg.bezeichner), )
+			mail.send(TG_JOIN_SUBJECT % str(tg.bezeichner), tg.chef.email, 
+				TG_JOIN_MSG % args, 
+				TG_JOIN_MSG_HTML % args)
+			return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
 		else:
 			form = TG_showForm(request.POST, instance = tg, user=request.user)
 			if form.is_valid() and tg.chef.id == request.user.id:
@@ -185,6 +200,7 @@ def userform(request, referer=None):
 	context["pwchange_form"] = pwchange_form
 	context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=user.id).order_by("spielzeit")
 	context["tg_member"] = Tippgemeinschaft.objects.filter(users=user.id).exclude(chef__id=user.id).order_by("spielzeit")
+	context["tg_open"] = Tippgemeinschaft.objects.filter(open=True).exclude(chef__id=user.id).exclude(users=user.id).order_by("spielzeit")
 	if request.method == 'POST':
 		form = UserModelForm(request.POST, instance = user)
 		if form.is_valid():

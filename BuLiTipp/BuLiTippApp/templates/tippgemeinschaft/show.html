@@ -16,16 +16,19 @@
 					<form role="form" class="form-horizontal" method="post">
 						{% csrf_token %}
 						{% bootstrap_form form layout="horizontal" %}
-						{% if user.id == tg.chef.id or user.is_staff %}
-							<div class="form-group">
-								<label class="col-md-2 control-label">&nbsp;</label>
-								<div class="col-md-4">
-									<button type="submit" class="btn btn-primary">Speichern</button>
-									<button type="submit" name="delete" onclick='return confirm("Wirklich löschen?\nDamit wird die Tippgemeinschaft aufgelöst, aber alle Tipps bleiben erhalten.");' class="btn btn-warning">Löschen</button>
-									<button type="reset" class="btn btn-default">Abbrechen</button>
-								</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">&nbsp;</label>
+							<div class="col-md-4">
+							{% if user.id == tg.chef.id or user.is_staff %}
+								<button type="submit" class="btn btn-primary">Speichern</button>
+								<button type="submit" name="delete" onclick='return confirm("Wirklich löschen?\nDamit wird die Tippgemeinschaft aufgelöst, aber alle Tipps bleiben erhalten.");' class="btn btn-warning">Löschen</button>
+								<button type="reset" class="btn btn-default">Abbrechen</button>
+							{% endif %}
+							{% if tg.open and user.id != tg.chef.id and not user in tg.users.all %}
+								<button type="submit" name="join" class="btn btn-primary">Beitreten!</button>
+							{% endif %}
 							</div>
-						{% endif %}
+						</div>
 					<div class="form-group">
 						<label class="col-md-2 control-label">Chef</label>
 						<div class="col-md-4">
