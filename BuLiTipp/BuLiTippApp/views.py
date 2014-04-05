@@ -183,8 +183,8 @@ def userform(request, referer=None):
 	user = User.objects.get(pk = request.user.id)
 	pwchange_form = PasswordChangeForm(user=request.user)
 	context["pwchange_form"] = pwchange_form
-	context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=user.id)
-	context["tg_member"] = Tippgemeinschaft.objects.filter(users=user.id).exclude(chef__id=user.id)
+	context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=user.id).order_by("spielzeit")
+	context["tg_member"] = Tippgemeinschaft.objects.filter(users=user.id).exclude(chef__id=user.id).order_by("spielzeit")
 	if request.method == 'POST':
 		form = UserModelForm(request.POST, instance = user)
 		if form.is_valid():
@@ -342,7 +342,7 @@ def get_spielzeit_by_request(request, spielzeit_id, before_spieltag_id=None, use
 	tabelle = TabelleDAO.spielzeit(sz.id)
 	bestenliste = BestenlisteDAO.spielzeit(sz.id, before_spieltag_id=before_spieltag_id, user_id=user_id)
 	spieltage = []
-	for st in sz.spieltag_set.all().order_by("nummer"):
+	for st in sz.spieltag_set.all().order_by("nummer"):#FIXME
 		spieltage.append(SpieltagTO(st))
 	return SpielzeitTO(sz, aktueller_spieltagTO, tabelle, bestenliste, spieltage)
 

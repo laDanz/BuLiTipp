@@ -5,18 +5,6 @@
 <!--
 
 tgs = new Array(); 
-if(typeof(Storage)!=="undefined")
-{
-	local_storage=true;
-	current = localStorage.getItem("current_tg");
-	if( ! current || current == "NaN"){
-		current = 0;
-	}
-}
-else
-{
-	current = 0;
-}
 function addTG(identifier){
 	for (tg in tgs){
 		if (tg == identifier){
@@ -36,14 +24,33 @@ function showNext(){
 	}
 }
 function show(identifier){
+	shown = false;
 	for (tg in tgs){
 		if (tgs[tg] == identifier){
 			$("[name='"+tgs[tg]+"']").css("display","");
+			shown = true;
 		}else{
 			$("[name='"+tgs[tg]+"']").css("display","none");
 		}
 	}
+	if( ! shown ){
+		current = 0;
+		show(tgs[current]);
+	}
 }
+if(typeof(Storage)!=="undefined")
+{
+	local_storage=true;
+	current = localStorage.getItem("current_tg");
+	if( ! current || current == "NaN" ){
+		current = 0;
+	}
+}
+else
+{
+	current = 0;
+}
+
 //-->
 </script>
 <div class="tab-content">
@@ -53,12 +60,14 @@ function show(identifier){
 				<thead>
 					<tr>
 						<th colSpan=3 class="text-center">
-							<h4 style="margin:0px;">Bestenliste<small>Spieltag</small> <a id="abl2" href="#bl2" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a>
+							<h4 style="margin:0px;">Bestenliste<small>Spieltag</small>{% if no_switch != "true" %} <a id="abl2" href="#bl2" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}
 						{% for tg, bl in spieltag.bestenliste.items %}
 							<script>addTG("bl_tg_{{tg.id}}");</script>
+							{% if no_switch != "true" %}
 							<small>
 								<div name="bl_tg_{{tg.id}}" style="display:none; color:black;{% if tg.bezeichner == "Übersicht" %}font-weight:bold;{% endif %}">{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</div>
 							</small>
+							{% endif %}
 						{% endfor %}
 						</h4>
 						</th >
@@ -94,9 +103,11 @@ function show(identifier){
 							<h4 style="margin:0px;">Bestenliste<small>Spielzeit</small>{% if no_switch != "true" %} <a id="abl1" href="#bl1" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}
 						{% for tg, bl in spieltag.bestenliste.items %}
 							<script>addTG("bl_tg_{{tg.id}}");</script>
+							{% if no_switch != "true" %}
 							<small>
 								<div name="bl_tg_{{tg.id}}" style="display:none; color:black;{% if tg.bezeichner == "Übersicht" %}font-weight:bold;{% endif %}">{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</div>
 							</small>
+							{% endif %}
 						{% endfor %}
 						</h4>
 						</th >

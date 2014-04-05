@@ -16,7 +16,7 @@
 					<form role="form" class="form-horizontal" method="post">
 						{% csrf_token %}
 						{% bootstrap_form form layout="horizontal" %}
-						{% if user.id == tg.chef.id %}
+						{% if user.id == tg.chef.id or user.is_staff %}
 							<div class="form-group">
 								<label class="col-md-2 control-label">&nbsp;</label>
 								<div class="col-md-4">

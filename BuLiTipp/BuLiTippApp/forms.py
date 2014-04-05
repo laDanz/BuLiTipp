@@ -32,7 +32,7 @@ class TG_showForm(forms.ModelForm):
 		del kwargs['user']
 		super(TG_showForm, self).__init__(*args, **kwargs)
 		instance = getattr(self, 'instance', None)
-		if instance.chef.id == user.id:
+		if instance.chef.id == user.id or user.is_staff:
 			pass
 		else:
 			for f in self.fields:

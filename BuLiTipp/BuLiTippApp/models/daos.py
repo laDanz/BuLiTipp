@@ -49,18 +49,21 @@ class BestenlisteDAO():
 	def query(user_id=None, full=True, spieltag_id=None, spielzeit_id=None, before_spieltag_id=None):
 		from models_statistics import Punkte
 		result={}
-		#fuer jeden user
-		users = User.objects.filter(is_active = True).filter(groups = 1)
 		if user_id:
 			tgs = Tippgemeinschaft.objects.filter(users__id = user_id)
 			if spieltag_id:
 				tgs = tgs.filter(spielzeit__spieltag__id = spieltag_id)
+			if spielzeit_id:
+				tgs = tgs.filter(spielzeit__id = spielzeit_id)
 		else:
 			tgs = [1]
+		#tgs des users
 		for tg in tgs:
 			blp=[]
 			if user_id:
 				users = tg.users.all()
+			else:
+				users = User.objects.filter(is_active = True).filter(groups = 1)# FIXME?
 			for user in users:
 				punkte = Punkte.objects.filter(user=user)
 				if spieltag_id is not None:
@@ -88,6 +91,7 @@ class BestenlisteDAO():
 			if spielzeit_id:
 				tgs = Tippgemeinschaft.objects.filter(spielzeit__id = spielzeit_id)
 			blp=[]
+			#alle tgs dieser spielzeit/spieltag für übersicht zusammenrechnen
 			for tg in tgs:
 				users = tg.users.all()
 				punkte = Punkte.objects.filter(user__in=users)
@@ -101,6 +105,19 @@ class BestenlisteDAO():
 				user = User()
 				user.username = tg.bezeichner
 				user.id = tg.bezeichner
+				blp.append(BestenlistenPlatzTO(None, user, punkte))
+			if len(result) == 0 or 1 :#FIXME immer anzeigen?
+				#falls net in TG, Spieler selbst zur Übersicht hinzufügen
+				user = User.objects.get(pk=user_id)
+				punkte = Punkte.objects.filter(user=user)
+				if spieltag_id is not None:
+					punkte = punkte.filter(spieltag__id=spieltag_id)
+				if spielzeit_id is not None:
+					punkte = punkte.filter(spieltag__spielzeit_id=spielzeit_id)
+				if before_spieltag_id is not None:
+					punkte = punkte.filter(spieltag__id__lt=before_spieltag_id)
+				#summiere die punkte der Tipps
+				punkte = sum(punkte)
 				blp.append(BestenlistenPlatzTO(None, user, punkte))
 			tg = Tippgemeinschaft()
 			tg.bezeichner = "Übersicht"
