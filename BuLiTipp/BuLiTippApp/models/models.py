@@ -69,6 +69,15 @@ class Spielzeit(models.Model):
 			return self.spieltag_set.filter(datum__gte=now)[0]
 		except:
 			return self.spieltag_set.all().order_by("nummer").reverse()[0]
+	def has_ended(self):
+		''' True, wenn der letzte Spieltag der Spielzeit abgelaufen ist
+		'''
+		now = timezone.now()
+		try:
+			self.spieltag_set.filter(datum__gte=now)[0]
+			return False
+		except:
+			return True
 	def userpunkteplatz(self):
 		return Bestenliste().spielzeit(self.id)
 	def is_tippable(self):
@@ -208,7 +217,7 @@ class Spiel(models.Model):
 					from models_statistics import Tabelle, Serie, Punkte
 					Tabelle().refresh()
 					Serie().refresh()
-					Punkte(spieltag_id).refresh()
+					Punkte().refresh(spieltag_id)
 				Timer(30, refresh, args=[self.spieltag.id]).start()
 				last_save_time = timezone.now()
 

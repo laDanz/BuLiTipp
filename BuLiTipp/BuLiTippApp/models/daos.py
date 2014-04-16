@@ -17,25 +17,30 @@ class BestenlisteDAO():
     def spieltag(spieltag_id, user_id=-1, full=True):
         return BestenlisteDAO.query(spieltag_id=spieltag_id, user_id=user_id, full=full)
     @staticmethod
-    def spielzeit(spielzeit_id, user_id=-1, full=True, before_spieltag_id=None):
-        '''before_spieltag_id : calculate all Punkte til that spieltag. Result will not include Punkte from the given spieltag.
+    def spielzeit(spielzeit_id, user_id=-1, full=True, aktuell_spieltag_id=None):
+        '''aktuell_spieltag_id : calculate all Punkte til that spieltag. Result will include Punkte from the given spieltag.
         '''
         sz = Spielzeit.objects.get(pk=spielzeit_id)
-        if before_spieltag_id == None:
-            before_spieltag_id = sz.next_spieltag().previous().id
-            aktuell_spieltag_id = sz.next_spieltag().id
+        if aktuell_spieltag_id == None:
+            try:
+                if sz.has_ended():
+                    before_spieltag_id = sz.next_spieltag().previous().id
+                else:
+                    before_spieltag_id = sz.next_spieltag().previous().previous().id
+            except:
+                before_spieltag_id = 0
         else:
-            aktuell_spieltag_id = before_spieltag_id
-            before_spieltag_id = Spieltag.objects.get(pk=before_spieltag_id).previous().id
-        aktuell = BestenlisteDAO.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full, before_spieltag_id=aktuell_spieltag_id)
-        vorher = BestenlisteDAO.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full, before_spieltag_id=before_spieltag_id)
+            # actually inaccurate, but sufficient and faster
+            before_spieltag_id = int(aktuell_spieltag_id)-1
+        aktuell = BestenlisteDAO.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full, aktuell_spieltag_id=aktuell_spieltag_id)
+        vorher = BestenlisteDAO.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full, aktuell_spieltag_id=before_spieltag_id)
         for blp in aktuell.bestenlistenPlatz:
             for blp_old in vorher.bestenlistenPlatz:
                 if blp.user.id == blp_old.user.id:
                     blp.delta = blp_old.position - blp.position
         return aktuell
     @staticmethod
-    def query(user_id=-1, full=True, spieltag_id=None, spielzeit_id=None, before_spieltag_id=None):
+    def query(user_id=-1, full=True, spieltag_id=None, spielzeit_id=None, aktuell_spieltag_id=None):
         from models_statistics import Punkte
         blp=[]
         #fuer jeden user
@@ -46,8 +51,8 @@ class BestenlisteDAO():
                 punkte = punkte.filter(spieltag__id=spieltag_id)
             if spielzeit_id is not None:
                 punkte = punkte.filter(spieltag__spielzeit_id=spielzeit_id)
-            if before_spieltag_id is not None:
-                punkte = punkte.filter(spieltag__id__lt=before_spieltag_id)
+            if aktuell_spieltag_id is not None:
+                punkte = punkte.filter(spieltag__id__lte=aktuell_spieltag_id)
             #summiere die punkte der Tipps
             punkte = punkte.aggregate(Sum("punkte"))["punkte__sum"]
             blp.append(BestenlistenPlatzTO(None, user, punkte if punkte else 0))
