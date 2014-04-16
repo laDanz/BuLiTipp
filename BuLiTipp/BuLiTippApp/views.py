@@ -16,6 +16,9 @@ from django.views.generic import FormView
 from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
 
+import autocomplete_light
+autocomplete_light.autodiscover()
+
 from django.db import IntegrityError
 from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte, User, Spiel, Tippgemeinschaft, TG_Einladung
 from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichnerTO

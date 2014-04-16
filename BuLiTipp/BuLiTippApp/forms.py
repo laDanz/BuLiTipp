@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django import forms
 from models import User, Tippgemeinschaft, TG_Einladung
+import autocomplete_light
 
 class UserModelForm(forms.ModelForm):
 	class Meta:
@@ -60,4 +61,8 @@ class TG_Einladung_createForm(forms.ModelForm):
 		for tge in TG_Einladung.objects.filter(tg_id=tg.id):
 			users.append(tge.fuer.id)
 		self.fields["fuer"] = forms.ModelChoiceField(queryset=User.objects.filter(is_active = True).exclude(id__in=users),
-								label="Einladung für", empty_label="auswählen")
+								label="Einladung für", empty_label="auswählen",
+								widget=autocomplete_light.ChoiceWidget('UserAutocomplete',
+													attrs={'data-autocomplete-minimum-characters':3,
+														#'placeholder': 'Choose 3 cities ...',
+														}))

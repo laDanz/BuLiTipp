@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, include, url
 
-# Uncomment the next two lines to enable the admin:
+import autocomplete_light
+autocomplete_light.autodiscover()
+
 from django.contrib import admin
 admin.autodiscover()
 
@@ -12,4 +14,5 @@ url(r'^logout/', "BuLiTippApp.views.logout", name="logout"),
 
 url(r'^BuLiTipp/', include('BuLiTippApp.urls')),
 url(r'^home/', "BuLiTippApp.views.home"),
+url(r'^autocomplete/', include('autocomplete_light.urls')),
 )
