@@ -17,6 +17,7 @@ from django.views.generic.base import TemplateView
 from django.template.response import TemplateResponse
 
 import autocomplete_light
+from smtplib import SMTPRecipientsRefused
 autocomplete_light.autodiscover()
 
 from django.db import IntegrityError
@@ -28,9 +29,9 @@ from sets import Set
 from forms import UserModelForm, UserCreateForm
 from forms import TG_createForm, TG_showForm, TG_Einladung_createForm
 
-import operator
+import operator, string
 from django.forms.forms import Form
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 import mail
 import uuid
 
@@ -76,12 +77,38 @@ def del_tg_user(request, tg_id, user_id):
 	return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
 
 def tg_einladung_acc(request, tge_key):
+	def render_usercreate_completition(request, tge_key, tge):
+		context = {}
+		pwchange_form = SetPasswordForm(user=tge.fuer)
+		context["pwchange_form"] = pwchange_form
+		context["tge_key"] = tge_key
+		return render(request, 'tippgemeinschaft/einladung_create_user.html', context)
+	def finish_account_creation(tge):
+		form = SetPasswordForm(user=tge.fuer, data=request.POST)
+		if form.is_valid():
+			form.save()
+			user = tge.fuer
+			user.is_active = True
+			group = Group.objects.filter(name="BuLiTipp")[0]
+			user.groups.add(group)
+			user.save()
+			user = authenticate(username=user.username, password=request.POST["new_password1"])
+			djlogin(request, user)
+			messages.success(request, "Account erfolgreich aktiviert!")
 	try:
+		user_created = False
 		tge = TG_Einladung.objects.get(key=tge_key)
+		if request.method == "POST":
+			finish_account_creation(tge)
+			user_created = True
+		if not tge.fuer.is_active:
+			return render_usercreate_completition(request, tge_key, tge)
 		tge.delete()
 		tge.tg.users.add(tge.fuer)
 		tge.tg.save()
 		messages.success(request, "Einladung erfolgreich angenommen!")
+		if user_created:
+			return HttpResponseRedirect(reverse("user"))
 		return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tge.tg.id]))
 	except:
 		messages.warning(request, "Einladung besteht nicht mehr!")
@@ -102,33 +129,60 @@ TGE_MSG = 'Hallo %s,\n\nDu hast eine Einladung von %s fuer die Tippgemeinschaft 
 TGE_MSG_HTML = '<html>Hallo %s,<br><br>Du hast eine Einladung von %s f&uuml;r die Tippgemeinschaft "<b>%s</b>" erhalten!<br><br>Die Beschreibung der Tippgemeinschaft ist:<br><br><i>%s</i><br><br>Wenn du <a href="%s">hier</a> klickst dann <b>nimmst du die Einladung an</b>!<br>Wenn du die Einladung <b>nicht annehmen</b> m&ouml;chtest, dann klicke <a href="%s">hier</a> oder ignoriere diese Email.<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
 
 def tg_einladung_new_form(request, tg_id):
+	def return_empty_form():
+		context = {}
+		form = TG_Einladung_createForm(tg=tg, user=request.user)
+		context["news"] = get_news_by_request(request)
+		context["form"] = form
+		return render(request, 'tippgemeinschaft/einladung_create.html', context)
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse("home"))
-	context = {}
 	tg = Tippgemeinschaft.objects.get(pk = tg_id)
 	if request.method == 'POST':
+		fuer = request.POST["fuer-autocomplete"]		
+		# 2 cases: valid user, or email address
+		# case 1, user
+		if "user_select" in request.POST.keys():
+			user_select_id = request.POST["user_select"] 
+		# case 2, email:
+		elif string.count(fuer, '@') == 1:
+			new_user = User()
+			new_user.username = fuer
+			new_user.email = fuer
+			new_user.is_active = False
+			new_user.save()
+			user_select_id = new_user.id
+		else:
+			messages.warning(request, "User nicht gefunden, oder ungültige eMail-Adresse!")
+			return return_empty_form()
+		
 		tg_e = TG_Einladung()
 		form = TG_Einladung_createForm(request.POST, instance = tg_e, tg=tg, user=request.user)
 		if form.is_valid():
 			tg_e.key = uuid.uuid4()
 			tg_e.tg = tg
 			tg_e.von = request.user
+			tg_e.fuer_id = user_select_id
 			form.save()
 			#mail schicken
 			von = tg_e.von.first_name if tg_e.von.first_name else tg_e.von.username
 			fuer = tg_e.fuer.first_name if tg_e.fuer.first_name else tg_e.fuer.username
 			args = (str(fuer), str(von), str(tg.bezeichner), str(tg.beschreibung), "http://"+request.get_host()+reverse("acc_tg_einladung", args=[tg_e.key]), "http://"+request.get_host()+reverse("del_tg_einladung", args=[tg_e.key]), )
-			mail.send(TGE_SUBJECT % str(tg.bezeichner), 
-					tg_e.fuer.email, 
-					TGE_MSG % args, 
-					TGE_MSG_HTML % args)
+			try:
+				mail.send(TGE_SUBJECT % str(tg.bezeichner), 
+						tg_e.fuer.email, 
+						TGE_MSG % args, 
+						TGE_MSG_HTML % args)
+			except SMTPRecipientsRefused:
+				tg_e.delete()
+				if new_user:
+					new_user.delete()
+				messages.warning(request, "Ungültige eMail-Adresse!")
+				return return_empty_form()
 			messages.success(request, "Erfolgreich eingeladen!")
 			return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
 	else:
-		form = TG_Einladung_createForm(tg=tg, user=request.user)
-	context["news"] = get_news_by_request(request)
-	context["form"] = form
-	return render(request, 'tippgemeinschaft/einladung_create.html', context)
+		return return_empty_form()
 
 def tg_show_form(request, tg_id):
 	if not request.user.is_authenticated():

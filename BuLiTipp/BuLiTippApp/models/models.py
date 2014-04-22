@@ -18,6 +18,8 @@ class User(djUser):
 	letzte_news_gelesen = models.DateTimeField(null=True)
 	theme = models.ForeignKey(BootstrapThemes, null=True)
 	input_type = models.ForeignKey(InputTypes, null=True)
+	def __unicode__(self):
+		return self.first_name if self.first_name else self.username
 # FIXME: not sure if hack(that means probably pretty big hack): everyone who requests auth.User gets my User object instead 
 djUser.objects = User.objects
 

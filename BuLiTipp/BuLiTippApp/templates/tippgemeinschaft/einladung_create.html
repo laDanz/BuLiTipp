@@ -16,11 +16,12 @@
 				<div class="panel-body">
 					<form role="form" class="form-horizontal" method="post">
 						{% csrf_token %}
-						Lieber nicht aus allen Usern wählen?<br>
-						Auch möglichkeit der email eingabe
+						Einfach nach <b>Benutzernamen</b> suchen, oder<br>
+						eine <b>eMail-Adresse</b> eingeben, um eine Einladung an nicht registrierte Benutzer zu schicken.<br><br> 
 						{% bootstrap_form form layout="horizontal" %}
 						{% buttons submit='Einladen' reset='Abbrechen' layout='horizontal' %}{% endbuttons %}
 					</form>
+					<script type="text/javascript" src="/static/js/autocomplete_fix.js"></script>
 				</div>
 		</div>
 	</div>

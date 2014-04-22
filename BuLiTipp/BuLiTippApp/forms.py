@@ -46,7 +46,7 @@ class TG_showForm(forms.ModelForm):
 class TG_Einladung_createForm(forms.ModelForm):
 	class Meta:
 		model = TG_Einladung
-		fields = ['fuer', ]
+		fields = []
 	#fuer = forms.ModelChoiceField(queryset=User.objects.filter(is_active = True), label="Einladung für", empty_label="auswählen")
 	def __init__(self, *args, **kwargs):
 		user = kwargs['user']
@@ -62,6 +62,7 @@ class TG_Einladung_createForm(forms.ModelForm):
 			users.append(tge.fuer.id)
 		self.fields["fuer"] = forms.ModelChoiceField(queryset=User.objects.filter(is_active = True).exclude(id__in=users),
 								label="Einladung für", empty_label="auswählen",
+								required = False,
 								widget=autocomplete_light.ChoiceWidget('UserAutocomplete',
 													attrs={'data-autocomplete-minimum-characters':3,
 														#'placeholder': 'Choose 3 cities ...',
