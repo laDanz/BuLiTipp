@@ -105,7 +105,19 @@ else
 							<script>addTG("bl_tg_{{tg.id}}");</script>
 							{% if no_switch != "true" %}
 							<small>
-								<div name="bl_tg_{{tg.id}}" style="display:none; color:black;{% if tg.bezeichner == "Übersicht" %}font-weight:bold;{% endif %}">{{tg.bezeichner}}{% if spieltag.bestenliste|length > 1 %} <a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}</div>
+								<div name="bl_tg_{{tg.id}}" style="display:none; color:black;{% if tg.bezeichner == "Übersicht" %}font-weight:bold;{% endif %}">
+								<select class="form-control" onchange="show(this.value);this.selectedIndex=0;">
+								<option value="bl_tg_{{tg.id}}">{{tg.bezeichner}}</option>
+								{% for tg1, bl1 in spieltag.bestenliste.items %}
+								{% if tg != tg1 %}
+								<option value="bl_tg_{{tg1.id}}">{{tg1.bezeichner}}</option>
+								{% endif %}
+								{% endfor %}
+								</select>
+								{% if spieltag.bestenliste|length > 1 and 0 %} 
+								<a href="#" onclick="showNext()"><span class="glyphicon glyphicon-refresh"></span></a>
+								{% endif %}
+								</div>
 							</small>
 							{% endif %}
 						{% endfor %}
