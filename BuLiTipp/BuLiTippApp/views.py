@@ -239,7 +239,7 @@ def tg_new_form(request):
 			form.save()
 			tg.users.add(request.user)
 			tg.save()
-			messages.success(request, "Erfolgreich angelegt!")
+			messages.success(request, "Erfolgreich angelegt! Versende als nächstes Einladungen!")
 			return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
 	else:
 		form = TG_createForm()
@@ -270,6 +270,8 @@ def userform(request, referer=None):
 		context["referer"] = referer
 	return render(request, 'user/user.html', context)
 
+open_registration = True
+
 def register(request):
 	context = {}
 	context["news"] = get_news_by_request(request)
@@ -279,16 +281,21 @@ def register(request):
 		if form.is_valid():
 			pw = user.password
 			user.set_password(user.password)
-			user.is_active = False
+			if not open_registration:
+				user.is_active = False
 			form.save()
-			group = Group.objects.filter(name="BuLiTipp")[0]
-			#user.groups.add(group)
-			user = authenticate(username=user.username, password=pw)
-			#djlogin(request, user)
-			mail.send("BuLiTipp: User registriert", "cdanzmann@gmail.com", "Bitte administriere den neuen User " + user.username+ " !")
-			messages.success(request, "Benutzer erfolgreich angelegt! Du kannst dich einloggen sobald der Administrator dich freigeschaltet hat.")
-			#return HttpResponseRedirect(reverse("user"))
-			return HttpResponseRedirect(reverse("home"))
+			if open_registration:
+				group = Group.objects.filter(name="BuLiTipp")[0]
+				user.groups.add(group)
+				user = authenticate(username=user.username, password=pw)
+				djlogin(request, user)
+				messages.success(request, "Benutzer erfolgreich angelegt! Tritt als nächstes einer Tippgemeinschaft bei!")
+				return HttpResponseRedirect(reverse("user", args=["tgchange"]))
+			else:
+				mail.send("BuLiTipp: User registriert", "cdanzmann@gmail.com", "Bitte administriere den neuen User " + user.username+ " !")
+				messages.success(request, "Benutzer erfolgreich angelegt! Du kannst dich einloggen sobald der Administrator dich freigeschaltet hat.")
+				return HttpResponseRedirect(reverse("home"))
+			
 	else:
 		form = UserCreateForm(instance=user)
 	context["form"] = form
