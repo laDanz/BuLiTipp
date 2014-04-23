@@ -148,6 +148,7 @@ def tg_einladung_new_form(request, tg_id):
 		elif string.count(fuer, '@') == 1:
 			new_user = User()
 			new_user.username = fuer
+			new_user.first_name = string.split(fuer, '@')[0]
 			new_user.email = fuer
 			new_user.is_active = False
 			new_user.save()
