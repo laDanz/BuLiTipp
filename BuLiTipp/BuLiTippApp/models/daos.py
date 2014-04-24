@@ -3,6 +3,8 @@ Created on 19.12.2013
 
 @author: ladanz
 '''
+from sets import Set
+
 from django.contrib.auth.models import User
 from transferObjects import BestenlistenPlatzTO, BestenlisteTO, TabellenPlatzTO, TabelleTO
 from models_statistics import Tabelle
@@ -72,7 +74,7 @@ class TabelleDAO():
 class VereinDAO():
     @staticmethod
     def spielzeit(spielzeit_id):
-        averein = list(Verein.objects.filter(auswaertsmannschaft__spieltag__nummer = 1, auswaertsmannschaft__spieltag__spielzeit_id=spielzeit_id))
-        hverein = list(Verein.objects.filter(heimmannschaft__spieltag__nummer = 1, heimmannschaft__spieltag__spielzeit_id=spielzeit_id))
-        return sorted(averein + hverein, key=lambda verein: verein.name)
+        verein = Set(Verein.objects.filter(auswaertsmannschaft__spieltag__spielzeit_id=spielzeit_id))
+        verein.union( Set(Verein.objects.filter(heimmannschaft__spieltag__spielzeit_id=spielzeit_id)) )
+        return sorted(verein, key=lambda verein: verein.name)
 
