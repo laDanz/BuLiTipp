@@ -37,6 +37,17 @@ function disableOptions() {
 		<h3 class="panel-title">Saisontipp</h3>
 	</div>
 	<div class="panel-body">
+		<div class="text-center" style="padding-bottom: 10px;">
+			<div id="dude"></div>
+		</div>
+		<script>
+			var jahr={{spielzeit.tippbar_bis.year}}, monat={{spielzeit.tippbar_bis.month}}, tag={{spielzeit.tippbar_bis.day}}, stunde={{spielzeit.tippbar_bis.hour}}, minute={{spielzeit.tippbar_bis.minute}}, sekunde={{spielzeit.tippbar_bis.second}};
+			var zielDatum=new Date(jahr,monat-1,tag,stunde,minute,sekunde);
+			
+			var p = document.getElementById('dude');
+			countdown(p, zielDatum);
+			p.id = "";
+		</script>
 		<form action="{% url saisontipp_post spielzeit.id %}" method="post">
 			{% csrf_token  %}
 			

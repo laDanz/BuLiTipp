@@ -135,7 +135,11 @@ class SaisontippView(TemplateView):
 		return context
 	def get(self, request, *args, **kwargs):
 		context = self.get_context_data(**kwargs)
-		spielzeit_id = kwargs["spielzeit_id"]
+		if "spielzeit_id" in kwargs and kwargs["spielzeit_id"]:
+			spielzeit_id = kwargs["spielzeit_id"]
+		else:
+			# FIXME: implement for real
+			spielzeit_id = Spielzeit.objects.all()[0].id
 		if not request.user.is_authenticated():
 			return HttpResponseRedirect(reverse("home"))
 		context["news"]=get_news_by_request(request)

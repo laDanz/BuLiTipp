@@ -28,6 +28,6 @@ urlpatterns = patterns('',
 	url(r'^spieltag/(?P<spielzeit_id>\d+)/(?P<spieltag_id>\d+)/postk/$', 'BuLiTippApp.views.post_kommentar', name='postk'),
 	url(r'^spieltag/(?P<spielzeit_id>\d+)/(?P<spieltag_id>\d+)/delk/$', 'BuLiTippApp.views.delete_kommentar', name='delk'),
 	url(r'^register/', "BuLiTippApp.views.register", name="register"),
-	url(r'^saisontipp/(?P<spielzeit_id>\d+)/$', SaisontippView.as_view(), name='saisontipp'),
+	url(r'^saisontipp/(?P<spielzeit_id>\d?)/$', SaisontippView.as_view(), name='saisontipp'),
 	url(r'^saisontipp/(?P<spielzeit_id>\d+)/post/$', 'BuLiTippApp.views.saisontipp', name='saisontipp_post'),
 )

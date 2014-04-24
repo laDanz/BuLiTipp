@@ -102,6 +102,7 @@ class SpielzeitBezeichnerTO(object):
 		self.bezeichner = spielzeit.bezeichner
 		self.istPokal = spielzeit.isPokal
 		self.tippbar = spielzeit.is_tippable()
+		self.tippbar_bis = spielzeit.saisontipp_end
 	def __unicode__(self):
 		return "Spielzeit %s(Pokal:%s)" % (self.bezeichner, self.istPokal)
 	def __str__(self):
