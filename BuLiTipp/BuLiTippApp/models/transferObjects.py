@@ -9,7 +9,7 @@ Created on 18.12.2013
 
 Contains transfer objects for front end visualization.
 '''
-
+from sets import Set
 from punkterechner import Punkterechner
 
 class NewsTO(object):
@@ -135,6 +135,32 @@ class BestenlisteTO(object):
 		self.bestenlistenPlatz = plaetze
 		self.spieltag = spieltagTO
 		self.spielzeit = spielzeitTO
+	def reduce(self, plaetze_amount=10, user_id=None):
+		''' Reduce the size of the bestenlist to the given amount, keeping the user inside, if given.
+			Smallest possible plaetze_amount seems to be 9.(first three, last three, three around the user)
+		'''
+		user_platz = 1
+		if user_id:
+			for blp in self.bestenlistenPlatz:
+				if blp.user and blp.user.id and blp.user.id == user_id:
+					user_platz = blp.position
+					break
+		max_platz = self.bestenlistenPlatz[-1].position
+		shown_plaetze = Set([1,2,3,max_platz, max_platz-1, max_platz-2, user_platz])
+		if user_platz > 1:
+			shown_plaetze.add(user_platz-1)
+		if user_platz < max_platz:
+			shown_plaetze.add(user_platz+1)
+		# fill with first unoccured spaces
+		it = iter(self.bestenlistenPlatz)
+		while len(shown_plaetze)<max_platz and len(shown_plaetze)<plaetze_amount:
+			 blp = it.next()
+			 shown_plaetze.add(blp.position)
+		# the final reduce
+		for blp in self.bestenlistenPlatz[:]:
+			if not blp.position in shown_plaetze:
+				self.bestenlistenPlatz.remove(blp)
+
 
 class TabellenPlatzTO(object):
 	def __init__(self, position=None, verein=None, punkte=None, spiele=None, tore=None):

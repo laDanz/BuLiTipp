@@ -47,6 +47,8 @@ class BestenlisteDAO():
 		return aktuell
 	@staticmethod
 	def query(user_id=None, full=True, spieltag_id=None, spielzeit_id=None, before_spieltag_id=None):
+		''' Result: {tg:bestenlistTO}
+		'''
 		from models_statistics import Punkte
 		result={}
 		if user_id:
@@ -82,7 +84,9 @@ class BestenlisteDAO():
 				platz += 1
 			# TODO: muss noch gefuellt werden?
 			if user_id:
-				result[tg] = BestenlisteTO(blp, None, None)
+				bl = BestenlisteTO(blp, None, None)
+				bl.reduce(user_id = user_id)
+				result[tg] = bl
 			else:
 				return {"":BestenlisteTO(blp, None, None)}
 		if user_id:
