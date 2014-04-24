@@ -14,6 +14,8 @@ vereine	= []
 
 spielzeit=Spielzeit()
 spielzeit.bezeichner="FIFA WM 2014"
+spielzeit.saisontipp_end=datetime.datetime.strptime("12/06/2014 22:00","%d/%m/%Y %H:%M")
+spielzeit.isPokal = True
 spielzeit.save()
 for st in spielzeit.spieltag_set.all():
 	st.delete()
@@ -64,6 +66,10 @@ for line in f:
 	elif line.startswith("SPIELTAG"):
 		print "encountered SPIELTAG" + line
 		spieltag = True
+	elif line.startswith('"'):
+		print "encountered BEZEICHNER" + line
+		stag.bezeichner = line.split('"')[1]
+		stag.save()
 	else:
 		datum =	line[0:5]+"/2014" + line[5:11]
 		v=line.split(":")
