@@ -1,7 +1,7 @@
 {% extends 'bootstrap3/bootstrap3.html'	%}
 
 {% block bootstrap3_title %}TippBuLi.de{% endblock %}
-
+{% load i18n %}
 {% load bootstrap3 %}
 
 {% block bootstrap3_content	%}
@@ -17,7 +17,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand {% if referer = 'home' %}active{% endif %}" href="{% url home %}">Home</a>
+				<a class="navbar-brand {% if referer = 'home' %}active{% endif %}" href="{% url home %}">{% trans "Home" %}</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -27,6 +27,8 @@
 					{% if user.is_authenticated %}
 					<li {% if referer = 'spieltag' %}class="active"{% endif %}>
 						<a href="{% url spieltag spielzeit_id=spielzeit.id spieltag_id=spieltag.id %}">Spieltag</a></li>
+					<li {% if referer = 'saisontipp' %}class="active"{% endif %}>
+						<a href="{% url saisontipp spielzeit.id %}">Saisontipp</a></li>
 					<li {% if referer = 'bestenliste' %}class="active"{% endif %}>
 						<a href="{% url bestenliste %}">Bestenlisten</a></li>
 					{% endif %}

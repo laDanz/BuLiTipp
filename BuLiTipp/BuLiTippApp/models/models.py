@@ -5,9 +5,11 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User as djUser
+from threading import Timer
 from punkterechner import Punkterechner
 from datetime import timedelta
-from models_reference import BootstrapThemes, InputTypes
+from models_reference import BootstrapThemes, InputTypes, ReminderOffsets
+import BuLiTippApp.ngmail as mail
 # Create your models here.
 
 spiel_zeit_vorlauf=timedelta(hours = 1)
@@ -18,6 +20,8 @@ class User(djUser):
 	letzte_news_gelesen = models.DateTimeField(null=True)
 	theme = models.ForeignKey(BootstrapThemes, null=True)
 	input_type = models.ForeignKey(InputTypes, null=True)
+	receive_newsletter = models.BooleanField(default=True)
+	reminder_offset = models.ManyToManyField(ReminderOffsets)
 	def __unicode__(self):
 		return self.first_name if self.first_name else self.username
 # FIXME: not sure if hack(that means probably pretty big hack): everyone who requests auth.User gets my User object instead 
@@ -30,6 +34,12 @@ class News(models.Model):
 	datum = models.DateTimeField()
 	title = models.CharField(max_length=100)
 	text = models.TextField()
+	newsletter = models.BooleanField()
+	def save(self):
+		if self.id is None and self.newsletter:
+			for user in User.objects.filter(receive_newsletter=True):
+				mail.send("TippBuLi Newsletter: "+self.title, user.email, str(self.text), str(self.text))
+		super(News, self).save()
 
 class Spielzeit(models.Model):
 	class Meta:
@@ -61,6 +71,15 @@ class Spielzeit(models.Model):
 			return self.spieltag_set.filter(datum__gte=now)[0]
 		except:
 			return self.spieltag_set.all().order_by("nummer").reverse()[0]
+	def has_ended(self):
+		''' True, wenn der letzte Spieltag der Spielzeit abgelaufen ist
+		'''
+		now = timezone.now()
+		try:
+			self.spieltag_set.filter(datum__gte=now)[0]
+			return False
+		except:
+			return True
 	def userpunkteplatz(self):
 		return Bestenliste().spielzeit(self.id)
 	def is_tippable(self):
@@ -194,12 +213,14 @@ class Spiel(models.Model):
 			old_spiel = None
 		super(Spiel, self).save()
 		global last_save_time
-		if old_spiel != None and old_spiel.ergebniss != self.ergebniss:
+		if old_spiel and old_spiel.ergebniss != self.ergebniss:
 			if last_save_time == None or timezone.now()>last_save_time+timedelta(minutes = 1):
-				from models_statistics import Tabelle, Serie, Punkte
-				Tabelle().refresh()
-				Serie().refresh()
-				Punkte().refresh()
+				def refresh(spieltag_id):
+					from models_statistics import Tabelle, Serie, Punkte
+					Tabelle().refresh()
+					Serie().refresh()
+					Punkte().refresh(spieltag_id)
+				Timer(30, refresh, args=[self.spieltag.id]).start()
 				last_save_time = timezone.now()
 
 
@@ -303,10 +324,12 @@ class Absteiger(models.Model):
 		return unicode(s)
 	def save(self):
 		count = 0
+		return super(Absteiger, self).save()
 		try:
 			count = len(Absteiger.objects.filter(user_id=self.user.id, spielzeit_id=self.spielzeit.id))
 		except:
 			pass
-		if count>=self.ABSTEIGER_ANZAHL:
+		if count>self.ABSTEIGER_ANZAHL:
+			self.delete()
 			raise Exception("no more than " + str(self.ABSTEIGER_ANZAHL)  + " Absteiger allowed")
-		return super(Absteiger, self).save()
+		

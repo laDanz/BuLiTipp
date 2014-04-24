@@ -5,7 +5,7 @@ SPIELTAG
 14/06 00:00	Chile	:	Australien
 14/06 18:00	Kolumbien	:	Griechenland
 14/06 21:00	Uruguay	:	Costa Rica
-15/06 00:00	Elfenbeinküste	:	Japan
+15/06 00:00	Elfenbeinkueste	:	Japan
 15/06 03:00	England	:	Italien
 SPIELTAG
 15/06 18:00	Schweiz	:	Ecuador
@@ -21,7 +21,7 @@ SPIELTAG
 18/06 18:00	Australien	:	Niederlande
 18/06 21:00	Kamerun	:	Kroatien
 19/06 00:00	Spanien	:	Chile
-19/06 18:00	Kolumbien	:	Elfenbeinküste
+19/06 18:00	Kolumbien	:	Elfenbeinkueste
 19/06 21:00	Uruguay	:	England
 20/06 00:00	Japan	:	Griechenland
 20/06 18:00	Italien	:	Costa Rica
@@ -41,7 +41,7 @@ SPIELTAG
 23/06 22:00	Kroatien	:	Mexiko
 24/06 18:00	Costa Rica	:	England
 24/06 18:00	Italien	:	Uruguay
-24/06 22:00	Griechenland	:	Elfenbeinküste
+24/06 22:00	Griechenland	:	Elfenbeinkueste
 24/06 22:00	Japan	:	Kolumbien
 SPIELTAG
 25/06 18:00	Nigeria	:	Argentinien
@@ -52,3 +52,29 @@ SPIELTAG
 26/06 18:00	USA	:	Deutschland
 26/06 22:00	Korea Republik	:	Belgien
 26/06 23:40	Algerien	:	Russland
+SPIELTAG
+28/06 18:00	Platzhalter	:	Platzhalter
+28/06 22:00	Platzhalter	:	Platzhalter
+29/06 18:00	Platzhalter	:	Platzhalter
+29/06 22:00	Platzhalter	:	Platzhalter
+30/06 18:00	Platzhalter	:	Platzhalter
+30/06 22:00	Platzhalter	:	Platzhalter
+01/07 18:00	Platzhalter	:	Platzhalter
+01/07 22:00	Platzhalter	:	Platzhalter
+"Achtelfinale"
+SPIELTAG
+04/07 18:00	Platzhalter	:	Platzhalter
+04/07 22:00	Platzhalter	:	Platzhalter
+05/07 18:00	Platzhalter	:	Platzhalter
+05/07 22:00	Platzhalter	:	Platzhalter
+"Viertelfinale"
+SPIELTAG
+08/07 22:00	Platzhalter	:	Platzhalter
+09/07 22:00	Platzhalter	:	Platzhalter
+"Halbfinale"
+SPIELTAG
+12/07 22:00	Platzhalter	:	Platzhalter
+"Spiel um Platz 3"
+SPIELTAG
+13/07 21:00	Platzhalter	:	Platzhalter
+"FINALE"

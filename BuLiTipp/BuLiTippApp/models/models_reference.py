@@ -21,3 +21,11 @@ class InputTypes(models.Model):
 	template = models.CharField(max_length=50)
 	def __unicode__(self):
 		return "%s" % (self.bezeichner,)
+
+class ReminderOffsets(models.Model):
+	class Meta:
+		app_label = 'BuLiTippApp'
+	value = models.IntegerField()
+	def __unicode__(self):
+		return "%s" % (self.value,)
+

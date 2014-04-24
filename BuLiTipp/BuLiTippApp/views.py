@@ -23,7 +23,7 @@ autocomplete_light.autodiscover()
 from django.db import IntegrityError
 from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte, User, Spiel, Tippgemeinschaft, TG_Einladung
 from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichnerTO
-from models import BestenlisteDAO, TabelleDAO
+from models import BestenlisteDAO, TabelleDAO, VereinDAO
 from datetime import datetime
 from sets import Set
 from forms import UserModelForm, UserCreateForm
@@ -32,7 +32,7 @@ from forms import TG_createForm, TG_showForm, TG_Einladung_createForm
 import operator, string
 from django.forms.forms import Form
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
-import mail
+import ngmail as mail
 import uuid
 
 TG_KICK_SUBJECT = 'TippBuLi: Rauswurf aus Tippgemeinschaft "%s" !'
@@ -340,7 +340,7 @@ class HomePageView(TemplateView):
 		context = self.get_context_data(**kwargs)
 		context["news"]=get_news_by_request(request)
 		context["spielzeiten"]=get_spielzeiten_by_request(request)
-		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id, before_spieltag_id=spieltag_id, user_id=request.user.id)
+		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id, aktuell_spieltag_id=spieltag_id, user_id=request.user.id)
 		context["spieltag"]=get_spieltag_by_request(request, spielzeit_id, spieltag_id)
 		context["kommentare"]=get_kommentare_by_request(request, spielzeit_id, context["spieltag"].id)
 		context["referer"]=self.referer #request.META["HTTP_REFERER"]
@@ -361,6 +361,34 @@ class SpieltagView(HomePageView):
 
 class SpieltagPrintView(SpieltagView):
 	template_name = 'spieltag/print/st_index.html'
+
+class SaisontippView(TemplateView):
+	template_name = 'saisontipp/st_index.html'
+	referer = "saisontipp"
+	def get_context_data(self, **kwargs):
+		context = super(SaisontippView, self).get_context_data(**kwargs)
+		return context
+	def get(self, request, *args, **kwargs):
+		context = self.get_context_data(**kwargs)
+		if "spielzeit_id" in kwargs and kwargs["spielzeit_id"]:
+			spielzeit_id = kwargs["spielzeit_id"]
+		else:
+			# FIXME: implement for real
+			spielzeit_id = Spielzeit.objects.all()[0].id
+		if not request.user.is_authenticated():
+			return HttpResponseRedirect(reverse("home"))
+		context["news"]=get_news_by_request(request)
+		context["spielzeiten"]=get_spielzeiten_by_request(request)
+		context["spielzeit"]=get_spielzeit_by_request(request, spielzeit_id)
+		context["mannschaften"] = VereinDAO.spielzeit(spielzeit_id)
+		try:
+			context["meistertipp"] = Meistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
+			context["herbstmeistertipp"] = Herbstmeistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
+			context["absteiger"] = Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)
+		except:
+			pass
+		context["referer"]=self.referer
+		return self.render_to_response(context)
 
 class BestenlisteView(TemplateView):
 	template_name = 'bestenliste/bl_index.html'
@@ -386,7 +414,7 @@ def get_kommentare_by_request(request, spielzeit_id, spieltag_id):
 	return Kommentar.objects.filter(spieltag__id = spieltag_id).order_by("datum").reverse()
 
 def get_news_by_request(request):
-	news = News.objects.all().order_by("datum").reverse()
+	news = News.objects.all().order_by("datum").reverse().select_related('author')
 	newsto = NewsTO(news)
 	try:
 		user = User.objects.get(pk=request.user.id)
@@ -404,16 +432,11 @@ def get_spielzeiten_by_request(request):
 		szTOs.append(SpielzeitBezeichnerTO(sz))
 	return szTOs
 
-def get_spielzeit_by_request(request, spielzeit_id, before_spieltag_id=None, user_id=None):
+def get_spielzeit_by_request(request, spielzeit_id, aktuell_spieltag_id=None, user_id=None):
 	if spielzeit_id == None:
 		sz = Spielzeit.objects.all().order_by("id").reverse()[0]
 	else:
 		sz = Spielzeit.objects.get(pk=spielzeit_id)
-	if not before_spieltag_id is None:
-		try:
-			before_spieltag_id = Spieltag.objects.get(pk=before_spieltag_id).next().id
-		except:
-			pass
 	st = sz.next_spieltag()
 	if st.is_tippable():
 			st_prev = st.previous()
@@ -421,7 +444,7 @@ def get_spielzeit_by_request(request, spielzeit_id, before_spieltag_id=None, use
 				st = st_prev
 	aktueller_spieltagTO = SpieltagTO(st)
 	tabelle = TabelleDAO.spielzeit(sz.id)
-	bestenliste = BestenlisteDAO.spielzeit(sz.id, before_spieltag_id=before_spieltag_id, user_id=user_id)
+	bestenliste = BestenlisteDAO.spielzeit(sz.id, aktuell_spieltag_id=aktuell_spieltag_id, user_id=user_id)
 	spieltage = []
 	for st in sz.spieltag_set.all().order_by("nummer"):#FIXME
 		spieltage.append(SpieltagTO(st))
@@ -452,20 +475,20 @@ def get_spieltagTO_by_request(request, st):
 	count_andere_tipps = {}
 	spieleTOs = []
 	tipps = Tipp.objects.filter(spiel__spieltag_id=st.id)
-	user_tipped = Set([tipp.user.id for tipp in tipps])
+	user_tipped = Set([tipp.user_id for tipp in tipps])
 	try:
 		user_tipped.remove(request.user.id)
 	except:
 		pass
-	for spiel in st.spiel_set.all().order_by("datum"):
+	for spiel in st.spiel_set.all().select_related().order_by("datum"):
 		count_spiele += 1
 		tipps = spiel.tipp_set.all()
 		try:
-			eigenerTipp = tipps.filter(user_id = request.user.id)[0]
+			eigenerTipp = tipps.filter(user_id = request.user.id).select_related('user')[0]
 			count_eigene_tipps += 1
 		except:
 			eigenerTipp = None
-		andereTipps = tipps.exclude(user_id = request.user.id)
+		andereTipps = tipps.exclude(user_id = request.user.id).select_related('user')
 		andereTipps_ = []
 		for id in user_tipped:
 			atipp = andereTipps.filter(user_id=id)
@@ -478,17 +501,17 @@ def get_spieltagTO_by_request(request, st):
 			if tipp == None:
 				continue
 			try:
-				count_andere_tipps[tipp.user] = count_andere_tipps[tipp.user] + 1
+				count_andere_tipps[tipp.user_id] = count_andere_tipps[tipp.user_id] + 1
 			except:
-				count_andere_tipps[tipp.user] = 1
+				count_andere_tipps[tipp.user_id] = 1
 		spieleTOs.append(SpielTO(spiel, eigenerTipp, andereTipps))
 	naechster = st.next()
 	vorheriger = st.previous()
 	bestenliste = BestenlisteDAO.spieltag(st.id, request.user.id)
 	voll_getippt = {}
 	voll_getippt[request.user.id] = count_spiele == count_eigene_tipps
-	for user, tipps in count_andere_tipps.iteritems():
-		voll_getippt[user.id] = count_spiele == tipps
+	for user_id, tipps in count_andere_tipps.iteritems():
+		voll_getippt[user_id] = count_spiele == tipps
 	return SpieltagTO(st, spieleTOs, voll_getippt, naechster, vorheriger, bestenliste)
 
 class ImpressumView(TemplateView):
@@ -563,102 +586,6 @@ def tippen(request, spielzeit_id, spieltag_id):
 		elif request.POST["referer"] == "home":
 			return HttpResponseRedirect(reverse("spieltag", args=(spielzeit_id, spieltag_id)))
 	return HomePageView.as_view()(request, spieltag_id=spieltag_id, spielzeit_id=spielzeit_id)
-
-@login_required
-def saisontipp(request, spielzeit_id=None, message=None):
-	spielzeiten = Spielzeit.objects.all()
-	if spielzeit_id is None:
-		spielzeit_id = spielzeiten[0].id
-		return HttpResponseRedirect(reverse("BuLiTippApp.views.saisontipp", args=(spielzeit_id,)))
-	spielzeit = Spielzeit.objects.get(pk=spielzeit_id)
-	is_pokal = spielzeit.isPokal
-	mannschaften=Verein.objects.all()
-	try:
-		meistertipp=Meistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
-	except:
-		meistertipp=None
-	try:
-		herbstmeistertipp=Herbstmeistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
-	except:
-		herbstmeistertipp=None
-	try:
-		absteiger1=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[0]
-	except:
-		absteiger1=None
-	try:
-		absteiger2=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[1]
-	except:
-		absteiger2=None
-	try:
-		absteiger3=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)[2]
-	except:
-		absteiger3=None
-	if "absteigertipp1_id" in request.POST.keys():
-		absteigertipp1_id = request.POST["absteigertipp1_id"]
-		if absteiger1 is not None:
-			absteiger1.delete()
-		absteiger1=None
-		if absteiger1 is None:
-			absteiger1=Absteiger()
-		absteiger1.user=request.user
-		absteiger1.spielzeit_id=spielzeit_id
-		absteiger1.mannschaft_id=absteigertipp1_id
-		absteiger1.save()
-	if "absteigertipp2_id" in request.POST.keys():
-		absteigertipp2_id = request.POST["absteigertipp2_id"]
-		if absteiger2 is not None:
-			absteiger2.delete()
-		absteiger2=None
-		if absteiger2 is None:
-			absteiger2=Absteiger()
-		absteiger2.user=request.user
-		absteiger2.spielzeit_id=spielzeit_id
-		absteiger2.mannschaft_id=absteigertipp2_id
-		absteiger2.save()
-	if "absteigertipp3_id" in request.POST.keys():
-		absteigertipp3_id = request.POST["absteigertipp3_id"]
-		if absteiger3 is not None:
-			absteiger3.delete()
-		absteiger3=None
-		if absteiger3 is None:
-			absteiger3=Absteiger()
-		absteiger3.user=request.user
-		absteiger3.spielzeit_id=spielzeit_id
-		absteiger3.mannschaft_id=absteigertipp3_id
-		absteiger3.save()
-	if "herbstmeistertipp_id" in request.POST.keys():
-		herbstmeistertipp_id = request.POST["herbstmeistertipp_id"]
-		if herbstmeistertipp is None:
-			herbstmeistertipp=Herbstmeistertipp()
-		herbstmeistertipp.user=request.user
-		herbstmeistertipp.spielzeit_id=spielzeit_id
-		herbstmeistertipp.mannschaft_id=herbstmeistertipp_id
-		herbstmeistertipp.save()
-	if "meistertipp_id" in request.POST.keys():
-		meistertipp_id = request.POST["meistertipp_id"]
-		if meistertipp is None:
-			meistertipp=Meistertipp()
-		meistertipp.user=request.user
-		meistertipp.spielzeit_id=spielzeit_id
-		meistertipp.mannschaft_id=meistertipp_id
-		meistertipp.save()
-		return saisontipp(request, spielzeit_id, "Erfolgreich gespeichert!")
-	return render_to_response( \
-		"saisontipp.html", \
-		{  \
-		"mannschaften":mannschaften, \
-		"spielzeiten" :spielzeiten,  \
-		"meistertipp" :meistertipp,  \
-		"absteiger1"  :absteiger1,	\
-		"absteiger2"  :absteiger2,	\
-		"absteiger3"  :absteiger3,	\
-		"herbstmeistertipp" :herbstmeistertipp,  \
-		"spielzeit_id" :spielzeit_id,  \
-		"spielzeit" :spielzeit,  \
-		"is_pokal"	:is_pokal,	\
-		"message"	:message,		\
-		}, \
-		context_instance=RequestContext(request))
 
 @login_required
 @csrf_protect
@@ -893,4 +820,48 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 	if info is not None:
 		args["message"]=info
 	return render_to_response("spieltag/detail.html", args, context_instance=RequestContext(request))
+
+@login_required
+def saisontipp(request, spielzeit_id):
+	try:
+		absteigertipp_id = []
+		absteigertipp_id.append(request.POST["absteigertipp1_id"])
+		absteigertipp_id.append(request.POST["absteigertipp2_id"])
+		absteigertipp_id.append(request.POST["absteigertipp3_id"])
+		absteiger=Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)
+		absteiger.delete()
+		for id_ in absteigertipp_id:
+			absteiger=Absteiger()
+			absteiger.user=request.user
+			absteiger.spielzeit_id=spielzeit_id
+			absteiger.mannschaft=Verein.objects.get(pk=id_)
+			absteiger.save()
+	except:
+		pass
+	try:
+		meistertipp=Meistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
+	except:
+		meistertipp=None
+	try:
+		herbstmeistertipp=Herbstmeistertipp.objects.get(user_id=request.user.id, spielzeit_id=spielzeit_id)
+	except:
+		herbstmeistertipp=None
+	if "herbstmeistertipp_id" in request.POST.keys():
+		herbstmeistertipp_id = request.POST["herbstmeistertipp_id"]
+		if herbstmeistertipp is None:
+			herbstmeistertipp=Herbstmeistertipp()
+			herbstmeistertipp.user=request.user
+			herbstmeistertipp.spielzeit_id=spielzeit_id
+		herbstmeistertipp.mannschaft_id=herbstmeistertipp_id
+		herbstmeistertipp.save()
+	if "meistertipp_id" in request.POST.keys():
+		meistertipp_id = request.POST["meistertipp_id"]
+		if meistertipp is None:
+			meistertipp=Meistertipp()
+			meistertipp.user=request.user
+			meistertipp.spielzeit_id=spielzeit_id
+		meistertipp.mannschaft_id=meistertipp_id
+		meistertipp.save()
+		messages.success(request, "Erfolgreich gespeichert!")
+	return HttpResponseRedirect(reverse("saisontipp", args=(spielzeit_id)))
 
