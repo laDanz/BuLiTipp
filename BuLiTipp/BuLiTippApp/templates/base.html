@@ -27,6 +27,8 @@
 					{% if user.is_authenticated %}
 					<li {% if referer = 'spieltag' %}class="active"{% endif %}>
 						<a href="{% url spieltag spielzeit_id=spielzeit.id spieltag_id=spieltag.id %}">Spieltag</a></li>
+					<li {% if referer = 'saisontipp' %}class="active"{% endif %}>
+						<a href="{% url saisontipp spielzeit.id %}">Saisontipp</a></li>
 					<li {% if referer = 'bestenliste' %}class="active"{% endif %}>
 						<a href="{% url bestenliste %}">Bestenlisten</a></li>
 					{% endif %}

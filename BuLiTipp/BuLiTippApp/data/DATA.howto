@@ -1,0 +1,3 @@
+cd BuLiTippApp
+../manage.py shell
+import BuLiTippApp.dataImport_wm
