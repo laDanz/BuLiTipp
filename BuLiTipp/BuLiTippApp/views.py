@@ -477,7 +477,12 @@ def get_spieltagTO_by_request(request, st):
 	count_eigene_tipps = 0
 	count_andere_tipps = {}
 	spieleTOs = []
-	tipps = Tipp.objects.filter(spiel__spieltag_id=st.id)
+	# limit to TG members
+	tgs = Tippgemeinschaft.objects.filter(users=request.user.id).filter(spielzeit__id=st.spielzeit.id)
+	users_from_tg = Set()
+	for tg in tgs:
+		users_from_tg = users_from_tg.union(Set([u["id"] for u in tg.users.values()]))
+	tipps = Tipp.objects.filter(spiel__spieltag_id=st.id).filter(user__id__in=users_from_tg)
 	user_tipped = Set([tipp.user_id for tipp in tipps])
 	try:
 		user_tipped.remove(request.user.id)
