@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from models	import Verein, Spielzeit, Spieltag,	Spiel, News, BootstrapThemes, InputTypes, ReminderOffsets
+from models	import Verein, Spielzeit, Spieltag,	Spiel, News, BootstrapThemes, InputTypes, ReminderOffsets, Tippgemeinschaft, TG_Einladung
 from django.contrib	import admin
 
+admin.site.register(Tippgemeinschaft)
+admin.site.register(TG_Einladung)
 admin.site.register(Verein)
 admin.site.register(News)
 admin.site.register(BootstrapThemes)

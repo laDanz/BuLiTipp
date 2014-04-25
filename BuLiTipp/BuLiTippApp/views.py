@@ -137,7 +137,10 @@ def tg_einladung_new_form(request, tg_id):
 		return render(request, 'tippgemeinschaft/einladung_create.html', context)
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse("home"))
-	tg = Tippgemeinschaft.objects.get(pk = tg_id)
+	try:
+		tg = Tippgemeinschaft.objects.get(pk = tg_id)
+	except:
+		return HttpResponseRedirect(reverse("home"))
 	if request.method == 'POST':
 		fuer = request.POST["fuer-autocomplete"]		
 		# 2 cases: valid user, or email address

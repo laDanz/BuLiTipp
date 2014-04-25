@@ -28,3 +28,6 @@ msgstr "Newsletter erhalten"
 
 msgid "Reminder offset"
 msgstr "Erinnerungsmail Versatz"
+
+msgid "Open"
+msgstr "Jeder kann beitreten!"
