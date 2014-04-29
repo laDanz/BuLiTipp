@@ -12,8 +12,8 @@ from django.utils import timezone
 import BuLiTippApp.ngmail as mail
 
 ERINNERUNG_SUBJECT = "Jetzt den nächsten Spieltag tippen!"
-ERINNERUNG_MSG = 'Hallo %s,\n\nEs wird höchste Zeit, dass du den nächsten Spieltag tippst!\nGehe gleich auf http://TippBuLi.de/BuLiTipp/BuLiTipp/spieltag/%s/%s/ um deinen Tipp abzugeben!\n\nViele Grüße,\ndie BuLiTippApp\n\n*psst* unter uns: Du kannst auch gleich mehrere Spieltage "voraus" tippen ;)'
-ERINNERUNG_MSG_HTML = '<html>Hallo %s,<br><br>Es wird h&ouml;chste Zeit, dass du den n&auml;chsten Spieltag tippst!<br>Gehe gleich auf <a href="http://TippBuLi.de/BuLiTipp/BuLiTipp/spieltag/%s/%s/">http://TippBuLi.de/</a> um deinen Tipp abzugeben!<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp<br><br><b>*psst*: Nur unter uns:</b> Du kannst auch gleich mehrere Spieltage "voraus" tippen ;)'
+ERINNERUNG_MSG = 'Hallo %s,\n\nEs wird höchste Zeit, dass du den nächsten Spieltag tippst!\nGehe gleich auf http://TippBuLi.de/BuLiTipp/BuLiTipp/spieltag/%s/%s/ um deinen Tipp abzugeben!\n\nViele Grüße,\nTippBuLi.de\n\n*psst* unter uns: Du kannst auch gleich mehrere Spieltage "voraus" tippen ;)'
+ERINNERUNG_MSG_HTML = '<html>Hallo %s,<br><br>Es wird h&ouml;chste Zeit, dass du den n&auml;chsten Spieltag tippst!<br>Gehe gleich auf <a href="http://TippBuLi.de/BuLiTipp/BuLiTipp/spieltag/%s/%s/">http://TippBuLi.de/</a> um deinen Tipp abzugeben!<br><br>Viele Gr&uuml;&szlig;e,<br>TippBuLi.de<br><br><b>*psst*: Nur unter uns:</b> Du kannst auch gleich mehrere Spieltage "voraus" tippen ;)'
 
 def run(test=False):
 	global ERINNERUNG_SUBJECT
