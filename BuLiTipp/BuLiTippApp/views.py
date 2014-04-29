@@ -167,7 +167,11 @@ def tg_einladung_new_form(request, tg_id):
 			tg_e.tg = tg
 			tg_e.von = request.user
 			tg_e.fuer_id = user_select_id
-			form.save()
+			try:
+				form.save()
+			except IntegrityError:
+				messages.warning(request, "Bereits eine Einladung an diesen User verschickt!")
+				return return_empty_form()
 			#mail schicken
 			von = tg_e.von.first_name if tg_e.von.first_name else tg_e.von.username
 			fuer = tg_e.fuer.first_name if tg_e.fuer.first_name else tg_e.fuer.username
