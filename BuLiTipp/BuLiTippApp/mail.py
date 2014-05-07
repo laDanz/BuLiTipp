@@ -11,6 +11,11 @@ def send(subject, toaddrs, message, message_html=None):
 	import smtplib
 	from email.mime.text import MIMEText
 	from email.mime.multipart import MIMEMultipart
+	#encoding
+	subject = subject.encode('ascii', 'xmlcharrefreplace')
+	message = message.encode('ascii', 'xmlcharrefreplace')
+	if message_html:
+		message_html = message_html.encode('ascii', 'xmlcharrefreplace')
 	fromaddr = mail_settings.USERNAME
 	# Credentials (if needed)
 	username = mail_settings.USERNAME

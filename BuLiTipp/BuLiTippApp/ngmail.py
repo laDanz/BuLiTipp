@@ -31,10 +31,10 @@ class Send_async(Thread):
 	timeout_timer = None
 	def __init__(self, subject, toaddrs, message, message_html):
 		Thread.__init__(self)
-		self.subject = subject
+		self.subject = subject.encode('ascii', 'xmlcharrefreplace')
 		self.toaddrs = toaddrs
-		self.message = message
-		self.message_html = message_html
+		self.message = message.encode('ascii', 'xmlcharrefreplace')
+		self.message_html = message_html.encode('ascii', 'xmlcharrefreplace')
 
 	def run(self):
 		self.send_sync()
