@@ -51,9 +51,10 @@ def run(test=False):
 					if test:
 						print "User %s has not tipped(%s/%s), lets send him an riminder to %s" % (user.username, tipps_anz, spiele_anz, email)
 					else:
-						ERINNERUNG_SUBJECT_ = ERINNERUNG_SUBJECT+"(%s)" % str(latest_spielzeit.bezeichner)
-						ERINNERUNG_MSG_ = ERINNERUNG_MSG % (str(user.username), sp.id, next_spieltag.id)
-						ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % (str(user.username), sp.id, next_spieltag.id)
+						name = user.first_name if user.first_name else user.username
+						ERINNERUNG_SUBJECT_ = ERINNERUNG_SUBJECT+"(%s)" % unicode(latest_spielzeit.bezeichner)
+						ERINNERUNG_MSG_ = ERINNERUNG_MSG % (unicode(name), sp.id, next_spieltag.id)
+						ERINNERUNG_MSG_HTML_ = ERINNERUNG_MSG_HTML % (unicode(name), sp.id, next_spieltag.id)
 						if send:
 							mail.send(ERINNERUNG_SUBJECT_, user.email, ERINNERUNG_MSG_, ERINNERUNG_MSG_HTML_)
 def install():

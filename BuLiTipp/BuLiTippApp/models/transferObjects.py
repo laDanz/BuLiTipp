@@ -69,7 +69,7 @@ class SpielTO(object):
 				andere.append(TippTO(tipp))
 		self.andereTipps = andere
 	def __unicode__(self):
-		return "%s vs %s: %s" % (str(self.heimTeam), str(self.auswTeam), self.ergebnis)
+		return "%s vs %s: %s" % (unicode(self.heimTeam), unicode(self.auswTeam), self.ergebnis)
 	def __str__(self):
 		return unicode(self)
 
@@ -92,7 +92,7 @@ class SpieltagTO(object):
 			if spiel.tippbar:
 				self.tippbare_spiele += 1
 	def __unicode__(self):
-		return "Spieltag %s(%s)" % (str(self.nummer), self.bezeichner)
+		return "Spieltag %s(%s)" % (str(self.nummer), unicode(self.bezeichner))
 	def __str__(self):
 		return unicode(self)
 
@@ -122,7 +122,7 @@ class BestenlistenPlatzTO(object):
 		self.user = user
 		self.punkte = punkte
 	def __unicode__(self):
-		return "%s. %s %s" % (str(self.position), self.user.username, self.punkte)
+		return "%s. %s %s" % (str(self.position), unicode(self.user.username), self.punkte)
 	def __str__(self):
 		return unicode(self)
 
@@ -172,7 +172,7 @@ class TabellenPlatzTO(object):
 		self.spiele = spiele
 		self.tore = tore
 	def __unicode__(self):
-		return "%s. %s %s %s %s" % (str(self.position), self.verein.name, self.punkte, self.spiele, self.tore)
+		return "%s. %s %s %s %s" % (str(self.position), unicode(self.verein.name), self.punkte, self.spiele, self.tore)
 	def __str__(self):
 		return unicode(self)
 

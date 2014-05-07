@@ -64,14 +64,14 @@ def del_tg_user(request, tg_id, user_id):
 	fuer = user.first_name if user.first_name else user.username
 	if user.id == request.user.id:
 		messages.success(request, "Erfolgreich ausgetreten!")
-		args = (str(von), str(fuer), str(tg.bezeichner), )
-		mail.send(TG_QUIT_SUBJECT % str(tg.bezeichner), user.email, 
+		args = (unicode(von), unicode(fuer), unicode(tg.bezeichner), )
+		mail.send(TG_QUIT_SUBJECT % unicode(tg.bezeichner), user.email, 
 				TG_QUIT_MSG % args, 
 				TG_QUIT_MSG_HTML % args)
 	else:
 		messages.success(request, "Tipper erfolgreich rausgeschmissen!")
-		args = (str(fuer), str(von), str(tg.bezeichner), )
-		mail.send(TG_KICK_SUBJECT % str(tg.bezeichner), user.email, 
+		args = (unicode(fuer), unicode(von), unicode(tg.bezeichner), )
+		mail.send(TG_KICK_SUBJECT % unicode(tg.bezeichner), user.email, 
 				TG_KICK_MSG % args, 
 				TG_KICK_MSG_HTML % args)
 	return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
@@ -207,8 +207,8 @@ def tg_show_form(request, tg_id):
 			von = tg.chef.first_name if tg.chef.first_name else tg.chef.username
 			for user in users:
 				fuer = user.first_name if user.first_name else user.username
-				args = (str(fuer), str(von), str(tg.bezeichner), )
-				mail.send(TG_KICK_SUBJECT % str(tg.bezeichner), user.email, 
+				args = (unicode(fuer), unicode(von), unicode(tg.bezeichner), )
+				mail.send(TG_KICK_SUBJECT % unicode(tg.bezeichner), user.email, 
 						TG_KICK_MSG % args, 
 						TG_KICK_MSG_HTML % args)
 			return HttpResponseRedirect(reverse("user", args=["tgchange"]))
@@ -218,8 +218,8 @@ def tg_show_form(request, tg_id):
 			messages.success(request, "Erfolgreich beigetreten!")
 			fuer = tg.chef.first_name if tg.chef.first_name else tg.chef.username
 			wer = request.user.first_name if request.user.first_name else request.user.username 
-			args = (str(fuer), str(wer), str(tg.bezeichner), )
-			mail.send(TG_JOIN_SUBJECT % str(tg.bezeichner), tg.chef.email, 
+			args = (unicode(fuer), unicode(wer), unicode(tg.bezeichner), )
+			mail.send(TG_JOIN_SUBJECT % unicode(tg.bezeichner), tg.chef.email, 
 				TG_JOIN_MSG % args, 
 				TG_JOIN_MSG_HTML % args)
 			return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))

@@ -38,7 +38,7 @@ class News(models.Model):
 	def save(self):
 		if self.id is None and self.newsletter:
 			for user in User.objects.filter(receive_newsletter=True):
-				mail.send("TippBuLi Newsletter: "+self.title, user.email, str(self.text), str(self.text))
+				mail.send("TippBuLi Newsletter: "+self.title, user.email, unicode(self.text), unicode(self.text))
 		super(News, self).save()
 
 class Spielzeit(models.Model):
