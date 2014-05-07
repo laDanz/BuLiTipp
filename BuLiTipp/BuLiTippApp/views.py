@@ -175,9 +175,9 @@ def tg_einladung_new_form(request, tg_id):
 			#mail schicken
 			von = tg_e.von.first_name if tg_e.von.first_name else tg_e.von.username
 			fuer = tg_e.fuer.first_name if tg_e.fuer.first_name else tg_e.fuer.username
-			args = (str(fuer), str(von), str(tg.bezeichner), str(tg.beschreibung), "http://"+request.get_host()+reverse("acc_tg_einladung", args=[tg_e.key]), "http://"+request.get_host()+reverse("del_tg_einladung", args=[tg_e.key]), )
+			args = (unicode(fuer), unicode(von), unicode(tg.bezeichner), unicode(tg.beschreibung), "http://"+request.get_host()+reverse("acc_tg_einladung", args=[tg_e.key]), "http://"+request.get_host()+reverse("del_tg_einladung", args=[tg_e.key]), )
 			try:
-				mail.send(TGE_SUBJECT % str(tg.bezeichner), 
+				mail.send(TGE_SUBJECT % unicode(tg.bezeichner), 
 						tg_e.fuer.email, 
 						TGE_MSG % args, 
 						TGE_MSG_HTML % args)
