@@ -33,7 +33,7 @@ print s_punkte[-3:]
 
 print "+++ User: getippte Tore  +++"
 user_tore={}
-for user in User.objects.all():
+for user in User.objects.filter(id__lt=13):
 	tore=0
 	for tipp in Tipp.objects.filter(user_id=user.id):
 		if tipp.ergebniss != None and tipp.ergebniss != "":
@@ -52,7 +52,7 @@ UNENTSCHIEDEN=("0:0", "1:1", "2:2", "3:3", "4:4", "5:5", )
 print "+++ User: Unentschieden  +++"
 user_unent={}
 user_unent_recht={}
-for user in User.objects.all():
+for user in User.objects.filter(id__lt=13):
 	unent=0
 	recht = 0
 	for tipp in Tipp.objects.filter(user_id=user.id):
@@ -97,4 +97,9 @@ for s in Spiel.objects.filter(spieltag__spielzeit_id=sz.id).filter(datum__lte = 
 	v_punkte[hteam]=hpkt
 	v_punkte[ateam]=apkt
 v_punkte=sorted(v_punkte.iteritems(), key=itemgetter(1), reverse=True)
-print v_punkt
+print v_punkte
+
+print ""
+print "=== Pechvoegel ==="
+print "use special punktecalculator, and refreshStatistics"
+print "same for toto ergebnisse"
