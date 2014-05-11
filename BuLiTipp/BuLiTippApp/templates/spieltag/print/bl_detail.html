@@ -1,8 +1,27 @@
-﻿{% load url from future %}
+{% load url from future %}
 {% load filters %}
+
+<script type="text/javascript">
+<!--
+function fix_bestlist_reduction(){
+	// insert "empty lines" when a position is skipped due to bestenlist reduction.
+	last_position = 99;
+	items = $('#bl_table tbody tr');
+	$.each(items,function( index, value ) {
+		  pos = parseInt($(value).children()[0].innerHTML);
+		  if(pos > last_position+1){
+			  var empty_tr = $("<tr><td class='text-center' colSpan="+$(value).children().size()+">...</td></tr>");
+			  $(value).before(empty_tr)
+		  }
+		  last_position = pos;
+	});
+}
+//-->
+</script>
+
 <!--bl_buli-->
 <div class="table-responsive" style="float:right; width:200px;">
-	<table class="table table-bordered">
+	<table class="table table-bordered" id="bl_table">
 		<thead>
 			<tr>
 				<th colSpan=4 class="text-center"><h4 style="margin:0px;">Bestenliste<small>Spielzeit</small></h4></th >
@@ -28,3 +47,8 @@
 		</tbody>
 	</table>
 </div>
+<script type="text/javascript">
+<!--
+fix_bestlist_reduction();
+//-->
+</script>

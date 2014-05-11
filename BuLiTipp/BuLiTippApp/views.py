@@ -32,7 +32,7 @@ from forms import TG_createForm, TG_showForm, TG_Einladung_createForm
 import operator, string
 from django.forms.forms import Form
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
-import ngmail as mail
+import BuLiTippApp.ngmail as mail
 import uuid
 
 TG_KICK_SUBJECT = 'TippBuLi: Rauswurf aus Tippgemeinschaft "%s" !'
@@ -368,6 +368,12 @@ class SpieltagView(HomePageView):
 
 class SpieltagPrintView(SpieltagView):
 	template_name = 'spieltag/print/st_index.html'
+	def get(self, request, *args, **kwargs):
+		spieltag_id = kwargs["spieltag_id"]
+		spielzeit_id = kwargs["spielzeit_id"]
+		result = super(SpieltagView, self).get(request, *args, **kwargs)
+		result.context_data["spielzeit"].bestenliste = BestenlisteDAO.spielzeit(spielzeit_id, aktuell_spieltag_id=spieltag_id, full=False, user_id=request.user.id, tg_oriented=False, plaetze_amount=13).items()[0][1]
+		return result
 
 class SaisontippView(TemplateView):
 	template_name = 'saisontipp/st_index.html'

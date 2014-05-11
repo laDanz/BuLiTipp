@@ -5,10 +5,9 @@ Created on 19.12.2013
 @author: ladanz
 '''
 from django.contrib.auth.models import User
-from itertools import chain
 from transferObjects import BestenlistenPlatzTO, BestenlisteTO, TabellenPlatzTO, TabelleTO
 from models_statistics import Tabelle
-from models import Spielzeit, Spieltag, Tippgemeinschaft, Verein
+from models import Spielzeit, Tippgemeinschaft, Verein
 import collections
 from sets import Set
 
@@ -20,7 +19,7 @@ class BestenlisteDAO():
 	def spieltag(spieltag_id, user_id=None, full=True):
 		return BestenlisteDAO.query(spieltag_id=spieltag_id, user_id=user_id, full=full)
 	@staticmethod
-	def spielzeit(spielzeit_id, user_id=None, full=True, aktuell_spieltag_id=None):
+	def spielzeit(spielzeit_id, user_id=None, full=True, aktuell_spieltag_id=None, tg_oriented=True, plaetze_amount=10):
 		'''aktuell_spieltag_id : calculate all Punkte til that spieltag. Result will include Punkte from the given spieltag.
 		'''
 		sz = Spielzeit.objects.get(pk=spielzeit_id)
@@ -35,8 +34,8 @@ class BestenlisteDAO():
 		else:
 			# actually inaccurate, but sufficient and faster
 			before_spieltag_id = int(aktuell_spieltag_id)-1
-		aktuell = BestenlisteDAO.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full, aktuell_spieltag_id=aktuell_spieltag_id)
-		vorher = BestenlisteDAO.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full, aktuell_spieltag_id=before_spieltag_id)
+		aktuell = BestenlisteDAO.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full, aktuell_spieltag_id=aktuell_spieltag_id, tg_oriented=tg_oriented, plaetze_amount=plaetze_amount)
+		vorher = BestenlisteDAO.query(spielzeit_id=spielzeit_id, user_id=user_id, full=full, aktuell_spieltag_id=before_spieltag_id, tg_oriented=tg_oriented, plaetze_amount=plaetze_amount)
 		if hasattr(aktuell, "keys"):
 			for k in aktuell.keys():
 				for blp in aktuell[k].bestenlistenPlatz:
@@ -52,12 +51,12 @@ class BestenlisteDAO():
 						break
 		return aktuell
 	@staticmethod
-	def query(user_id=None, full=True, spieltag_id=None, spielzeit_id=None, aktuell_spieltag_id=None):
+	def query(user_id=None, full=True, spieltag_id=None, spielzeit_id=None, aktuell_spieltag_id=None, tg_oriented=True, plaetze_amount=10):
 		''' Result: {tg:bestenlistTO}
 		'''
 		from models_statistics import Punkte
 		result={}
-		if user_id:
+		if user_id and tg_oriented:
 			tgs = Tippgemeinschaft.objects.filter(users__id = user_id)
 			if spieltag_id:
 				tgs = tgs.filter(spielzeit__spieltag__id = spieltag_id)
@@ -68,8 +67,15 @@ class BestenlisteDAO():
 		#tgs des users
 		for tg in tgs:
 			blp=[]
-			if user_id:
+			if user_id and tg_oriented:
 				users = tg.users.all()
+			elif user_id:
+				#users from all tgs i'm in?
+				tgs = Tippgemeinschaft.objects.filter(users=user_id).filter(spielzeit__id=spielzeit_id)
+				users_from_tg = Set()
+				for tg in tgs:
+					users_from_tg = users_from_tg.union(Set([u["id"] for u in tg.users.values()]))
+				users = User.objects.filter(id__in=users_from_tg)
 			else:
 				users = User.objects.filter(is_active = True).filter(groups = 1)# FIXME?
 			for user in users:
@@ -89,13 +95,15 @@ class BestenlisteDAO():
 				bl.position = platz
 				platz += 1
 			# TODO: muss noch gefuellt werden?
-			if user_id:
-				bl = BestenlisteTO(blp, None, None)
-				bl.reduce(user_id = user_id)
+			bl = BestenlisteTO(blp, None, None)
+			if user_id and tg_oriented:
+				bl.reduce(user_id = user_id, plaetze_amount=plaetze_amount)
 				result[tg] = bl
 			else:
-				return {"":BestenlisteTO(blp, None, None)}
-		if user_id:
+				if not full:
+					bl.reduce(user_id = user_id, plaetze_amount=plaetze_amount)
+				return {"":bl}
+		if user_id and tg_oriented:
 			if spieltag_id:
 				tgs = Tippgemeinschaft.objects.filter(spielzeit__spieltag__id = spieltag_id)
 			if spielzeit_id:
@@ -116,19 +124,18 @@ class BestenlisteDAO():
 				user.username = tg.bezeichner
 				user.id = tg.bezeichner
 				blp.append(BestenlistenPlatzTO(None, user, punkte))
-			if len(result) == 0 or 1 :#FIXME immer anzeigen?
-				#falls net in TG, Spieler selbst zur Übersicht hinzufügen
-				user = User.objects.get(pk=user_id)
-				punkte = Punkte.objects.filter(user=user)
-				if spieltag_id is not None:
-					punkte = punkte.filter(spieltag__id=spieltag_id)
-				if spielzeit_id is not None:
-					punkte = punkte.filter(spieltag__spielzeit_id=spielzeit_id)
-				if aktuell_spieltag_id is not None:
-					punkte = punkte.filter(spieltag__id__lte=aktuell_spieltag_id)
-				#summiere die punkte der Tipps
-				punkte = sum(punkte)
-				blp.append(BestenlistenPlatzTO(None, user, punkte))
+			#Spieler selbst zur Übersicht hinzufügen
+			user = User.objects.get(pk=user_id)
+			punkte = Punkte.objects.filter(user=user)
+			if spieltag_id is not None:
+				punkte = punkte.filter(spieltag__id=spieltag_id)
+			if spielzeit_id is not None:
+				punkte = punkte.filter(spieltag__spielzeit_id=spielzeit_id)
+			if aktuell_spieltag_id is not None:
+				punkte = punkte.filter(spieltag__id__lte=aktuell_spieltag_id)
+			#summiere die punkte der Tipps
+			punkte = sum(punkte)
+			blp.append(BestenlistenPlatzTO(None, user, punkte))
 			tg = Tippgemeinschaft()
 			tg.bezeichner = "Übersicht"
 			blp.sort(key=lambda blp:blp.punkte, reverse=True)
