@@ -74,6 +74,7 @@ function fix_bestlist_reduction(id){
 					<tr>
 						<th colSpan=3 class="text-center">
 							<h4 style="margin:0px;">Bestenliste<small>Spieltag</small>{% if no_switch != "true" %} <a id="abl2" href="#bl2" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}
+							<a class "right pull-right" href="{% url "help_single_item" "faq" "bestenliste" %}"><span style="color:blue;" class="glyphicon glyphicon-question-sign"></span></a>
 						{% for tg, bl in spieltag.bestenliste.items %}
 							<script>addTG("bl_tg_{{tg.id}}");</script>
 							{% if no_switch != "true" %}
@@ -114,6 +115,7 @@ function fix_bestlist_reduction(id){
 					<tr>
 						<th colSpan=4 class="text-center">
 							<h4 style="margin:0px;">Bestenliste<small>Spielzeit</small>{% if no_switch != "true" %} <a id="abl1" href="#bl1" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span></a>{% endif %}
+							<a class "right pull-right" href="{% url "help_single_item" "faq" "bestenliste" %}"><span style="color:blue;" class="glyphicon glyphicon-question-sign"></span></a>
 						{% for tg, bl in spieltag.bestenliste.items %}
 							<script>addTG("bl_tg_{{tg.id}}");</script>
 							{% if no_switch != "true" %}

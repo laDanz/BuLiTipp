@@ -98,8 +98,10 @@ p.id = "";
 	<input type="hidden" name="referer" value="{{referer}}">
 	{% if user.is_authenticated and spielzeit.tippbar %}
 	<a href="{% url "saisontipp" spielzeit.id %}" class="btn btn-success" type="submit" id="saisontippabgeben_button">Saisontipp abgeben!</a>
+	<a style="padding:10px;" href="{% url "help_single_item" "faq" "saisontipp" %}"><span style="color:blue;" class="glyphicon glyphicon-question-sign"></span></a>
 	{% endif %}
 	{% if user.is_authenticated and spieltag.tippbare_spiele > 0 %}
+	<a class="pull-right right" style="padding:10px;" href="{% url "help_single_item" "faq" "tippen" %}"><span style="color:blue;" class="glyphicon glyphicon-question-sign"></span></a>
 	<input class="btn btn-success pull-right right" type="submit" value="Tipp abgeben!" id="tippabgeben_button" /><br>
 	{% endif %}
 	</form>

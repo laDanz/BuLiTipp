@@ -1,4 +1,4 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load bootstrap3 %}
 {% load url from future %}
 
@@ -11,7 +11,7 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Einladung annehmen</h3>
+				<h3 class="panel-title">Einladung annehmen<a class="right pull-right" href="{% url "help_single_item" "tippgemeinschaften" "einladung-annehmen" %}"><span style="color:blue;" class="glyphicon glyphicon-question-sign"></span></a></h3>
 			</div>
 				<div class="panel-body">
 					Um deine Accounterstellung abzuschließen und der Tippgemeinschaft <b>{{tg.bezeichner}}</b> beizutreten, vergebe hier ein Passwort:<br><br>

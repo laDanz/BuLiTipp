@@ -2,7 +2,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<a data-toggle="collapse" data-parent="#accordion" href="#user_tg">
-			<h3 class="panel-title">Tippgemeinschaften verwalten</h3>
+			<h3 class="panel-title">Tippgemeinschaften verwalten<a class="right pull-right" href="{% url "help_single_item" "tippgemeinschaften" "tippgemeinschaft" %}"><span style="color:blue;" class="glyphicon glyphicon-question-sign"></span></a></h3>
 		</a>
 	</div>
 	<div id="user_tg" class="panel-collapse collapse{% if referer = "tgchange" %} in{% endif %}">

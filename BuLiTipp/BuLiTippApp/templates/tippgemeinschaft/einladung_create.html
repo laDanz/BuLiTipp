@@ -1,4 +1,4 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load bootstrap3 %}
 {% load url from future %}
 
@@ -11,7 +11,7 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Tipper einladen</h3>
+				<h3 class="panel-title">Tipper einladen<a class="right pull-right" href="{% url "help_single_item" "tippgemeinschaften" "einladung" %}"><span style="color:blue;" class="glyphicon glyphicon-question-sign"></span></a></h3>
 			</div>
 				<div class="panel-body">
 					<form role="form" class="form-horizontal" method="post">
