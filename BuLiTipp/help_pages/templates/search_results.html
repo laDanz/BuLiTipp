@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %} Help Search Results {% endblock %}
+
+{% block content %}
+	
+<h1>Search results for {{query}}</h1>
+
+{% ifequal hits|length 0 %}
+	<p>Sorry, there are no hits for '{{query}}'</p>
+{% else %}
+<p>The following contained all of the search terms:</p>
+{% endifequal %}
+
+{% for item in hits  %}
+	{% include "includes/help_search_hit_entry.html" %}
+{% endfor %} 	
+
+{% endblock %}

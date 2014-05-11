@@ -1,0 +1,43 @@
+{% extends "help_category_list.html" %}
+
+{% block braedcrumb_content %}
+	<ul class="breadcrumb">
+		<li><a href = "{% url help_category_list %}">Start</a></li> <span class="divider">/</span>
+		{% for cat in trail  %}
+		<li><a href = "{% url help_item_list cat.slug %}">{{cat}}</a></li>
+		{% if not forloop.last %} <span class="divider">/</span> {% endif %}
+		{% endfor %}
+	</ul>
+	{% with category.subcategories as subcategories %}
+		{% if subcategories %}
+			Subsections of this section:
+		{% endif %}
+		{% for category in subcategories %}
+		{% with "category_nest.html" as template_name %}
+			{% include template_name %}
+		{% endwith %}
+		{% endfor %}
+	{% endwith %} 
+{% endblock %}
+{% block page_list %}
+	{% if help_items|length == 0 %}
+		<p class="text-warning">This section has no help items in it, but its subcategories may do</p>
+	{% endif %}
+	<table class="table table-bordered">
+	<tr>
+		<th>Heading</th>
+		<th>Body</th>
+	</tr>
+	{% for item in help_items %}
+	<tr>
+		<td>
+			<a href="{% url help_single_item item.category.slug item.slug %}">{{item.heading}}</a>
+		</td>
+		<td>{{item.body}}</td>
+	</tr>
+	{% endfor %}
+	</table>
+	<p>
+		<a href="{% url help_category_list %}">Go back</a>
+	</p>
+{% endblock %}

@@ -15,4 +15,5 @@ url(r'^logout/', "BuLiTippApp.views.logout", name="logout"),
 url(r'^BuLiTipp/', include('BuLiTippApp.urls')),
 url(r'^home/', "BuLiTippApp.views.home"),
 url(r'^autocomplete/', include('autocomplete_light.urls')),
+url(r'^help_pages/', include('help_pages.urls')),
 )

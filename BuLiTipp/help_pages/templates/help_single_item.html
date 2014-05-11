@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %} Help {% endblock %}
+
+{% block content %}
+<div>
+	<p>
+		{% for cat in item.category.trail %}
+			<a href="{% url help_item_list cat.slug %}">{{cat}}</a>&nbsp;>&nbsp;
+		{% endfor %}
+	</p>
+
+	<h2>{{item.heading}}</a></h2>
+		<p>{{item.body}}</p>
+		{% with item.related_items as related_items %}
+			{{related_items}}
+			{% if related_items %}
+			Also in this section:
+			{% for item in related_items  %}
+				<a href = "{% url help_single_item cat.slug item.slug %}">{{cat}}</a>
+			{% endfor %}
+			{% endif %}
+		{% endwith %}	
+	<p>
+		<a href="{% url help_category_list %}">See all help topics</a>
+	</p>
+</div>
+{% endblock %}

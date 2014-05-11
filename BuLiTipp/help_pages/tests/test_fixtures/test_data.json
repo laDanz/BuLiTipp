@@ -1,0 +1,135 @@
+[
+  {
+    "pk": 1,
+    "model": "help_pages.helpcategory",
+    "fields": {
+      "title": "Top Level 1",
+      "order": 1.0,
+      "slug": "top-level-1",
+      "parent": null,
+      "published": true
+    }
+  },
+  {
+    "pk": 2,
+    "model": "help_pages.helpcategory",
+    "fields": {
+      "title": "Top Level 2",
+      "order": 1.0,
+      "slug": "top-level-2",
+      "parent": null,
+      "published": true
+    }
+  },
+  {
+    "pk": 3,
+    "model": "help_pages.helpcategory",
+    "fields": {
+      "title": "Top Level 3",
+      "order": 1.0,
+      "slug": "top-level-3",
+      "parent": null,
+      "published": true
+    }
+  },
+  {
+    "pk": 4,
+    "model": "help_pages.helpcategory",
+    "fields": {
+      "title": "Subcategory 1.1",
+      "order": 1.0,
+      "slug": "subcategory-11",
+      "parent": 1,
+      "published": true
+    }
+  },
+  {
+    "pk": 5,
+    "model": "help_pages.helpcategory",
+    "fields": {
+      "title": "Subcategory 1.2",
+      "order": 1.0,
+      "slug": "subcategory-12",
+      "parent": 1,
+      "published": true
+    }
+  },
+  {
+    "pk": 6,
+    "model": "help_pages.helpcategory",
+    "fields": {
+      "title": "Subcategory 2.1",
+      "order": 1.0,
+      "slug": "subcategory-21",
+      "parent": 2,
+      "published": true
+    }
+  },
+  {
+    "pk": 7,
+    "model": "help_pages.helpcategory",
+    "fields": {
+      "title": "Subcategory 1.2.1",
+      "order": 1.0,
+      "slug": "subcategory-121",
+      "parent": 5,
+      "published": true
+    }
+  },
+  {
+    "pk": 1,
+    "model": "help_pages.helpitem",
+    "fields": {
+      "category": 7,
+      "body": "This is thing A",
+      "slug": "aaaaa",
+      "denormed_search_terms": "aaaaa this is thing a subcategory 1.2.1",
+      "heading": "AAAAA",
+      "tags": "test1",
+      "published": true,
+      "order": 1.0
+    }
+  },
+  {
+    "pk": 2,
+    "model": "help_pages.helpitem",
+    "fields": {
+      "category": 7,
+      "body": "This is thing BBBB",
+      "slug": "bbbb",
+      "denormed_search_terms": "bbbb this is thing bbbb subcategory 1.2.1",
+      "heading": "BBBB",
+      "tags": "test3, test 4\" \"this & that\"",
+      "published": true,
+      "order": 1.0
+    }
+  },
+  {
+    "pk": 3,
+    "model": "help_pages.helpitem",
+    "fields": {
+      "category": 2,
+      "body": "Thing C is hung off Top Level 2, which also has a subcategory",
+      "slug": "thing-c-attached-top-level-2",
+      "denormed_search_terms": "this is thing c, attached to top level 2 thing c is hung off top level 2, which also has a subcategory top level 2",
+      "heading": "This is thing C, attached to Top Level 2",
+      "tags": "test1 test2",
+      "published": true,
+      "order": 1.0
+    }
+  },
+  {
+    "pk": 4,
+    "model": "help_pages.helpitem",
+    "fields": {
+      "category": 3,
+      "body": "This is hung off Top Level 3, which has no subcategories",
+      "slug": "ddddd",
+      "denormed_search_terms": "ddddd this is hung off top level 3, which has no subcategories top level 3",
+      "heading": "DDDDD",
+      "tags": "test2",
+      "published": true,
+      "order": 1.0
+    }
+  }
+]

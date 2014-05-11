@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load tags tagging_tags %}
+
+{% block title %} Help {% endblock %}
+
+{% block content %}
+<div>
+    <ul>
+    {% for item in tagged_items %}
+        <li>
+            <a href="{% url 'help_single_item' item.category.slug item.slug %}">
+                {{item.heading|truncatewords:15}}
+            </a>
+            (Category:
+            <a href="{% url 'help_item_list' item.category.slug %}">
+                {{item.category.title }}
+            </a>
+            )
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

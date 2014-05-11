@@ -1,0 +1,11 @@
+<div>
+	<h3>{{item.heading}}</h3>
+	<p>
+		{{item.body}}
+	</p>
+	<p>
+	In: {% for cat in item.category.trail %}
+		<a href="{% url help_item_list cat.slug %}">{{cat}}</a>&nbsp;>&nbsp;
+	{% endfor %}
+	</p>
+</div>
