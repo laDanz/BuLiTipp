@@ -5,6 +5,8 @@ from django import forms
 from django.forms.util import ErrorList
 from models import User, ReminderOffsets, Tippgemeinschaft, TG_Einladung
 import autocomplete_light
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 
 class UserModelForm(forms.ModelForm):
 	class Meta:
@@ -24,6 +26,15 @@ class UserCreateForm(forms.ModelForm):
 		widgets = {
 			'password': forms.PasswordInput(),
 		}
+	def clean_email(self):
+		cleanedData = self.cleaned_data['email']
+		
+		#email just once
+		user_count = User.objects.filter(email=self.data["email"]).count()
+		if user_count > 0:
+			raise ValidationError(_('Email address already in use!'), code='emailaddressinuse')
+		
+		return cleanedData
 
 class TG_createForm(forms.ModelForm):
 	class Meta:

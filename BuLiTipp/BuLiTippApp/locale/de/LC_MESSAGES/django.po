@@ -31,3 +31,7 @@ msgstr "Erinnerungsmail Versatz"
 
 msgid "Open"
 msgstr "Jeder kann beitreten!"
+
+msgid "Email address already in use!"
+msgstr "E-Mail-Adresse bereits registriert!"
+
