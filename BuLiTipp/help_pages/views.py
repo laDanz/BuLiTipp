@@ -17,6 +17,7 @@ from help_pages.models import (
     HelpItem
 )
 
+HELP_ITEMS_PER_PAGE = 10
 
 def category_list(request, template_name='help_category_list.html'):
 
@@ -32,7 +33,7 @@ def category_list(request, template_name='help_category_list.html'):
 
     help_items = HelpItem.published_objects.all()
 
-    paginator = Paginator(help_items, 2) # Show 2 help on each row
+    paginator = Paginator(help_items, HELP_ITEMS_PER_PAGE)
     page = request.GET.get('page')
 
     try:

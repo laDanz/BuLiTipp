@@ -1,0 +1,116 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-11 15:24+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:33
+msgid "Published?"
+msgstr "Veröffentlicht?"
+
+#: models.py:65 models.py:141
+msgid "No HTML in the this label, please"
+msgstr "Bitte kein HTML verwenden"
+
+#: models.py:69
+msgid "Help category"
+msgstr "Hilfe Kategorie"
+
+#: models.py:70
+msgid "Help categories"
+msgstr "Hilfe Kategorien"
+
+#: models.py:145
+msgid "Main content for the Help item"
+msgstr "Hilfetext für dieses Hilfethema"
+
+#: models.py:158
+msgid "Tags"
+msgstr "Tags"
+
+#: models.py:168 models.py:169
+msgid "Help item"
+msgstr "Hilfethema"
+
+#: templates/help_category_list.html:13
+msgid "Categories"
+msgstr "Kategorien"
+
+#: templates/help_category_list.html:31 templates/help_item_list.html:26
+msgid "This section has no help items in it, but its subcategories may do"
+msgstr "Hier gibt es keine Hilfe, aber vielleicht in den Unterkategorien"
+
+#: templates/help_category_list.html:35 templates/help_item_list.html:30
+msgid "Heading"
+msgstr "Titel"
+
+#: templates/help_category_list.html:36 templates/help_item_list.html:31
+msgid "Body"
+msgstr "Hilfe"
+
+#: templates/help_category_list.html:54
+msgid "previous"
+msgstr "zurück"
+
+#: templates/help_category_list.html:70
+msgid "next"
+msgstr "weiter"
+
+#: templates/help_item_list.html:15
+msgid "Subsections of this section:"
+msgstr "Untersektionen:"
+
+#: templates/help_item_list.html:45
+msgid "Go back"
+msgstr "Zurück"
+
+#: templates/help_single_item.html:19
+#, fuzzy
+msgid "Also in this section:"
+msgstr "Untersektionen:"
+
+#: templates/help_single_item.html:26
+msgid "Back to previous page"
+msgstr "Zurück zur vorherigen Seite"
+
+#: templates/help_single_item.html:27
+msgid "See all help topics"
+msgstr "Alle Hilfethemen anschauen"
+
+#: templates/search_results.html:5
+msgid "Help Search Results"
+msgstr "Hilfe Suchergebnisse"
+
+#: templates/search_results.html:9
+msgid "Search results for"
+msgstr "Suchergebnisse für"
+
+#: templates/search_results.html:12
+msgid "Sorry, there are no hits for"
+msgstr "Es gibt leider keine Ergebnisse für"
+
+#: templates/search_results.html:14
+msgid "The following contained all of the search terms:"
+msgstr "In folgenden Hilfethemen gab es Treffer:"
+
+#: templates/includes/help_search_form.html:12
+msgid "Find help!"
+msgstr "Hilfe suchen!"
+
+#: templates/includes/help_search_hit_entry.html:10
+msgid "Show full help item"
+msgstr "Zur kompletten Hilfeseite"

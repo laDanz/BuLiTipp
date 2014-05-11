@@ -1,11 +1,12 @@
+{% load i18n %}
 <div>
 	<h3>{{item.heading}}</h3>
 	<p>
-		{{item.body}}
+		{% with cont=item.body|truncatewords:50 %}
+			{{cont|striptags}}
+		{% endwith %}
 	</p>
 	<p>
-	In: {% for cat in item.category.trail %}
-		<a href="{% url help_item_list cat.slug %}">{{cat}}</a>&nbsp;>&nbsp;
-	{% endfor %}
+		<a href="{% url help_single_item item.category.slug item.slug %}">{% trans "Show full help item" %}</a>	
 	</p>
 </div>

@@ -2,7 +2,7 @@
 
 
 <!-- (% load tags tagging_tags %) -->
-{% load help_tags %}
+{% load help_tags i18n %}
 
 {% block title %} Help {% endblock %}
 
@@ -10,7 +10,7 @@
 {% block braedcrumb_content %}{% endblock %}
 <div class="row-fluid show-grid">
 	<div class="col-xs-12 col-sm-4">
-		<h3>Categories</h3>
+		<h3>{% trans "Categories" %}</h3>
 			<ul>
 	{% for category in branches %}
 		{% with "category_nest.html" as template_name %}
@@ -28,19 +28,21 @@
 		<div class="row-fluid show-grid">
 					{% block page_list %}
 						{% if help_items|length == 0 %}
-							<p class="text-warning">This section has no help items in it, but its subcategories may do</p>
+							<p class="text-warning">{% trans "This section has no help items in it, but its subcategories may do" %}</p>
 						{% endif %}
 						<table class="table table-bordered">
 						<tr>
-							<th>Heading</th>
-							<th>Body</th>
+							<th>{% trans "Heading" %}</th>
+							<th>{% trans "Body" %}</th>
 						</tr>
 						{% for item in help_items %}
 						<tr>
 							<td>
 								<a href="{% url help_single_item item.category.slug item.slug %}">{{item.heading}}</a>
 							</td>
-							<td>{{item.body}}</td>
+							{% with cont=item.body|truncatewords:15 %}
+								<td>{{cont|striptags}}</td>
+							{% endwith %}
 						</tr>
 						{% endfor %}
 						</table>
@@ -49,7 +51,7 @@
 		<div class="pagination">
 		  <ul>
 			{% if help_items.has_previous %}
-			  <li><a href="?page={{ help_items.previous_page_number }}">previous</a></li>
+			  <li><a href="?page={{ help_items.previous_page_number }}">{% trans "previous" %}</a></li>
 			{% endif %}
 			{% if help_items.page_range_data.show_first %}
 			  <li><a href="?page=1">1</a></li>
@@ -65,7 +67,7 @@
 				<li><a href="?page={{ help_items.paginator.num_pages }}">{{ help_items.paginator.num_pages }}</a></li>
 			{% endif %}
 			{% if help_items.has_next %}
-				<li><a href="?page={{ help_items.next_page_number }}">next</a></li>
+				<li><a href="?page={{ help_items.next_page_number }}">{% trans "next" %}</a></li>
 			{% endif %}
   		 </ul>
 		</div>

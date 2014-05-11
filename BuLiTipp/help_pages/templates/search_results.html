@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %} Help Search Results {% endblock %}
+{% load i18n %}
+
+{% block title %} {% trans "Help Search Results" %} {% endblock %}
 
 {% block content %}
 	
-<h1>Search results for {{query}}</h1>
+<h1>{% trans "Search results for" %} {{query}}</h1>
 
 {% ifequal hits|length 0 %}
-	<p>Sorry, there are no hits for '{{query}}'</p>
+	<p>{% trans "Sorry, there are no hits for" %} '{{query}}'</p>
 {% else %}
-<p>The following contained all of the search terms:</p>
+<p>{% trans "The following contained all of the search terms:" %}</p>
 {% endifequal %}
 
 {% for item in hits  %}

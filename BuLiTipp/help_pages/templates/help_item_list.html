@@ -1,5 +1,7 @@
 {% extends "help_category_list.html" %}
 
+{% load i18n %}
+
 {% block braedcrumb_content %}
 	<ul class="breadcrumb">
 		<li><a href = "{% url help_category_list %}">Start</a></li> <span class="divider">/</span>
@@ -10,7 +12,7 @@
 	</ul>
 	{% with category.subcategories as subcategories %}
 		{% if subcategories %}
-			Subsections of this section:
+			{% trans "Subsections of this section:" %}
 		{% endif %}
 		{% for category in subcategories %}
 		{% with "category_nest.html" as template_name %}
@@ -21,23 +23,25 @@
 {% endblock %}
 {% block page_list %}
 	{% if help_items|length == 0 %}
-		<p class="text-warning">This section has no help items in it, but its subcategories may do</p>
+		<p class="text-warning">{% trans "This section has no help items in it, but its subcategories may do" %}</p>
 	{% endif %}
 	<table class="table table-bordered">
 	<tr>
-		<th>Heading</th>
-		<th>Body</th>
+		<th>{% trans "Heading" %}</th>
+		<th>{% trans "Body" %}</th>
 	</tr>
 	{% for item in help_items %}
 	<tr>
 		<td>
 			<a href="{% url help_single_item item.category.slug item.slug %}">{{item.heading}}</a>
 		</td>
-		<td>{{item.body}}</td>
+		{% with cont=item.body|truncatewords:15 %}
+			<td>{{cont|striptags}}</td>
+		{% endwith %}
 	</tr>
 	{% endfor %}
 	</table>
 	<p>
-		<a href="{% url help_category_list %}">Go back</a>
+		<a href="{% url help_category_list %}">{% trans "Go back" %}</a>
 	</p>
 {% endblock %}

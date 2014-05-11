@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block title %} Help {% endblock %}
 
 {% block content %}
@@ -11,18 +13,18 @@
 	</p>
 
 	<h2>{{item.heading}}</a></h2>
-		<p>{{item.body}}</p>
+		<p>{{item.body|safe}}</p>
 		{% with item.related_items as related_items %}
-			{{related_items}}
 			{% if related_items %}
-			Also in this section:
+			{% trans "Also in this section:" %}
 			{% for item in related_items  %}
 				<a href = "{% url help_single_item cat.slug item.slug %}">{{cat}}</a>
 			{% endfor %}
 			{% endif %}
 		{% endwith %}	
 	<p>
-		<a href="{% url help_category_list %}">See all help topics</a>
+		<a class="btn btn-default" onclick="history.back();">{% trans "Back to previous page" %}</a>
+		<a class="btn btn-primary" href="{% url help_category_list %}">{% trans "See all help topics" %}</a>
 	</p>
 </div>
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+
+<!-- (% load tags tagging_tags %) -->
+{% load help_tags i18n %}
+
+{% block title %} Help {% endblock %}
+
+{% block content %}
+{% block braedcrumb_content %}{% endblock %}
+<div class="row-fluid show-grid">
+	<div class="col-xs-12">
+	Diese Hilfeseite wurde nicht gefunden! Bitte Nutze die Suche, oder gehe auf die <a href="{% url help_category_list %}">Hilfeseite <span style="color:blue;" class="glyphicon glyphicon-question-sign"></span></a>.
+		<div class="right pull-right">
+			{% help_search_form %}
+		</div>
+	</div>
+</div>
+{% endblock %}
