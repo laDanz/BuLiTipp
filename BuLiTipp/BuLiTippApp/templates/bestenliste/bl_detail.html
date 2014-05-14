@@ -54,12 +54,18 @@ else
 function fix_bestlist_reduction(id){
 	// insert "empty lines" when a position is skipped due to bestenlist reduction.
 	last_position = 99;
+	skipped_position = 0;
 	items = $('#'+id+' tr[name^="bl_tg"]');
 	$.each(items,function( index, value ) {
 		  pos = parseInt($(value).children()[0].innerHTML);
-		  if(pos > last_position+1){
+		  if(pos > last_position+1+skipped_position){
 			  var empty_tr = $("<tr name='"+$(value).attr("name")+"' style='"+$(value).attr("style")+"'><td class='text-center' colSpan="+$(value).children().size()+">...</td></tr>");
 			  $(value).before(empty_tr)
+		  }
+		  if(pos == last_position){
+			  skipped_position++;
+		  }else{
+			  skipped_position=0;
 		  }
 		  last_position = pos;
 	});

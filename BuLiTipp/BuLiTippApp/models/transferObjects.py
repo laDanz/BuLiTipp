@@ -141,13 +141,17 @@ class BestenlisteTO(object):
 		''' Reduce the size of the bestenlist to the given amount, keeping the user inside, if given.
 			Smallest possible plaetze_amount seems to be 9.(first three, last three, three around the user)
 		'''
+		help_position = 1
+		for blp in self.bestenlistenPlatz:
+			blp.help_position = help_position
+			help_position += 1
 		user_platz = 1
 		if user_id:
 			for blp in self.bestenlistenPlatz:
 				if blp.user and blp.user.id and blp.user.id == user_id:
-					user_platz = blp.position
+					user_platz = blp.help_position
 					break
-		max_platz = self.bestenlistenPlatz[-1].position
+		max_platz = self.bestenlistenPlatz[-1].help_position
 		shown_plaetze = Set([1,2,3,max_platz, max_platz-1, max_platz-2, user_platz])
 		if user_platz > 1:
 			shown_plaetze.add(user_platz-1)
@@ -157,10 +161,10 @@ class BestenlisteTO(object):
 		it = iter(self.bestenlistenPlatz)
 		while len(shown_plaetze)<max_platz and len(shown_plaetze)<plaetze_amount:
 			 blp = it.next()
-			 shown_plaetze.add(blp.position)
+			 shown_plaetze.add(blp.help_position)
 		# the final reduce
 		for blp in self.bestenlistenPlatz[:]:
-			if not blp.position in shown_plaetze:
+			if not blp.help_position in shown_plaetze:
 				self.bestenlistenPlatz.remove(blp)
 
 

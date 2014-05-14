@@ -16,8 +16,8 @@ class BestenlisteDAO():
 	def all(user_id=None, full=True):
 		return BestenlisteDAO.query(user_id=user_id, full=full)
 	@staticmethod
-	def spieltag(spieltag_id, user_id=None, full=True):
-		return BestenlisteDAO.query(spieltag_id=spieltag_id, user_id=user_id, full=full)
+	def spieltag(spieltag_id, user_id=None, full=True, plaetze_amount=10):
+		return BestenlisteDAO.query(spieltag_id=spieltag_id, user_id=user_id, full=full, plaetze_amount=plaetze_amount)
 	@staticmethod
 	def spielzeit(spielzeit_id, user_id=None, full=True, aktuell_spieltag_id=None, tg_oriented=True, plaetze_amount=10):
 		'''aktuell_spieltag_id : calculate all Punkte til that spieltag. Result will include Punkte from the given spieltag.
@@ -91,9 +91,16 @@ class BestenlisteDAO():
 				blp.append(BestenlistenPlatzTO(None, user, punkte))
 			blp.sort(key=lambda blp:blp.punkte, reverse=True)
 			platz = 1
+			last_points = -1
+			plaetze_skipped = 0
 			for bl in blp:
-				bl.position = platz
+				if(bl.punkte == last_points):
+					plaetze_skipped += 1
+				else:
+					plaetze_skipped = 0
+				bl.position = platz - plaetze_skipped
 				platz += 1
+				last_points = bl.punkte
 			# TODO: muss noch gefuellt werden?
 			bl = BestenlisteTO(blp, None, None)
 			if user_id and tg_oriented:
@@ -140,9 +147,16 @@ class BestenlisteDAO():
 			tg.bezeichner = "Übersicht"
 			blp.sort(key=lambda blp:blp.punkte, reverse=True)
 			platz = 1
+			last_points = -1
+			plaetze_skipped = 0
 			for bl in blp:
-				bl.position = platz
+				if(bl.punkte == last_points):
+					plaetze_skipped += 1
+				else:
+					plaetze_skipped = 0
+				bl.position = platz - plaetze_skipped
 				platz += 1
+				last_points = bl.punkte
 			result[tg] = BestenlisteTO(blp, None, None)
 		result = collections.OrderedDict(sorted(result.items(),key=lambda t:t[0].id, reverse=False))
 		return result
