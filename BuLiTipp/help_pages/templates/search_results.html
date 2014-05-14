@@ -6,10 +6,10 @@
 
 {% block content %}
 	
-<h1>{% trans "Search results for" %} {{query}}</h1>
+<h1>{% trans "Search results for" %} "{{query}}"</h1>
 
 {% ifequal hits|length 0 %}
-	<p>{% trans "Sorry, there are no hits for" %} '{{query}}'</p>
+	<p>{% trans "Sorry, there are no hits for your search." %}</p>
 {% else %}
 <p>{% trans "The following contained all of the search terms:" %}</p>
 {% endifequal %}
