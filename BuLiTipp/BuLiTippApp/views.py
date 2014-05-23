@@ -860,6 +860,9 @@ def detail(request, spieltag_id, spielzeit_id=-1, info=""):
 
 @login_required
 def saisontipp(request, spielzeit_id):
+	sz = Spielzeit.objects.get(pk=spielzeit_id)
+	if not sz.is_tippable():
+		return HttpResponseRedirect(reverse("saisontipp", args=(spielzeit_id)))
 	try:
 		absteigertipp_id = []
 		absteigertipp_id.append(request.POST["absteigertipp1_id"])
