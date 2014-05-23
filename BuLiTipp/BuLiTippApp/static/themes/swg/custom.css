@@ -1,0 +1,39 @@
+body{
+height:1080px;
+background: -webkit-radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* Safari 5.1 to 6.0 */
+background: -o-radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* For Opera 11.6 to 12.0 */
+background: -moz-radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* For Firefox 3.6 to 15 */
+background: radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* Standard syntax (must be last) */
+}
+
+.navbar-default{
+background: -webkit-radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* Safari 5.1 to 6.0 */
+background: -o-radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* For Opera 11.6 to 12.0 */
+background: -moz-radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* For Firefox 3.6 to 15 */
+background: radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* Standard syntax (must be last) */
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus,
+.nav>li>a:hover, .nav>li>a:focus,
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus{
+background: -webkit-linear-gradient(	black 25%, red 50%, gold 75%); /* Safari 5.1 to 6.0 */
+background: -o-linear-gradient(			black 25%, red 50%, gold 75%); /* For Opera 11.6 to 12.0 */
+background: -moz-linear-gradient(		black 25%, red 50%, gold 75%); /* For Firefox 3.6 to 15 */
+background: linear-gradient(			black 25%, red 50%, gold 75%); /* Standard syntax (must be last) */
+color:white;	
+}
+tables {
+background: -webkit-radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* Safari 5.1 to 6.0 */
+background: -o-radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* For Opera 11.6 to 12.0 */
+background: -moz-radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* For Firefox 3.6 to 15 */
+background: radial-gradient(white 70%,gold 80%, red 90%, black 100%); /* Standard syntax (must be last) */
+}
+
+tr[class=active] td {
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary,
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success{
+background: -webkit-linear-gradient(	black 25%, red 50%, gold 75%); /* Safari 5.1 to 6.0 */
+background: -o-linear-gradient(			black 25%, red 50%, gold 75%); /* For Opera 11.6 to 12.0 */
+background: -moz-linear-gradient(		black 25%, red 50%, gold 75%); /* For Firefox 3.6 to 15 */
+background: linear-gradient(			black 25%, red 50%, gold 75%); /* Standard syntax (must be last) */
+}
