@@ -126,7 +126,10 @@ class BestenlisteDAO():
 					punkte = punkte.filter(spieltag__spielzeit_id=spielzeit_id)
 				if aktuell_spieltag_id is not None:
 					punkte = punkte.filter(spieltag__id__lte=aktuell_spieltag_id)
-				punkte = sum(punkte)*10/len(users)/10.
+				try:
+					punkte = sum(punkte)*10/len(users)/10.
+				except:
+					punkte = 0
 				user = User()
 				user.username = tg.bezeichner
 				user.id = tg.bezeichner
