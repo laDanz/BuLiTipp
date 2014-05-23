@@ -35,3 +35,5 @@ msgstr "Jeder kann beitreten!"
 msgid "Email address already in use!"
 msgstr "E-Mail-Adresse bereits registriert!"
 
+msgid "no matches found"
+msgstr "Niemanden gefunden"
