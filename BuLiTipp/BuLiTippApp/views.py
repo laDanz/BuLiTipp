@@ -457,7 +457,10 @@ def get_news_by_request(request):
 
 def get_spielzeiten_by_request(request):
 	szTOs=[]
-	for sz in Spielzeit.objects.all().order_by("id").reverse():
+	szs = Spielzeit.objects.distinct().order_by("id").reverse()
+	if request.user.is_authenticated():
+		szs = szs.filter(tippgemeinschaft__users__id=request.user.id)
+	for sz in szs:
 		szTOs.append(SpielzeitBezeichnerTO(sz))
 	return szTOs
 
