@@ -21,9 +21,11 @@ from smtplib import SMTPRecipientsRefused
 autocomplete_light.autodiscover()
 
 from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 from models import Spieltag, Spielzeit, Tipp, Kommentar, News, Meistertipp, Verein, Herbstmeistertipp, Absteiger, Tabelle, Punkte, User, Spiel, Tippgemeinschaft, TG_Einladung
 from models import NewsTO, SpielzeitTO, SpieltagTO, SpielTO, SpielzeitBezeichnerTO
 from models import BestenlisteDAO, TabelleDAO, VereinDAO
+from models import ReminderOffsets
 from datetime import datetime
 from sets import Set
 from forms import UserModelForm, UserCreateForm
@@ -91,10 +93,18 @@ def tg_einladung_acc(request, tge_key):
 			user.is_active = True
 			group = Group.objects.filter(name="BuLiTipp")[0]
 			user.groups.add(group)
+			user.theme_id=4
+			user.input_type_id=1
+			ro = ReminderOffsets.objects.get(value=0)
+			user.reminder_offset.add(ro)
+			ro = ReminderOffsets.objects.get(value=2)
+			user.reminder_offset.add(ro)
 			user.save()
 			user = authenticate(username=user.username, password=request.POST["new_password1"])
 			djlogin(request, user)
 			messages.success(request, "Account erfolgreich aktiviert!")
+		else:
+			messages.warning(request, "Bitte 2 Mal das gleiche Passwort eingeben!")
 	try:
 		user_created = False
 		tge = TG_Einladung.objects.get(key=tge_key)
@@ -110,7 +120,7 @@ def tg_einladung_acc(request, tge_key):
 		if user_created:
 			return HttpResponseRedirect(reverse("user"))
 		return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tge.tg.id]))
-	except:
+	except ObjectDoesNotExist as e:
 		messages.warning(request, "Einladung besteht nicht mehr!")
 		return HttpResponseRedirect(reverse("home"))
 
@@ -289,9 +299,15 @@ def register(request):
 		if form.is_valid():
 			pw = user.password
 			user.set_password(user.password)
+			user.theme_id=4
+			user.input_type_id=1
 			if not open_registration:
 				user.is_active = False
 			form.save()
+			ro = ReminderOffsets.objects.get(value=0)
+			user.reminder_offset.add(ro)
+			ro = ReminderOffsets.objects.get(value=2)
+			user.reminder_offset.add(ro)
 			if open_registration:
 				group = Group.objects.filter(name="BuLiTipp")[0]
 				user.groups.add(group)
