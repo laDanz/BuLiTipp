@@ -38,16 +38,16 @@ import BuLiTippApp.ngmail as mail
 import uuid
 
 TG_KICK_SUBJECT = 'TippBuLi: Rauswurf aus Tippgemeinschaft "%s" !'
-TG_KICK_MSG = 'Hallo %s,\n\nDu wurdest von %s aus der Tippgemeinschaft "%s" rausgeworfen!\n\nViele Gruesze,\ndie BuLiTippApp'
-TG_KICK_MSG_HTML = '<html>Hallo %s,<br><br>Du wurdest von %s aus der Tippgemeinschaft "<b>%s</b>" rausgeworfen!<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
+TG_KICK_MSG = 'Hallo %s,\n\nDu wurdest von %s aus der Tippgemeinschaft "%s" rausgeworfen!\n\nViele Gruesze,\nTippBuLi.de'
+TG_KICK_MSG_HTML = '<html>Hallo %s,<br><br>Du wurdest von %s aus der Tippgemeinschaft "<b>%s</b>" rausgeworfen!<br><br>Viele Gr&uuml;&szlig;e,<br>TippBuLi.de</html>'
 
 TG_JOIN_SUBJECT = 'TippBuLi: Eintritt in die Tippgemeinschaft "%s" !'
-TG_JOIN_MSG = 'Hallo %s,\n\n%s ist in deine Tippgemeinschaft "%s" eingetreten!\nSo lange deine Tippgemeinschaft "offen" ist, kann jeder beitreten der moechte.\n\nViele Gruesze,\ndie BuLiTippApp'
-TG_JOIN_MSG_HTML = '<html>Hallo %s,<br><br>%s ist in deine Tippgemeinschaft "<b>%s</b>" eingetreten!<br>So lange deine Tippgemeinschaft "offen" ist, kann jeder beitreten der m&ouml;chte.<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
+TG_JOIN_MSG = 'Hallo %s,\n\n%s ist in deine Tippgemeinschaft "%s" eingetreten!\nSo lange deine Tippgemeinschaft "offen" ist, kann jeder beitreten der moechte.\n\nViele Gruesze,\nTippBuLi.de'
+TG_JOIN_MSG_HTML = '<html>Hallo %s,<br><br>%s ist in deine Tippgemeinschaft "<b>%s</b>" eingetreten!<br>So lange deine Tippgemeinschaft "offen" ist, kann jeder beitreten der m&ouml;chte.<br><br>Viele Gr&uuml;&szlig;e,<br>TippBuLi.de</html>'
 
 TG_QUIT_SUBJECT = 'TippBuLi: Austritt aus Tippgemeinschaft "%s" !'
-TG_QUIT_MSG = 'Hallo %s,\n\n%s ist aus deiner Tippgemeinschaft "%s" ausgetreten!\n\nViele Gruesze,\ndie BuLiTippApp'
-TG_QUIT_MSG_HTML = '<html>Hallo %s,<br><br>%s ist aus deiner Tippgemeinschaft "<b>%s</b>" ausgetreten!<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
+TG_QUIT_MSG = 'Hallo %s,\n\n%s ist aus deiner Tippgemeinschaft "%s" ausgetreten!\n\nViele Gruesze,\nTippBuLi.de'
+TG_QUIT_MSG_HTML = '<html>Hallo %s,<br><br>%s ist aus deiner Tippgemeinschaft "<b>%s</b>" ausgetreten!<br><br>Viele Gr&uuml;&szlig;e,<br>TippBuLi.de</html>'
 
 
 ### new:
@@ -135,8 +135,8 @@ def tg_einladung_del(request, tge_key):
 		return HttpResponseRedirect(reverse("home"))
 
 TGE_SUBJECT = 'TippBuLi: Einladung zur Tippgemeinschaft "%s" !'
-TGE_MSG = 'Hallo %s,\n\nDu hast eine Einladung von %s fuer die Tippgemeinschaft "%s" erhalten!\n\nDie Beschreibung der Tippgemeinschaft ist:\n\n%s\n\nWenn du hier klickst: %s dann nimmst du die Einladung an!\nWenn du die Einladung nicht annehmen moechtest, dann klicke hier: %s oder ignoriere diese Email.\n\nViele Gruesze,\ndie BuLiTippApp'
-TGE_MSG_HTML = '<html>Hallo %s,<br><br>Du hast eine Einladung von %s f&uuml;r die Tippgemeinschaft "<b>%s</b>" erhalten!<br><br>Die Beschreibung der Tippgemeinschaft ist:<br><br><i>%s</i><br><br>Wenn du <a href="%s">hier</a> klickst dann <b>nimmst du die Einladung an</b>!<br>Wenn du die Einladung <b>nicht annehmen</b> m&ouml;chtest, dann klicke <a href="%s">hier</a> oder ignoriere diese Email.<br><br>Viele Gr&uuml;&szlig;e,<br>die BuLiTippApp</html>'
+TGE_MSG = 'Hallo %s,\n\nDu hast eine Einladung von %s fuer die Tippgemeinschaft "%s" erhalten!\n\nDie Beschreibung der Tippgemeinschaft ist:\n\n%s\n\nWenn du hier klickst: %s dann nimmst du die Einladung an!\nWenn du die Einladung nicht annehmen moechtest, dann klicke hier: %s oder ignoriere diese Email.\n\nViele Gruesze,\nTippBuLi.de'
+TGE_MSG_HTML = '<html>Hallo %s,<br><br>Du hast eine Einladung von %s f&uuml;r die Tippgemeinschaft "<b>%s</b>" erhalten!<br><br>Die Beschreibung der Tippgemeinschaft ist:<br><br><i>%s</i><br><br>Wenn du <a href="%s">hier</a> klickst dann <b>nimmst du die Einladung an</b>!<br>Wenn du die Einladung <b>nicht annehmen</b> m&ouml;chtest, dann klicke <a href="%s">hier</a> oder ignoriere diese Email.<br><br>Viele Gr&uuml;&szlig;e,<br>TippBuLi.de</html>'
 
 def tg_einladung_new_form(request, tg_id):
 	def return_empty_form():
