@@ -18,6 +18,10 @@ class UserModelForm(forms.ModelForm):
 		f=self.fields['reminder_offset']
 		f.help_text = "Bitte auswählen, wie viele Tage vor Beginn eines Spieltages eine Email geschickt werden soll. Wenn man z.B.: \"0\" wählen würde, würde man am Spieltag selbst morgens eine Benachrichtigung erhalten." +\
 				"<br>Halten Sie die Strg-Taste (⌘ für Mac) während des Klickens gedrückt, um mehrere Einträge auszuwählen."
+		f=self.fields['first_name']
+		f.help_text = "Dein Spitzname, wie du auf der Seite angesprochen wirst und andere deinen Namen sehen."
+		f=self.fields['username']
+		f.help_text = "Erforderlich. 30 Zeichen oder weniger. Nur alphanumerische Zeichen (Buchstaben, Ziffern und @/./+/-/_) sind erlaubt.<b>(Mit diesem Namen musst du dich einloggen.)</b>"
 
 class UserCreateForm(forms.ModelForm):
 	class Meta:
