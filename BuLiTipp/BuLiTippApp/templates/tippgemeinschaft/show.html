@@ -62,7 +62,7 @@
 						<ul>
 							{% for tge in tg.tg_einladung_set.all %}
 							<li>
-								{% firstof tge.fuer.first_name tge.fuer.username %} (vom {{ tge.datum|date:"d.m." }})
+								{% firstof tge.fuer.first_name|slice:":3" tge.fuer.username|slice:":3" %}*** (vom {{ tge.datum|date:"d.m." }})
 								{% if user.id == tg.chef.id or user.id == tge.von.id or user.id == tge.fuer.id %}
 									<a href="{% url "del_tg_einladung" tge.key %}" style="color:orange;" title="Einladung zurück ziehen" onclick='return confirm("Einladung wirklich zurück ziehen?");'><span class="glyphicon glyphicon-remove"></span></a>
 								{% endif %}
