@@ -63,12 +63,12 @@
 							{% for tge in tg.tg_einladung_set.all %}
 							<li>
 								{% firstof tge.fuer.first_name tge.fuer.username %} (vom {{ tge.datum|date:"d.m." }})
-								{% if user.id == tg.chef.id or user.id == user_.id %}
+								{% if user.id == tg.chef.id or user.id == tge.von.id or user.id == tge.fuer.id %}
 									<a href="{% url "del_tg_einladung" tge.key %}" style="color:orange;" title="Einladung zurück ziehen" onclick='return confirm("Einladung wirklich zurück ziehen?");'><span class="glyphicon glyphicon-remove"></span></a>
 								{% endif %}
 							</li>
 							{% endfor %}
-							{% if user.id == tg.chef.id %}
+							{% if tg.open and user in tg.users.all or user.id == tg.chef.id %}
 								<li><b><a href="{% url "new_tg_einladung" tg.id %}">Weiteren Tipper einladen!</a></b></li>
 							{% endif %}
 						</ul>
