@@ -99,7 +99,7 @@ function fix_bestlist_reduction(id){
 					<tr {% if user = blp.user %}class="active"{% endif %} name="bl_tg_{{tg.id}}"  style="{% if forloop.parentloop.counter > 1 %}display:none;{% endif %}">
 						<td>{{blp.position}}</td>
 						<td>
-							{% if not spieltag.vollstaendig_getippt|get:blp.user.id and spieltag.tippbare_spiele > 0 %}
+							{% if not spieltag.vollstaendig_getippt|get:blp.user.id and spieltag.tippbare_spiele > 0 and blp.user.id < 9999 %}
 								<span class="glyphicon glyphicon-warning-sign pull-right" style="color:orange;" title="{% firstof firstof blp.user.first_name blp.user.username %} hat noch nicht getippt!"></span>
 							{% endif %}
 							{% firstof blp.user.first_name blp.user.username %}
