@@ -1,7 +1,7 @@
-﻿{% extends 'spieltag/st_detail_xs.html' %}
+{% extends 'spieltag/st_detail_xs.html' %}
 {% block countdown_block %}{% endblock %}
 {% block additional_header%}
-	{% for tipp in spieltag.spiele.1.andereTipps %}
+	{% for tipp in spieltag.spiele.0.andereTipps %}
 		<th style="max-width: 50px;width: 50px;-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-o-transform: rotate(-90deg);writing-mode: tb-rl;">{% firstof tipp.user.first_name tipp.user.username %}</th>
 	{% endfor %}
 {% endblock %}
@@ -10,11 +10,15 @@
 	{% for tipp in spiel.andereTipps %}
 	<td class="text_center tipp{{tipp.punkte}}" style="max-width: 50px;">
 		{% if not spiel.tippbar and tipp.ergebnis %}
-			<nobr>{{ tipp.ergebnis }}
-			{% if tipp.punkte >= 0 %}
-				({{ tipp.punkte }})
+			{% if tipp.ergebnis|striptags == "DNF" %}
+				<nobr></nobr>
+			{% else %}
+				<nobr>{{ tipp.ergebnis }}
+				{% if tipp.punkte >= 0 %}
+					({{ tipp.punkte }})
+				{% endif %}
+				</nobr>
 			{% endif %}
-			</nobr>
 		{% endif %}
 	</td>
 	{% endfor %}

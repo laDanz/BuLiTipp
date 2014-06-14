@@ -546,7 +546,9 @@ def get_spieltagTO_by_request(request, st):
 			if len(atipp)>0:
 				andereTipps_.append(atipp[0])
 			else:
-				andereTipps_.append(None)
+				t=Tipp()
+				t.user_id=id
+				andereTipps_.append(t)
 		andereTipps = andereTipps_
 		for tipp in andereTipps:
 			if tipp == None:
