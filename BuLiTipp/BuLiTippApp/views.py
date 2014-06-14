@@ -49,6 +49,15 @@ TG_QUIT_SUBJECT = 'TippBuLi: Austritt aus Tippgemeinschaft "%s" !'
 TG_QUIT_MSG = 'Hallo %s,\n\n%s ist aus deiner Tippgemeinschaft "%s" ausgetreten!\n\nViele Gruesze,\nTippBuLi.de'
 TG_QUIT_MSG_HTML = '<html>Hallo %s,<br><br>%s ist aus deiner Tippgemeinschaft "<b>%s</b>" ausgetreten!<br><br>Viele Gr&uuml;&szlig;e,<br>TippBuLi.de</html>'
 
+def add_overall_messages(request):
+	link = reverse("user")
+	try:
+		if request.user.reminder_offset.count() == 0:
+			messages.warning(request, "Du hast keine <a href=\"" + link + "\">Erinnerungen</a> konfiguriert!")
+	except:
+		pass
+	for einladung in TG_Einladung.objects.filter(fuer_id=request.user.id):
+		messages.warning(request, "Du hast noch eine offene Einladung von "+einladung.von.first_name+" für \""+einladung.tg.bezeichner+"\"! <a href=\"" + reverse("acc_tg_einladung", kwargs={"tge_key":einladung.key}) + "\">Annehmen</a> oder <a href=\"" + reverse("del_tg_einladung", kwargs={"tge_key":einladung.key}) + "\">ablehnen</a>?")
 
 ### new:
 def del_tg_user(request, tg_id, user_id):
@@ -286,6 +295,7 @@ def userform(request, referer=None):
 	context["form"] = form
 	if(referer):
 		context["referer"] = referer
+	add_overall_messages(request)
 	return render(request, 'user/user.html', context)
 
 open_registration = True
@@ -343,6 +353,7 @@ class NewsPageView(TemplateView):
 			pass
 		context["news"]=get_news_by_request(request)
 		context["referer"]=self.referer #request.META["HTTP_REFERER"]
+		add_overall_messages(request)
 		return self.render_to_response(context)
 
 class HomePageView(TemplateView):
@@ -367,6 +378,7 @@ class HomePageView(TemplateView):
 		context["spieltag"]=get_spieltag_by_request(request, spielzeit_id, spieltag_id)
 		context["kommentare"]=get_kommentare_by_request(request, spielzeit_id, context["spieltag"].id)
 		context["referer"]=self.referer #request.META["HTTP_REFERER"]
+		add_overall_messages(request)
 		return self.render_to_response(context)
 	def post(self, request, *args, **kwargs):
 		return self.get(request, *args, **kwargs)
@@ -417,6 +429,7 @@ class SaisontippView(TemplateView):
 		except:
 			pass
 		context["referer"]=self.referer
+		add_overall_messages(request)
 		return self.render_to_response(context)
 
 class BestenlisteView(TemplateView):
@@ -437,6 +450,7 @@ class BestenlisteView(TemplateView):
 		context["spielzeiten"]=szs
 		context["news"]=get_news_by_request(request)
 		context["referer"]=self.referer
+		add_overall_messages(request)
 		return self.render_to_response(context)
 
 def get_kommentare_by_request(request, spielzeit_id, spieltag_id):
