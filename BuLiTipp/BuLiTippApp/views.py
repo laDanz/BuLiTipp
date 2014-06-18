@@ -50,14 +50,22 @@ TG_QUIT_MSG = 'Hallo %s,\n\n%s ist aus deiner Tippgemeinschaft "%s" ausgetreten!
 TG_QUIT_MSG_HTML = '<html>Hallo %s,<br><br>%s ist aus deiner Tippgemeinschaft "<b>%s</b>" ausgetreten!<br><br>Viele Gr&uuml;&szlig;e,<br>TippBuLi.de</html>'
 
 def add_overall_messages(request):
-	link = reverse("user")
 	try:
 		if request.user.reminder_offset.count() == 0:
+			link = reverse("user")
 			messages.warning(request, "Du hast keine <a href=\"" + link + "\">Erinnerungen</a> konfiguriert!")
 	except:
 		pass
 	for einladung in TG_Einladung.objects.filter(fuer_id=request.user.id):
 		messages.warning(request, "Du hast noch eine offene Einladung von "+einladung.von.first_name+" für \""+einladung.tg.bezeichner+"\"! <a href=\"" + reverse("acc_tg_einladung", kwargs={"tge_key":einladung.key}) + "\">Annehmen</a> oder <a href=\"" + reverse("del_tg_einladung", kwargs={"tge_key":einladung.key}) + "\">ablehnen</a>?")
+	if request.user.id:
+		for sz in Spielzeit.objects.all():
+			try:
+				mt = Meistertipp.objects.get(user_id=request.user.id, spielzeit_id=sz.id)
+			except:
+				mt = None
+			if sz.is_tippable() and mt == None:
+				messages.warning(request, "Du musst noch den <a href=\""+reverse("saisontipp", kwargs={"spielzeit_id":sz.id})+"\">Saisontipp</a> abgeben!")
 
 ### new:
 def del_tg_user(request, tg_id, user_id):
