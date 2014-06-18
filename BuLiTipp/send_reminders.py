@@ -37,7 +37,7 @@ def run(test=False):
 		send = day_difference < 10
 		if not send and test:
 			print "not sending any emails fpr this saison, since it's to far away"
-		for user in User.objects.filter(is_active = True).filter(groups = 1).filter(tg_user__spielzeit=sp.id):
+		for user in User.objects.filter(is_active = True).filter(groups = 1).filter(tg_user__spielzeit=sp.id).distinct():
 			if not day_difference in map(lambda r:r.value, user.reminder_offset.all()):
 				if test:
 					print "User %s will not be reminded because of settings." % (str(user.username))
