@@ -428,6 +428,8 @@ class SaisontippView(TemplateView):
 			context["absteiger"] = Absteiger.objects.filter(user_id=request.user.id, spielzeit_id=spielzeit_id)
 		except:
 			pass
+		if not Spielzeit.objects.get(pk=spielzeit_id).is_tippable():
+			context["meistertipp_andere"] = ((m.user, m.mannschaft) for m in Meistertipp.objects.filter(spielzeit_id=spielzeit_id).exclude(user_id=request.user.id))
 		context["referer"]=self.referer
 		add_overall_messages(request)
 		return self.render_to_response(context)

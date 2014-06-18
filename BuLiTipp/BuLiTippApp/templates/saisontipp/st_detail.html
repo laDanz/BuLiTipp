@@ -95,9 +95,21 @@ function disableOptions() {
 		disableOptions();
 		</script>
 		{% endif %}
-		
-		<input type="submit" class="btn btn-primary" value="Speichern !" {% if not spielzeit.tippbar %}disabled{% endif %}/>
-		
+		{% if spielzeit.tippbar %}
+		<input type="submit" class="btn btn-primary" value="Speichern !"/>
+		{% endif %}
 		</form>
+		{% if not spielzeit.tippbar %}
+		<div class="text-center form-group table-responsive">
+			<table class="table">
+				<thead><tr><th class="text-center">Tipper</th><th class="text-center">Tipp</th></tr></thead>
+				<tbody>
+					{% for u,m in meistertipp_andere %}
+					<tr><td>{% firstof u.first_name u.username%}</td><td>{{m}}</td></tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% endif %}
 	</div>
 </div>
