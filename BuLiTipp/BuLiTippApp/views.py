@@ -290,9 +290,9 @@ def userform(request, referer=None):
 	user = User.objects.get(pk = request.user.id)
 	pwchange_form = PasswordChangeForm(user=request.user)
 	context["pwchange_form"] = pwchange_form
-	context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=user.id).order_by("spielzeit")
-	context["tg_member"] = Tippgemeinschaft.objects.filter(users=user.id).exclude(chef__id=user.id).order_by("spielzeit")
-	context["tg_open"] = Tippgemeinschaft.objects.filter(open=True).exclude(chef__id=user.id).exclude(users=user.id).order_by("spielzeit")
+	context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=user.id).filter(spielzeit__archiviert=False).order_by("spielzeit")
+	context["tg_member"] = Tippgemeinschaft.objects.filter(users=user.id).filter(spielzeit__archiviert=False).exclude(chef__id=user.id).order_by("spielzeit")
+	context["tg_open"] = Tippgemeinschaft.objects.filter(open=True).filter(spielzeit__archiviert=False).exclude(chef__id=user.id).exclude(users=user.id).order_by("spielzeit")
 	if request.method == 'POST':
 		form = UserModelForm(request.POST, instance = user)
 		if form.is_valid():
@@ -481,7 +481,7 @@ def get_news_by_request(request):
 
 def get_spielzeiten_by_request(request):
 	szTOs=[]
-	szs = Spielzeit.objects.distinct().order_by("id").reverse()
+	szs = Spielzeit.objects.distinct().filter(archiviert = False).order_by("id").reverse()
 	if request.user.is_authenticated():
 		szs = szs.filter(tippgemeinschaft__users__id=request.user.id)
 	for sz in szs:
