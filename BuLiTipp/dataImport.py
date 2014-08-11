@@ -31,7 +31,7 @@ if __name__ == "__main__":
 	
 	#POKAL
 	f.readline()
-	spielzeit.isPokal = f.readline()=='true'
+	spielzeit.isPokal = f.readline()[:-1]=='true'
 	
 	#Confirmation
 	print "Bezeichner:	" + spielzeit.bezeichner
