@@ -8,8 +8,9 @@ from KickerSync import transformation
 from BuLiTippApp.models import Spiel, Verein
 from KickerSync.models import SpieltagXMLData
 
+'''enabling debug mode can cause encoding problems'''
+DEBUG = False
 
-DEBUG = True
 
 def syncSpieltag(compared_spieltag, spielid):
 	for spiel in compared_spieltag.spiele:
