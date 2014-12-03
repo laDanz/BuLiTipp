@@ -39,7 +39,7 @@ def getSpieltagData(spieltag):
 	if DEBUG:
 		print "response from URL " + url
 		print data_read
-	document, errors = tidy_document(data_read, options={'numeric-entities':1})
+	document, errors = tidy_document(data_read, options={'numeric-entities':1, 'output-xml':1})
 	#fix cdata
 	document=document.replace("]]>", "<!-- ]]> -->")
 	document=document.replace("&#160;", " ")
