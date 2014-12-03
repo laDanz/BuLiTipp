@@ -5,6 +5,9 @@
 {% block countdown_block %}
 <div class="text-center" style="padding-top: 10px;">
 	<div id="dude"></div>
+	{% if user.is_staff %}
+		<span><a href="{% url "parse" spieltag.id %}">abgleichen!</a></span>
+	{% endif %}
 </div>
 <script>
 var jahr={{spieltag.datum.year}}, monat={{spieltag.datum.month}}, tag={{spieltag.datum.day}}, stunde={{spieltag.datum.hour}}, minute={{spieltag.datum.minute}}, sekunde={{spieltag.datum.second}};

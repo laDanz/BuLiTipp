@@ -1,0 +1,87 @@
+{% extends 'kicker_base.html' %}
+
+{% load url from future %}
+{% load filters %}
+
+<!--parse-->
+{% block title %}Synchronisierung{% endblock %}
+
+{% block content %}
+	<span>Spieltag: {{ spieltag.nummer }} ({{spieltag.datum|date:"d.m. G:i"}})</span>
+	{% if spieltag.syncresult_datum %}
+		<span style="float:right">Zeige Daten von {{ spieltag.syncresult_datum|date:"d.m. G:i" }}. <a href="{% url "clearcache" spieltag.syncresult_id %}">Refresh!</a></span>
+	{% endif %}
+	{% if spieltag.spiele %}
+		<div class="table-responsive">
+			<table class="table" style="border:1px black solid;">
+				<thead>
+					<tr >
+						<th colspan=3 class="text-center">Spiel</th >
+						<th class="text-center">Zeitpunkt</th >
+						<th class="text-center">Ergebnis</th >
+						<th class="text-center"></th >
+					</tr>
+				</thead>
+				<tbody>
+					{% for spiel in spieltag.spiele  %}
+					<tr >
+						<td class="text-right">
+							<b>{{ spiel.heimmannschaft }}</b>  
+						</td>
+						<td class="text-center">
+							vs 
+						</td>
+						<td class="text-left">
+							<b>{{ spiel.auswaertsmannschaft }}</b> 
+						</td>
+						<td>
+							{{spiel.datum|date:"d.m. G:i"}} Uhr
+							{% if spiel.syncresult.datum|date:"d.m. G:i" != spiel.datum|date:"d.m. G:i" %}
+								<br>
+								<b name="diff_{{ spiel.id}}_datum">vs</b>
+								<br>
+								{{spiel.syncresult.datum|date:"d.m. G:i"}}
+							{% endif %}
+						
+						</td>
+						<td>
+							{{ spiel.ergebniss }}
+							{% if spiel.syncresult.ergebniss != spiel.ergebniss %}
+								<b name="diff_{{ spiel.id}}_ergebniss">vs</b>
+								{{spiel.syncresult.ergebniss}}
+							{% endif %}
+						</td>
+						<td>
+							<a id="diff_{{ spiel.id}}_link" href="{% url "sync" spieltag.id spiel.id %}">übernehmen</a>
+							<script>
+								if ($('*[name*="diff_{{ spiel.id}}"]').length == 0){
+									$('#diff_{{ spiel.id}}_link').hide();
+								}
+							</script>
+						</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	{% else %}
+		<p>Keine Spiele an diesem Spieltag.</p>
+	{% endif %}
+	<div style="width:33%;float:left;">
+	{% if spieltag.previous %}
+		<a href="{% url "parse" spieltag.previous.id %}">vorheriger Spieltag</a>
+	{% else %}
+		<a href="#" disabled="disabled">vorheriger Spieltag</a>
+	{% endif %}
+	</div>
+	<div style="width:33%;float:left;text-align:center;">
+		<a href="{% url "spieltag" spieltag.spielzeit_id spieltag.id %}">Zur&uuml;ck zur Hauptseite</a>
+	</div>
+	{% if spieltag.next %}
+		<a href="{% url "parse" spieltag.next.id %}" style="float:right;">n&auml;chster Spieltag</a>
+	{% else %}
+		<a href="#" disabled="disabled" style="float:right;">n&auml;chster Spieltag</a>
+	{% endif %}
+		
+		
+	
+{% endblock %}
