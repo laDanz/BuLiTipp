@@ -7,7 +7,11 @@
 {% block title %}Synchronisierung{% endblock %}
 
 {% block content %}
-	<span>Spieltag: {{ spieltag.nummer }} ({{spieltag.datum|date:"d.m. G:i"}})</span>
+	<span>Spieltag: {{ spieltag.nummer }} ({{spieltag.datum|date:"d.m. G:i"}})
+		{% if spieltag.datum|date:"d.m. G:i" != spieltag.sync_datum|date:"d.m. G:i" %}
+			<b>vs</b> ({{ spieltag.sync_datum|date:"d.m. G:i" }}) <a href="{% url "sync" spieltag.id %}">übernehmen</a>
+		{% endif %}
+	</span>
 	{% if spieltag.syncresult_datum %}
 		<span style="float:right">Zeige Daten von {{ spieltag.syncresult_datum|date:"d.m. G:i" }}. <a href="{% url "clearcache" spieltag.syncresult_id %}">Refresh!</a></span>
 	{% endif %}

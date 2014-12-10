@@ -13,8 +13,8 @@ DEBUG = False
 
 
 def syncSpieltag(compared_spieltag, spielid):
-	for spiel in compared_spieltag.spiele:
-		if (spielid):
+	if (spielid):
+		for spiel in compared_spieltag.spiele:
 			if(int(spielid)==spiel.id):
 				assert spiel.syncresult is not None
 				assert spiel.syncresult.datum is not None
@@ -22,6 +22,10 @@ def syncSpieltag(compared_spieltag, spielid):
 				spiel.datum = spiel.syncresult.datum
 				spiel.ergebniss = spiel.syncresult.ergebniss
 				spiel.save()
+	else:
+		# no spiel provided to sync, just sync the spieltag datum
+		compared_spieltag.datum=compared_spieltag.sync_datum
+		compared_spieltag.save()
 	return compared_spieltag
 
 
@@ -70,7 +74,9 @@ def compareSpieltag(spieltag):
 	root = getSpieltagData(spieltag)
 	assert root.tag == 'spieltag'
 	spiele = []
-	for spiel in spieltag.spiel_set.all():
+	# first_datum is the date of the spieltag, according to sync data
+	first_datum = None
+	for spiel in spieltag.spiel_set.all().order_by("datum"):
 		spiele.append(spiel)
 		for xmlspiel in root:
 			time = xmlspiel.find('zeitpunkt').text
@@ -87,10 +93,14 @@ def compareSpieltag(spieltag):
 			if(am):
 				localspiel.auswaertsmannschaft = am
 			localspiel.datum = datetime.strptime(time, format)
-			localspiel.ergebniss = xmlspiel.find('ergebnis').text		
+			localspiel.ergebniss = xmlspiel.find('ergebnis').text
+			if first_datum == None or first_datum > localspiel.datum:
+				first_datum = localspiel.datum
 			if (compareSpiel(spiel, localspiel)):
 				break
 	spieltag.spiele=spiele
+	# save the parsed date of the spieltag to "sync_datum"
+	spieltag.sync_datum=first_datum
 	return spieltag
 
 def compareSpiel(spiel, localspiel):
