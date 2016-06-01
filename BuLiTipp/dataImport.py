@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 from django.utils import timezone
 import string, datetime, sys, os, codecs
 
+debug = False
+
 if __name__ == "__main__":
 	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "BuLiTipp.settings")
 	import BuLiTipp.settings
@@ -17,58 +19,14 @@ if __name__ == "__main__":
 	f = codecs.open(file, encoding='utf-8')
 	spieltag=False
 	vereine	= []
-	
-	spielzeit=Spielzeit()
-	
-	#BEZEICHNER
-	f.readline()
-	spielzeit.bezeichner=f.readline()
-	
-	#SAISONTIPPEND
-	f.readline()
-	date = f.readline()[:-1]
-	spielzeit.saisontipp_end=datetime.datetime.strptime(date, "%d/%m/%Y %H:%M")
-	
-	#POKAL
-	f.readline()
-	spielzeit.isPokal = f.readline()[:-1]=='true'
-	
-	#Confirmation
-	print "Bezeichner:	" + spielzeit.bezeichner
-	print "Saisontipp Ende	" + unicode(spielzeit.saisontipp_end)
-	print "Pokal:		" + unicode(spielzeit.isPokal)
-	right = raw_input("Ist dies richtig?")
-	if (not right=="y"):
-		print "Abbruch!"
-		exit(0);
-	
-	spielzeit.save()
-	for st in spielzeit.spieltag_set.all():
-		st.delete()
-	stag = None
-	datum =	None
+
 	last_datum = None
-	nummer = 0
-	new_vereine = 0
-	
-	def retrieveOrCreate(s):
-		try:
-			# TODO: find Verein with similar writing
-			v = Verein.objects.filter(name=s)[0]
-			return v
-		except:
-			global new_vereine
-			v = Verein()
-			v.name = s
-			v.save()
-			new_vereine += 1
-			return v
-	
 	def parseDate(datum):
 		DATA_FORMAT_LONG = [
 			'%d/%m/%Y | %H:%M',
 			'%d.%m.%Y, %H.%M',
-			'%d.%m.%Y'
+			'%d.%m.%Y',
+			'%Y-%m-%dT%H:%M:%S'
 			]
 		''' possible formats:
 			%d/%m/%Y | %H:%M
@@ -89,11 +47,68 @@ if __name__ == "__main__":
 		except:
 			pass
 	
+
+	
+	spielzeit=Spielzeit()
+	
+	#BEZEICHNER
+	f.readline()
+	spielzeit.bezeichner=f.readline()
+	
+	#SAISONTIPPEND
+	f.readline()
+	date = f.readline()[:-1]
+	spielzeit.saisontipp_end=parseDate(date)
+	
+	#POKAL
+	f.readline()
+	spielzeit.isPokal = f.readline()[:-1]=='true'
+	
+	#Confirmation
+	print "Bezeichner:	" + spielzeit.bezeichner
+	print "Saisontipp Ende	" + unicode(spielzeit.saisontipp_end)
+	print "Pokal:		" + unicode(spielzeit.isPokal)
+	right = raw_input("Ist dies richtig?")
+	if (not right=="y"):
+		print "Abbruch!"
+		exit(0);
+	
+	spielzeit.save()
+	for st in spielzeit.spieltag_set.all():
+		st.delete()
+	stag = None
+	datum =	None
+	bezeichner = None
+	nummer = 0
+	new_vereine = 0
+	
+	def retrieveOrCreate(s):
+		try:
+			# TODO: find Verein with similar writing
+			v = Verein.objects.filter(name=s)[0]
+			return v
+		except:
+			global new_vereine
+			v = Verein()
+			v.name = s
+			v.save()
+			new_vereine += 1
+			return v
+	
 	for line in f:
 		#FORMAT
 		# Date(in different formats)	<TAB>	Verein1	<TAB>	<TRENNER>	<TAB>	Verein2
-		print "processing: " + unicode(line)
-		if spieltag:
+		if debug:
+			print "processing line: " + unicode(line)
+		if line.startswith("SPIELTAG"):
+			print "encountered SPIELTAG" + line
+			spieltag = True
+			bezeichner = None
+		elif line.startswith('"'):
+			print "encountered BEZEICHNER" + line
+			spieltag = True
+			bezeichner = line.split('"')[1]
+		elif spieltag:
 			nummer += 1
 			v=line.split("\t")
 			datum =	v[0]
@@ -107,6 +122,7 @@ if __name__ == "__main__":
 			print "v1:"+v1+", v2:"+v2
 			spieltag = False
 			stag = Spieltag()
+			stag.bezeichner = bezeichner
 			stag.spielzeit=spielzeit
 			stag.nummer=nummer
 			# datum
@@ -120,13 +136,6 @@ if __name__ == "__main__":
 			spiel.ergebniss="DNF"
 			spiel.datum = parseDate(datum)
 			spiel.save()
-		elif line.startswith("SPIELTAG"):
-			print "encountered SPIELTAG" + line
-			spieltag = True
-		elif line.startswith('"'):
-			print "encountered BEZEICHNER" + line
-			stag.bezeichner = line.split('"')[1]
-			stag.save()
 		else:
 			v=line.split("\t")
 			datum =	v[0]
@@ -146,5 +155,6 @@ if __name__ == "__main__":
 			print "datum: " + unicode(spiel.datum)
 			spiel.save()
 	print str(len(vereine))	+ "Vereine gefunden"
-	print str(new_vereine) + "neue Vereine gefunden!"
-
+	print str(new_vereine) + "neue Vereine gefunden:"
+	for v in new_vereine:
+		print v

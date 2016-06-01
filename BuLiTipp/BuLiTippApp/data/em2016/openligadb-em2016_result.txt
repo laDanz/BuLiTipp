@@ -1,0 +1,48 @@
+BEZEICHNER
+EM 2016
+SAISONTIPPEND
+2016-06-10T21:00:00
+POKAL
+true
+SPIELTAG
+2016-06-10T21:00:00	Frankreich	-	Rumänien
+2016-06-11T15:00:00	Albanien	-	Schweiz
+2016-06-15T18:00:00	Rumänien	-	Schweiz
+2016-06-15T21:00:00	Frankreich	-	Albanien
+2016-06-19T21:00:00	Schweiz	-	Frankreich
+2016-06-19T21:00:00	Rumänien	-	Albanien
+SPIELTAG
+2016-06-11T18:00:00	Wales	-	Slowakei
+2016-06-11T21:00:00	England	-	Russland
+2016-06-15T15:00:00	Russland	-	Slowakei
+2016-06-16T15:00:00	England	-	Wales
+2016-06-20T21:00:00	Slowakei	-	England
+2016-06-20T21:00:00	Russland	-	Wales
+SPIELTAG
+2016-06-12T18:00:00	Polen	-	Nordirland
+2016-06-12T21:00:00	Deutschland	-	Ukraine
+2016-06-16T18:00:00	Ukraine	-	Nordirland
+2016-06-16T21:00:00	Deutschland	-	Polen
+2016-06-21T18:00:00	Ukraine	-	Polen
+2016-06-21T18:00:00	Nordirland	-	Deutschland
+SPIELTAG
+2016-06-12T15:00:00	Türkei	-	Kroatien
+2016-06-13T15:00:00	Spanien	-	Tschechien
+2016-06-17T18:00:00	Tschechien	-	Kroatien
+2016-06-17T21:00:00	Spanien	-	Türkei
+2016-06-21T21:00:00	Kroatien	-	Spanien
+2016-06-21T21:00:00	Tschechien	-	Türkei
+SPIELTAG
+2016-06-13T18:00:00	Irland	-	Schweden
+2016-06-13T21:00:00	Belgien	-	Italien
+2016-06-17T15:00:00	Italien	-	Schweden
+2016-06-18T15:00:00	Belgien	-	Irland
+2016-06-22T21:00:00	Italien	-	Irland
+2016-06-22T21:00:00	Schweden	-	Belgien
+SPIELTAG
+2016-06-14T18:00:00	Österreich	-	Ungarn
+2016-06-14T21:00:00	Portugal	-	Island
+2016-06-18T18:00:00	Island	-	Ungarn
+2016-06-18T21:00:00	Portugal	-	Österreich
+2016-06-22T18:00:00	Ungarn	-	Portugal
+2016-06-22T18:00:00	Island	-	Österreich

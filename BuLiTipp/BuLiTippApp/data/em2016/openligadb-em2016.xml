@@ -1,0 +1,1164 @@
+<ArrayOfMatchdata xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Matchdata>
+		<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37181</matchID>
+		<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-10T21:00:00</matchDateTime>
+		<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+		<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-10T19:00:00Z</matchDateTimeUTC>
+		<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21065</groupID>
+		<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">1</groupOrderID>
+		<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe A</groupName>
+		<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+		<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+		<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+		<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+		<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Frankreich</nameTeam1>
+		<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Rumänien</nameTeam2>
+		<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">144</idTeam1>
+		<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">143</idTeam2>
+		<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/20px-Flag_of_France.svg.png</iconUrlTeam1>
+		<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">http://www.openligadb.de/images/teamicons/Rumänien.gif</iconUrlTeam2>
+		<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+		<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+		<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-05-26T17:20:20.227</lastUpdate>
+		<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+		<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+			<locationID>1020</locationID>
+			<locationCity>Saint-Denis</locationCity>
+			<locationStadium>Stade de France</locationStadium>
+		</location>
+		<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+	</Matchdata>
+	<Matchdata>
+		<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37182</matchID>
+		<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-11T15:00:00</matchDateTime>
+		<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+		<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-11T13:00:00Z</matchDateTimeUTC>
+		<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21065</groupID>
+		<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">1</groupOrderID>
+		<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe A</groupName>
+		<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+		<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+		<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+		<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+		<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Albanien</nameTeam1>
+		<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Schweiz</nameTeam2>
+		<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">2889</idTeam1>
+		<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">38</idTeam2>
+		<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">http://www.dfs-wappen.de/media/land/wappen_fl/dfs_fl_albanien.gif</iconUrlTeam1>
+		<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">http://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Flag_of_Switzerland_within_2to3.svg/20px-Flag_of_Switzerland_within_2to3.svg.png</iconUrlTeam2>
+		<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+		<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+		<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-05-17T15:33:31.57</lastUpdate>
+		<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+		<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+			<locationID>1037</locationID>
+			<locationCity>Lens Agglo</locationCity>
+			<locationStadium>Stade Bollaert-Delelis</locationStadium>
+		</location>
+		<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+	</Matchdata>
+	<Matchdata>
+		<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37183</matchID>
+		<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-15T18:00:00</matchDateTime>
+		<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+		<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-15T16:00:00Z</matchDateTimeUTC>
+		<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21065</groupID>
+		<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">1</groupOrderID>
+		<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe A</groupName>
+		<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+		<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+		<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+		<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+		<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Rumänien</nameTeam1>
+		<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Schweiz</nameTeam2>
+		<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">143</idTeam1>
+		<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">38</idTeam2>
+		<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">http://www.openligadb.de/images/teamicons/Rumänien.gif</iconUrlTeam1>
+		<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">http://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Flag_of_Switzerland_within_2to3.svg/20px-Flag_of_Switzerland_within_2to3.svg.png</iconUrlTeam2>
+		<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+		<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+		<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-05-17T15:37:51.967</lastUpdate>
+		<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+		<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+			<locationID>1038</locationID>
+			<locationCity>Paris</locationCity>
+			<locationStadium>Parc de Princes</locationStadium>
+		</location>
+		<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+	</Matchdata>
+	<Matchdata>
+		<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37184</matchID>
+		<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-15T21:00:00</matchDateTime>
+		<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+		<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-15T19:00:00Z</matchDateTimeUTC>
+		<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21065</groupID>
+		<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">1</groupOrderID>
+		<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe A</groupName>
+		<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+		<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+		<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+		<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+		<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Frankreich</nameTeam1>
+		<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Albanien</nameTeam2>
+		<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">144</idTeam1>
+		<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">2889</idTeam2>
+		<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/20px-Flag_of_France.svg.png</iconUrlTeam1>
+		<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">http://www.dfs-wappen.de/media/land/wappen_fl/dfs_fl_albanien.gif</iconUrlTeam2>
+		<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+		<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+		<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-05-17T15:35:06.43</lastUpdate>
+		<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+		<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+			<locationID>381</locationID>
+			<locationCity>Marseille</locationCity>
+			<locationStadium>Stade Vélodrome</locationStadium>
+		</location>
+		<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+	</Matchdata>
+	<Matchdata>
+		<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37185</matchID>
+		<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-19T21:00:00</matchDateTime>
+		<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+		<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-19T19:00:00Z</matchDateTimeUTC>
+		<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21065</groupID>
+		<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">1</groupOrderID>
+		<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe A</groupName>
+		<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+		<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+		<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+		<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+		<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Schweiz</nameTeam1>
+		<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Frankreich</nameTeam2>
+		<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">38</idTeam1>
+		<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">144</idTeam2>
+		<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">http://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Flag_of_Switzerland_within_2to3.svg/20px-Flag_of_Switzerland_within_2to3.svg.png</iconUrlTeam1>
+		<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/20px-Flag_of_France.svg.png</iconUrlTeam2>
+		<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+		<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+		<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-05-17T15:35:49.64</lastUpdate>
+		<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+		<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+			<locationID>1039</locationID>
+			<locationCity>Lille Métropole</locationCity>
+			<locationStadium>Stade Pierre Mauroy</locationStadium>
+		</location>
+		<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+	</Matchdata>
+	<Matchdata>
+		<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37186</matchID>
+		<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-19T21:00:00</matchDateTime>
+		<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+		<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-19T19:00:00Z</matchDateTimeUTC>
+		<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21065</groupID>
+		<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">1</groupOrderID>
+		<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe A</groupName>
+		<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+		<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+		<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+		<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+		<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Rumänien</nameTeam1>
+		<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Albanien</nameTeam2>
+		<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">143</idTeam1>
+		<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">2889</idTeam2>
+		<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">http://www.openligadb.de/images/teamicons/Rumänien.gif</iconUrlTeam1>
+		<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">http://www.dfs-wappen.de/media/land/wappen_fl/dfs_fl_albanien.gif</iconUrlTeam2>
+		<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+		<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+		<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-05-17T15:36:05.873</lastUpdate>
+		<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+		<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+		<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+			<locationID>1040</locationID>
+			<locationCity>Lyon</locationCity>
+			<locationStadium>Stade de Lyon</locationStadium>
+		</location>
+		<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+	</Matchdata>
+	<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37187</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-11T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-11T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21069</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">2</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe B</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Wales</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Slowakei</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">2939</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">763</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.dfs-wappen.de/media/land/wappen_fl/dfs_fl_wales.gif
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Flag_of_Slovakia.svg/20px-Flag_of_Slovakia.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-05-26T17:19:35.203</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>52</locationID>
+<locationCity/>
+<locationStadium/>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37188</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-11T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-11T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21069</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">2</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe B</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">England</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Russland</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">755</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">150</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Flag_of_England.svg/18px-Flag_of_England.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/20px-Flag_of_Russia.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-05-26T17:19:34.137</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>52</locationID>
+<locationCity/>
+<locationStadium/>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37189</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-15T15:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-15T13:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21069</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">2</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe B</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Russland</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Slowakei</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">150</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">763</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/20px-Flag_of_Russia.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Flag_of_Slovakia.svg/20px-Flag_of_Slovakia.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:15:50.657</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37190</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-16T15:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-16T13:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21069</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">2</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe B</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">England</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Wales</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">755</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">2939</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Flag_of_England.svg/18px-Flag_of_England.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.dfs-wappen.de/media/land/wappen_fl/dfs_fl_wales.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:16:12.683</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37191</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-20T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-20T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21069</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">2</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe B</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Slowakei</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">England</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">763</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">755</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Flag_of_Slovakia.svg/20px-Flag_of_Slovakia.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Flag_of_England.svg/18px-Flag_of_England.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:16:47.007</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37192</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-20T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-20T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21069</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">2</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe B</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Russland</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Wales</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">150</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">2939</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/20px-Flag_of_Russia.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.dfs-wappen.de/media/land/wappen_fl/dfs_fl_wales.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-05-16T22:24:58.987</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37193</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-12T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-12T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21070</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">3</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe C</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Polen</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Nordirland</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">1410</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">2920</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.dfs-wappen.de/media/land/wappen_fl/dfs_fl_nordirland.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:17:56.8</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37194</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-12T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-12T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21070</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">3</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe C</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Deutschland</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Ukraine</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">139</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">2004</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/20px-Flag_of_Germany.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/20px-Flag_of_Ukraine.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:18:11.997</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37195</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-16T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-16T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21070</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">3</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe C</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Ukraine</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Nordirland</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">2004</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">2920</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/20px-Flag_of_Ukraine.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.dfs-wappen.de/media/land/wappen_fl/dfs_fl_nordirland.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:18:39.267</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37196</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-16T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-16T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21070</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">3</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe C</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Deutschland</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Polen</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">139</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">1410</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/20px-Flag_of_Germany.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:18:56.837</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37197</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-21T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-21T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21070</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">3</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe C</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Ukraine</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Polen</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">2004</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">1410</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/20px-Flag_of_Ukraine.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:19:43.867</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37198</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-21T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-21T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21070</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">3</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe C</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Nordirland</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Deutschland</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">2920</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">139</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.dfs-wappen.de/media/land/wappen_fl/dfs_fl_nordirland.gif
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/20px-Flag_of_Germany.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:19:53.807</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37199</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-12T15:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-12T13:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21071</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">4</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe D</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Türkei</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Kroatien</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">153</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">146</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Türkei.gif
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_Croatia.svg/20px-Flag_of_Croatia.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:20:21.787</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37200</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-13T15:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-13T13:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21071</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">4</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe D</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Spanien</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Tschechien</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">170</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">141</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/20px-Flag_of_Spain.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Tschechien.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:20:40.15</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37201</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-17T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-17T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21071</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">4</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe D</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Tschechien</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Kroatien</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">141</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">146</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Tschechien.gif
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_Croatia.svg/20px-Flag_of_Croatia.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:21:37.077</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37202</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-17T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-17T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21071</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">4</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe D</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Spanien</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Türkei</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">170</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">153</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/20px-Flag_of_Spain.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Türkei.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:21:57.283</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37203</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-21T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-21T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21071</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">4</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe D</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Kroatien</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Spanien</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">146</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">170</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_Croatia.svg/20px-Flag_of_Croatia.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/20px-Flag_of_Spain.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:22:34.377</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37204</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-21T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-21T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21071</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">4</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe D</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Tschechien</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Türkei</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">141</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">153</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Tschechien.gif
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Türkei.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:22:42.457</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37205</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-13T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-13T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21072</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">5</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe E</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Irland</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Schweden</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">2003</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">151</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Flag_of_Ireland.svg/23px-Flag_of_Ireland.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Schweden.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:23:37.18</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37206</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-13T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-13T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21072</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">5</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe E</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Belgien</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Italien</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">2673</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">145</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Belgium_%28civil%29.svg/20px-Flag_of_Belgium_%28civil%29.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/20px-Flag_of_Italy.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:23:55.197</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37207</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-17T15:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-17T13:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21072</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">5</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe E</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Italien</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Schweden</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">145</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">151</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/20px-Flag_of_Italy.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Schweden.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:25:43.293</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37208</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-18T15:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-18T13:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21072</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">5</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe E</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Belgien</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Irland</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">2673</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">2003</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Belgium_%28civil%29.svg/20px-Flag_of_Belgium_%28civil%29.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Flag_of_Ireland.svg/23px-Flag_of_Ireland.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:26:04.133</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37209</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-22T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-22T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21072</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">5</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe E</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Italien</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Irland</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">145</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">2003</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/20px-Flag_of_Italy.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Flag_of_Ireland.svg/23px-Flag_of_Ireland.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:26:25.503</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37210</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-22T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-22T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21072</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">5</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe E</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Schweden</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Belgien</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">151</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">2673</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Schweden.gif
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Belgium_%28civil%29.svg/20px-Flag_of_Belgium_%28civil%29.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:26:43.653</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37211</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-14T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-14T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21073</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">6</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe F</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Österreich</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Ungarn</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">37</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">1395</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Oesterreich.gif
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:28:42.17</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37212</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-14T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-14T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21073</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">6</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe F</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Portugal</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Island</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">149</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">1394</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Portugal.svg/20px-Flag_of_Portugal.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:28:54.373</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37213</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-18T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-18T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21073</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">6</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe F</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Island</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Ungarn</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">1394</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">1395</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:29:10.907</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37214</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-18T21:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-18T19:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21073</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">6</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe F</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Portugal</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Österreich</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">149</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">37</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Portugal.svg/20px-Flag_of_Portugal.svg.png
+</iconUrlTeam1>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Oesterreich.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:29:21.84</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37215</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-22T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-22T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21073</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">6</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe F</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Ungarn</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Portugal</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">1395</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">149</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Portugal.svg/20px-Flag_of_Portugal.svg.png
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:29:47.463</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+<Matchdata>
+<matchID xmlns="http://msiggi.de/Sportsdata/Webservices">37216</matchID>
+<matchDateTime xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-22T18:00:00</matchDateTime>
+<TimeZoneID xmlns="http://msiggi.de/Sportsdata/Webservices">W. Europe Standard Time</TimeZoneID>
+<matchDateTimeUTC xmlns="http://msiggi.de/Sportsdata/Webservices">2016-06-22T16:00:00Z</matchDateTimeUTC>
+<groupID xmlns="http://msiggi.de/Sportsdata/Webservices">21073</groupID>
+<groupOrderID xmlns="http://msiggi.de/Sportsdata/Webservices">6</groupOrderID>
+<groupName xmlns="http://msiggi.de/Sportsdata/Webservices">Gruppe F</groupName>
+<leagueID xmlns="http://msiggi.de/Sportsdata/Webservices">1926</leagueID>
+<leagueName xmlns="http://msiggi.de/Sportsdata/Webservices">EM 2016</leagueName>
+<leagueSaison xmlns="http://msiggi.de/Sportsdata/Webservices">2016</leagueSaison>
+<leagueShortcut xmlns="http://msiggi.de/Sportsdata/Webservices">em2016</leagueShortcut>
+<nameTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">Island</nameTeam1>
+<nameTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">Österreich</nameTeam2>
+<idTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">1394</idTeam1>
+<idTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">37</idTeam2>
+<iconUrlTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<iconUrlTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">
+http://www.openligadb.de/images/teamicons/Oesterreich.gif
+</iconUrlTeam2>
+<pointsTeam1 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam1>
+<pointsTeam2 xmlns="http://msiggi.de/Sportsdata/Webservices">-1</pointsTeam2>
+<lastUpdate xmlns="http://msiggi.de/Sportsdata/Webservices">2016-02-08T07:30:01.283</lastUpdate>
+<matchIsFinished xmlns="http://msiggi.de/Sportsdata/Webservices">false</matchIsFinished>
+<matchResults xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<goals xmlns="http://msiggi.de/Sportsdata/Webservices"/>
+<location xmlns="http://msiggi.de/Sportsdata/Webservices">
+<locationID>0</locationID>
+</location>
+<NumberOfViewers xmlns="http://msiggi.de/Sportsdata/Webservices" xsi:nil="true"/>
+</Matchdata>
+</ArrayOfMatchdata>
