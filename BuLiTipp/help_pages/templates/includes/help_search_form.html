@@ -1,5 +1,5 @@
 {% load i18n %}
-<form action="{% url help_search_results %}" method="get" accept-charset="utf-8" class="form-search">
+<form action="{% url 'help_search_results' %}" method="get" accept-charset="utf-8" class="form-search">
 	{{search_form.errors}}
 	{% if search_form.errors %}
 		<ul>

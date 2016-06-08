@@ -6,7 +6,7 @@
 <ul class="nav nav-pills">
 {% for sz in spielzeiten%}
 	<li {% if sz.id == spielzeit.id %} class="active"{% endif %}>
-		<a href="{% url saisontipp sz.id %}">{{sz.bezeichner}}</a>
+		<a href="{% url 'saisontipp' sz.id %}">{{sz.bezeichner}}</a>
 	</li>
 {% endfor %}
 </ul>

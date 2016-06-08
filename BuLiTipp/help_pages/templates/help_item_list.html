@@ -4,9 +4,9 @@
 
 {% block braedcrumb_content %}
 	<ul class="breadcrumb">
-		<li><a href = "{% url help_category_list %}">Start</a></li> <span class="divider">/</span>
+		<li><a href = "{% url 'help_category_list' %}">Start</a></li> <span class="divider">/</span>
 		{% for cat in trail  %}
-		<li><a href = "{% url help_item_list cat.slug %}">{{cat}}</a></li>
+		<li><a href = "{% url 'help_item_list' cat.slug %}">{{cat}}</a></li>
 		{% if not forloop.last %} <span class="divider">/</span> {% endif %}
 		{% endfor %}
 	</ul>
@@ -33,7 +33,7 @@
 	{% for item in help_items %}
 	<tr>
 		<td>
-			<a href="{% url help_single_item item.category.slug item.slug %}">{{item.heading}}</a>
+			<a href="{% url 'help_single_item' item.category.slug item.slug %}">{{item.heading}}</a>
 		</td>
 		{% with cont=item.body|truncatewords:15 %}
 			<td>{{cont|striptags}}</td>
@@ -42,6 +42,6 @@
 	{% endfor %}
 	</table>
 	<p>
-		<a href="{% url help_category_list %}">{% trans "Go back" %}</a>
+		<a href="{% url 'help_category_list' %}">{% trans "Go back" %}</a>
 	</p>
 {% endblock %}

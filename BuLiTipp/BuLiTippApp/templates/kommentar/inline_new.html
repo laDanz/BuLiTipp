@@ -6,7 +6,7 @@
 	</div>
 	<div class="panel-body">
 {% endif %}	
-		<form action="{% url BuLiTippApp.views.post_kommentar spielzeit.id spieltag.id %}" method="post" role="form">
+		<form action="{% url 'BuLiTippApp.views.post_kommentar' spielzeit.id spieltag.id %}" method="post" role="form">
 			<div class="form-group">
 				{% csrf_token  %}
 				<input type="hidden" name="spieltag_id" value="{{spieltag_id}}" />

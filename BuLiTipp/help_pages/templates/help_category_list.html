@@ -38,7 +38,7 @@
 						{% for item in help_items %}
 						<tr>
 							<td>
-								<a href="{% url help_single_item item.category.slug item.slug %}">{{item.heading}}</a>
+								<a href="{% url 'help_single_item' item.category.slug item.slug %}">{{item.heading}}</a>
 							</td>
 							{% with cont=item.body|truncatewords:15 %}
 								<td>{{cont|striptags}}</td>

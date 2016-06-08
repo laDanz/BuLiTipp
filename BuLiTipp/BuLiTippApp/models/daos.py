@@ -147,6 +147,7 @@ class BestenlisteDAO():
 			punkte = sum(punkte)
 			blp.append(BestenlistenPlatzTO(None, user, punkte))
 			tg = Tippgemeinschaft()
+			tg.id = 99999 #fixme
 			tg.bezeichner = "Übersicht"
 			blp.sort(key=lambda blp:blp.punkte, reverse=True)
 			platz = 1

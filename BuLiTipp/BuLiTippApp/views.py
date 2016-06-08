@@ -158,7 +158,7 @@ TGE_MSG_HTML = '<html>Hallo %s,<br><br>Du hast eine Einladung von %s f&uuml;r di
 def tg_einladung_new_form(request, tg_id):
 	def return_empty_form():
 		context = {}
-		form = TG_Einladung_createForm(tg=tg, user=request.user)
+		form = TG_Einladung_createForm(tg=tg, user=request.user.user)
 		context["news"] = get_news_by_request(request)
 		context["form"] = form
 		return render(request, 'tippgemeinschaft/einladung_create.html', context)
@@ -188,11 +188,11 @@ def tg_einladung_new_form(request, tg_id):
 			return return_empty_form()
 		
 		tg_e = TG_Einladung()
-		form = TG_Einladung_createForm(request.POST, instance = tg_e, tg=tg, user=request.user)
+		form = TG_Einladung_createForm(request.POST, instance = tg_e, tg=tg, user=request.user.user)
 		if form.is_valid():
 			tg_e.key = uuid.uuid4()
 			tg_e.tg = tg
-			tg_e.von = request.user
+			tg_e.von = request.user.user
 			tg_e.fuer_id = user_select_id
 			try:
 				form.save()
@@ -240,7 +240,7 @@ def tg_show_form(request, tg_id):
 						TG_KICK_MSG_HTML % args)
 			return HttpResponseRedirect(reverse("user", args=["tgchange"]))
 		elif "join" in request.POST.keys() and tg.open:
-			tg.users.add(request.user)
+			tg.users.add(request.user.user)
 			tg.save()
 			messages.success(request, "Erfolgreich beigetreten!")
 			fuer = tg.chef.first_name if tg.chef.first_name else tg.chef.username
@@ -251,12 +251,12 @@ def tg_show_form(request, tg_id):
 				TG_JOIN_MSG_HTML % args)
 			return HttpResponseRedirect(reverse("show_tippgemeinschaft", args=[tg.id]))
 		else:
-			form = TG_showForm(request.POST, instance = tg, user=request.user)
+			form = TG_showForm(request.POST, instance = tg, user=request.user.user)
 			if form.is_valid() and tg.chef.id == request.user.id:
 				form.save()
 				messages.success(request, "Erfolgreich geändert!")
 	else:
-		form = TG_showForm(instance = tg, user=request.user)
+		form = TG_showForm(instance = tg, user=request.user.user)
 	context["news"] = get_news_by_request(request)
 	context["form"] = form
 	context["tg"] = tg
@@ -270,6 +270,7 @@ def tg_new_form(request):
 		tg = Tippgemeinschaft()
 		form = TG_createForm(request.POST, instance = tg)
 		if form.is_valid():
+			request.user = request.user.user #fixme
 			tg.chef = request.user
 			form.save()
 			tg.users.add(request.user)
@@ -288,7 +289,7 @@ def userform(request, referer=None):
 	context = {}
 	context["news"] = get_news_by_request(request)
 	user = User.objects.get(pk = request.user.id)
-	pwchange_form = PasswordChangeForm(user=request.user)
+	pwchange_form = PasswordChangeForm(user=request.user.user)
 	context["pwchange_form"] = pwchange_form
 	context["tg_created"] = Tippgemeinschaft.objects.filter(chef__id=user.id).filter(spielzeit__archiviert=False).order_by("spielzeit")
 	context["tg_member"] = Tippgemeinschaft.objects.filter(users=user.id).filter(spielzeit__archiviert=False).exclude(chef__id=user.id).order_by("spielzeit")
@@ -592,7 +593,7 @@ def delete_kommentar(request, spieltag_id=None, spielzeit_id=None):
 	
 def post_kommentar(request, spieltag_id=None, spielzeit_id=None):
 	text=request.POST["text"]
-	user=request.user
+	user=request.user.user
 	spieltag_id=request.POST["spieltag_id"]
 	reply_to=request.POST["reply_to"]
 	kommentar=Kommentar()
@@ -633,7 +634,7 @@ def tippen(request, spielzeit_id, spieltag_id):
 				#wenn nein: lege einen an
 				tipp = Tipp()
 				tipp.spiel_id = spiel_id
-				tipp.user = request.user
+				tipp.user = request.user.user
 			tipp.ergebniss = request.POST[tipp_]
 			#tipp speichern
 			tipp.save()
@@ -655,11 +656,11 @@ def tippen(request, spielzeit_id, spieltag_id):
 @sensitive_post_parameters()
 def change_pw(request):
 	context = {}
-	form = UserModelForm(instance=request.user)
+	form = UserModelForm(instance=request.user.user)
 	context["form"] = form
 	context["referer"] = "pwchange"
 	if request.method == "POST":
-		form = PasswordChangeForm(user=request.user, data=request.POST)
+		form = PasswordChangeForm(user=request.user.user, data=request.POST)
 		if form.is_valid():
 			form.save()
 			messages.success(request, "Passwort geändert!")
@@ -680,7 +681,7 @@ def delete_account(request):
 		return redirect(reverse("user"), context_instance=RequestContext(request))
 	# on submit: delete user, redirect to index page
 	if "submit" in request.POST.keys() :
-		user = request.user
+		user = request.user.user
 		user.delete()
 		djlogout(request)
 		return redirect(reverse("home"), context_instance=RequestContext(request))
@@ -690,7 +691,7 @@ def delete_account(request):
 
 @login_required
 def user_site(request, spielzeit_id=None):
-	user = request.user
+	user = request.user.user
 	
 # 	points_spielzeit = {}
 # 	for sz in Spielzeit.objects.all():
@@ -804,7 +805,7 @@ def best(request, full=True):
 		userpunkte.append((user, punkte))
 	userpunkte.sort(key=lambda punkt:punkt[1], reverse=True)
 	userpunkteplatz=[(userpunkt[0], userpunkt[1], platz+1) for platz, userpunkt in enumerate(userpunkte)]
-	user=request.user
+	user=request.user.user
 	for i, userp in enumerate(userpunkte):
 		if user.id == userp[0].id:
 			platz=i
@@ -898,7 +899,7 @@ def saisontipp(request, spielzeit_id):
 		absteiger.delete()
 		for id_ in absteigertipp_id:
 			absteiger=Absteiger()
-			absteiger.user=request.user
+			absteiger.user=request.user.user
 			absteiger.spielzeit_id=spielzeit_id
 			absteiger.mannschaft=Verein.objects.get(pk=id_)
 			absteiger.save()
@@ -916,7 +917,7 @@ def saisontipp(request, spielzeit_id):
 		herbstmeistertipp_id = request.POST["herbstmeistertipp_id"]
 		if herbstmeistertipp is None:
 			herbstmeistertipp=Herbstmeistertipp()
-			herbstmeistertipp.user=request.user
+			herbstmeistertipp.user=request.user.user
 			herbstmeistertipp.spielzeit_id=spielzeit_id
 		herbstmeistertipp.mannschaft_id=herbstmeistertipp_id
 		herbstmeistertipp.save()
@@ -924,7 +925,7 @@ def saisontipp(request, spielzeit_id):
 		meistertipp_id = request.POST["meistertipp_id"]
 		if meistertipp is None:
 			meistertipp=Meistertipp()
-			meistertipp.user=request.user
+			meistertipp.user=request.user.user
 			meistertipp.spielzeit_id=spielzeit_id
 		meistertipp.mannschaft_id=meistertipp_id
 		meistertipp.save()

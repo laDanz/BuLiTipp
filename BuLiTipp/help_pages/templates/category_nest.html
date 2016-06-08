@@ -1,5 +1,5 @@
 <ul class="dropdown-menu-no-collapse">
-	<li><a href="{% url help_item_list category.0.slug %}">{{category.0.title}}</a></li>
+	<li><a href="{% url 'help_item_list' category.0.slug %}">{{category.0.title}}</a></li>
 {% if category.1 %}
 	<ul class="dropdown-submenu">{% with category.1 as categories %}
 		{% for category in categories %}

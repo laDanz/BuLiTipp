@@ -34,7 +34,7 @@ class News(models.Model):
 	datum = models.DateTimeField()
 	title = models.CharField(max_length=100)
 	text = models.TextField()
-	newsletter = models.BooleanField()
+	newsletter = models.BooleanField(default=False)
 	def save(self):
 		if self.id is None and self.newsletter:
 			for user in User.objects.filter(receive_newsletter=True):
@@ -46,8 +46,8 @@ class Spielzeit(models.Model):
 		app_label = 'BuLiTippApp'
 	bezeichner = models.CharField(max_length=50)
 	saisontipp_end = models.DateTimeField(null=True)
-	isPokal = models.BooleanField()
-	archiviert = models.BooleanField()
+	isPokal = models.BooleanField(default=False)
+	archiviert = models.BooleanField(default=False)
 	def __init__(self, *args, **kwargs):
 		super(Spielzeit, self).__init__(*args, **kwargs)
 	def __unicode__(self):

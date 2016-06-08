@@ -12,12 +12,12 @@
 		<meta http-equiv="Content-Style-Type" content="text/css">
 		<meta http-equiv="Content-Script-Type" content="text/javascript">
 		{% bootstrap_css %}
-		{% if user.theme.location %}
-		<link href="/static/themes/{{ user.theme.location }}/css/bootstrap.min.css" rel="stylesheet" title="main">
+		{% if user.user.theme.location %}
+		<link href="/static/themes/{{ user.user.theme.location }}/css/bootstrap.min.css" rel="stylesheet" title="main">
 		{% endif %}
 		<link rel="stylesheet" media="screen" href="/static/css/custom.css">		
-		{% if user.theme.location %}
-		<link rel="stylesheet" media="screen" href="/static/themes/{{ user.theme.location }}/custom.css">
+		{% if user.user.theme.location %}
+		<link rel="stylesheet" media="screen" href="/static/themes/{{ user.user.theme.location }}/custom.css">
 		{% endif %}
 		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 		

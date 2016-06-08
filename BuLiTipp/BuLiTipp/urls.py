@@ -1,5 +1,8 @@
 from django.conf.urls import patterns, include, url
 
+import django
+django.setup()
+
 import autocomplete_light
 autocomplete_light.autodiscover()
 

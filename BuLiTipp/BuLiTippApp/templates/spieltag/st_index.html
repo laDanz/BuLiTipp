@@ -7,7 +7,7 @@
 <ul class="nav nav-pills">
 {% for sz in spielzeiten%}
 	<li {% if sz.id == spielzeit.id %} class="active"{% endif %}>
-		<a href="{% url spieltag sz.id %}">{{sz.bezeichner}}</a>
+		<a href="{% url 'spieltag' sz.id %}">{{sz.bezeichner}}</a>
 	</li>
 {% endfor %}
 </ul>
@@ -24,7 +24,7 @@
 				</div>
 				<div class="tab-pane active" id="st_solo">
 					{% if not spieltag.tippbar %}
-						<div class="text-right" style="height:0px;overflow:visible;"><a href="{% url spieltag_print spielzeit.id spieltag.id %}" title="zur Druckversion dieser Seite" style="position: relative;top: -20px;left: -25px;" target="_blank"><span class="glyphicon glyphicon-print"></span></a><a href="#st_andere" data-toggle="tab" style="position: relative;top: -20px;left: -15px;"> <span class="glyphicon glyphicon-fullscreen"></span></a></div>
+						<div class="text-right" style="height:0px;overflow:visible;"><a href="{% url 'spieltag_print' spielzeit.id spieltag.id %}" title="zur Druckversion dieser Seite" style="position: relative;top: -20px;left: -25px;" target="_blank"><span class="glyphicon glyphicon-print"></span></a><a href="#st_andere" data-toggle="tab" style="position: relative;top: -20px;left: -15px;"> <span class="glyphicon glyphicon-fullscreen"></span></a></div>
 					{% endif %}
 					<div class="hidden-lg hidden-md col-sm-8">
 						{% include "spieltag/st_detail_xs.html" %}
@@ -47,7 +47,7 @@
 				</div>
 				<div class="tab-pane active" id="st_solo">
 					{% if not spieltag.tippbar %}
-						<div class="text-right" style="height:0px;overflow:visible;"><a href="{% url spieltag_print spielzeit.id spieltag.id %}" title="zur Druckversion dieser Seite" style="position: relative;top: -20px;left: -25px;" target="_blank"><span class="glyphicon glyphicon-print"></span></a><a href="#st_andere" data-toggle="tab" style="position: relative;top: -20px;left: -15px;"> <span class="glyphicon glyphicon-fullscreen"></span></a></div>
+						<div class="text-right" style="height:0px;overflow:visible;"><a href="{% url 'spieltag_print' spielzeit.id spieltag.id %}" title="zur Druckversion dieser Seite" style="position: relative;top: -20px;left: -25px;" target="_blank"><span class="glyphicon glyphicon-print"></span></a><a href="#st_andere" data-toggle="tab" style="position: relative;top: -20px;left: -15px;"> <span class="glyphicon glyphicon-fullscreen"></span></a></div>
 					{% endif %}
 					<div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
 						{% include "tabelle/tabelle.html" %}

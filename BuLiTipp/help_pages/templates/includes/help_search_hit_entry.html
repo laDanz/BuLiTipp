@@ -7,6 +7,6 @@
 		{% endwith %}
 	</p>
 	<p>
-		<a href="{% url help_single_item item.category.slug item.slug %}">{% trans "Show full help item" %}</a>	
+		<a href="{% url 'help_single_item' item.category.slug item.slug %}">{% trans "Show full help item" %}</a>	
 	</p>
 </div>
