@@ -423,8 +423,7 @@ class SaisontippView(TemplateView):
 		if "spielzeit_id" in kwargs and kwargs["spielzeit_id"]:
 			spielzeit_id = kwargs["spielzeit_id"]
 		else:
-			# FIXME: implement for real
-			spielzeit_id = Spielzeit.objects.all()[0].id
+			spielzeit_id = Spielzeit.objects.all().filter(archiviert=False)[0].id
 		if not request.user.is_authenticated():
 			return HttpResponseRedirect(reverse("home"))
 		context["news"]=get_news_by_request(request)
