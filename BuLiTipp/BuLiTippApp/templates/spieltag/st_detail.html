@@ -75,8 +75,8 @@ p.id = "";
 				<td class="text-center">
 					{% if spiel.tippbar  %}
 					
-						{% if user.input_type %}
-							{% include user.input_type.template %}
+						{% if user.user.input_type %}
+							{% include user.user.input_type.template %}
 						{% else %}
 							{% include "spieltag/tipp_select.html" %}
 						{% endif %}
