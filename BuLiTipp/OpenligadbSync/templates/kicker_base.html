@@ -1,0 +1,15 @@
+{% extends 'bootstrap3/bootstrap3.html'	%}
+
+{% block bootstrap3_title %}TippBuLi.de{% endblock %}
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% block bootstrap3_content	%}
+	<div class="container">
+		<h1>TippBuLi.de <small>{% block title %}(no title){% endblock %}</small></h1>
+		{% bootstrap_messages %}
+		{% block content %}(no content){% endblock %}
+	</div>
+{% endblock	%}
+
+
