@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from models	import Verein, Spielzeit, Spieltag,	Spiel, News, BootstrapThemes, InputTypes, ReminderOffsets, Tippgemeinschaft, TG_Einladung
+from models	import Verein, Spielzeit, Spieltag, Spiel, News, BootstrapThemes, InputTypes, ReminderOffsets, Tippgemeinschaft, TG_Einladung, Tipp
 from django.contrib	import admin
 
 admin.site.register(Tippgemeinschaft)
@@ -37,4 +37,8 @@ class SpielzeitAdmin(admin.ModelAdmin):
 	inlines	= [SpieltagInline]
 	pass
 
+class TippAdmin(admin.ModelAdmin):
+	search_fields = ['user__username','spiel__heimmannschaft__name', 'spiel__auswaertsmannschaft__name']
+
+admin.site.register(Tipp, TippAdmin)
 admin.site.register(Spielzeit, SpielzeitAdmin)
