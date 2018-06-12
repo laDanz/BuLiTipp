@@ -929,5 +929,5 @@ def saisontipp(request, spielzeit_id):
 		meistertipp.mannschaft_id=meistertipp_id
 		meistertipp.save()
 		messages.success(request, "Erfolgreich gespeichert!")
-	return HttpResponseRedirect(reverse("saisontipp", args=(spielzeit_id)))
+	return HttpResponseRedirect(reverse("saisontipp", args=([spielzeit_id])))
 
